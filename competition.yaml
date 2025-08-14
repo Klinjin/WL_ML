@@ -1,0 +1,59 @@
+# FAIR-UNIVERSE - NeurIPS 2025 Weak Lensing Uncertainty Challenge
+# Created by: Ihsan Ullah
+# Created on: June 07, 2025
+
+version: 2
+title: NeurIPS 2025 Weak Lensing Uncertainty Challenge
+description: NeurIPS 2025 Weak Lensing Uncertainty Challenge Organized by FAIR Universe
+image: logo.png
+registration_auto_approve: False   
+enable_detailed_results: True
+docker_image: codalab/codalab-legacy:py39
+
+
+terms: pages/terms.md
+pages:  
+  - title: Overview
+    file: pages/overview.md
+  - title: Evaluation
+    file: pages/evaluation.md
+  - title: Material
+    file: pages/material.md
+  - title: Starting Kit
+    file: pages/starting_kit.md
+  - title: Terms
+    file: pages/terms.md
+  
+
+phases:
+  - index: 0
+    name: Phase 1
+    description: Feedback Phase
+    start: 2025-10-01
+    end: 2025-11-01
+    tasks:
+      - 0
+
+
+tasks:
+  - index: 0
+    name: Weak Lensing Uncertainty
+    description: Weak Lensing Uncertainty Task
+    input_data: input_data/
+    reference_data: reference_data/  
+    scoring_program: scoring_program/
+    ingestion_program: ingestion_program/
+
+
+leaderboards:
+  - index: 0 
+    title: Results
+    key: main
+    submission_rule: "Force_Latest_Multiple"
+    columns:
+      - index: 0
+        title: Score
+        key: score
+      - index: 1
+        title: Run Time (mins)
+        key: ingestion_duration
