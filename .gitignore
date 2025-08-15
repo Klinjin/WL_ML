@@ -2,6 +2,7 @@
 .DS_Store?
 ._*
 __pycache__
+.ipynb_checkpoints
 
 input_data/test_data.npy
 input_data/label.npy
