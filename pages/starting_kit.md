@@ -3,6 +3,14 @@
 
 
 
+## Starting Kit
+We have prepared a starting kit to help participants get started with the competition, to understand the data and prepare submissions for Codabench. You can check the starting kit notebook on our GitHub repository
+### [Starting Kit Notebook](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Startingkit_WL_PSAnalysis.ipynb)
+
+#### ⚠️ Note:
+- To run the starting kit, you will need the public/training data. You can download it from the `Files` tab.
+
+
 
 ## Dummy Sample Submission
 Dummy sample submission is provided to make you understand what is expected as a submission. The sample submission is a zip that only contains one json file named `result.json`. This file contains lists of `means` and `errorbars`. Each list item is list with 2 items. and it has `NTest` total number of items. The format looks like this:
