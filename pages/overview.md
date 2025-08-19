@@ -46,6 +46,10 @@ Our training datasets incorporate all major known systematics and are constructe
 ***
 This competition allows only result submissions. Participants can submit a result submission as instructed in the Starting Kit tab.
 
+## Data
+***
+We have prepared training data for participants that can be downloeded from [Here](https://www.codabench.org/datasets/download/c99c803a-450a-4e51-b5dc-133686258428/)
+
 
 ## Credits
 ***
@@ -61,8 +65,7 @@ This competition allows only result submissions. Participants can submit a resul
 - Steven Farrell
 - Chris Harris
 - Benjamin Nachman
-- Uroš Seljak 
-<!-- - Ben Thorne -->
+- Uroš Seljak
 
 
 #### University of Washington
