@@ -6,7 +6,7 @@ This competition is for educational and research purposes, and it is governed by
 
 ## General Terms
 
-- **Code & Methodology Verification:** At the conclusion of each competition phase, top-ranking Participants must submit their complete source code and a concise technical write-up of their solution to the Organizers. The Organizers reserve the right, in their sole discretion, to evaluate these submissions on private test sets to verify the reproducibility of the reported results. Failure to reproduce the results to the Organizers' satisfaction will be grounds for immediate disqualification.
+- **Code & Methodology Verification:** At the conclusion of each competition phase, top-ranking Participants must submit their complete source code and a concise technical write-up of their solution to the Organizers. The Organizers reserve the right, in their sole discretion, to evaluate these submissions on private test sets to verify the reproducibility of the reported results. Failure to reproduce the results to the Organizers' satisfaction will be grounds for disqualification.
 
 - **Competition Framework Adjustments:** The Organizers reserve the right to modify any aspect of the competition framework, including but not limited to scoring metrics, datasets, or evaluation protocols, if critical issues that compromise the fairness or integrity of the competition are identified.
 

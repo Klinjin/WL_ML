@@ -19,4 +19,4 @@ reference_data/label_test.npy
 input_data.zip
 
 PowerSpectrumAnalysis.ipynb
-generate_dumy_submission.py
+generate_dummy_submission.py
