@@ -1,3 +1,5 @@
+# Prizes
+***
 The Phase 1 and Phase 2 of the competition will have separate leaderboards. We will award the monetory prizes to the top performers in either phases of the competition.
 
 For the **Phase 1**, the top three performers will be awarded the following prizes:
