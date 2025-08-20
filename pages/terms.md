@@ -6,13 +6,13 @@ This competition is for educational and research purposes, and it is governed by
 
 ## General Terms
 
-- **Code & Methodology Verification:** At the conclusion of each competition phase, top-ranking Participants must submit their complete source code and a concise technical write-up of their solution to the Organizer. The Organizer reserves the right, in its sole discretion, to evaluate these submissions on private test sets to verify the reproducibility of the reported results. Failure to reproduce the results to the Organizer's satisfaction will be grounds for immediate disqualification.
+- **Code & Methodology Verification:** At the conclusion of each competition phase, top-ranking Participants must submit their complete source code and a concise technical write-up of their solution to the Organizers. The Organizers reserve the right, in their sole discretion, to evaluate these submissions on private test sets to verify the reproducibility of the reported results. Failure to reproduce the results to the Organizers' satisfaction will be grounds for immediate disqualification.
 
-- **Competition Framework Adjustments:** The Organizer reserves the right to modify any aspect of the competition framework, including but not limited to scoring metrics, datasets, or evaluation protocols, if critical issues that compromise the fairness or integrity of the competition are identified.
+- **Competition Framework Adjustments:** The Organizers reserve the right to modify any aspect of the competition framework, including but not limited to scoring metrics, datasets, or evaluation protocols, if critical issues that compromise the fairness or integrity of the competition are identified.
 
-- **Ranking and Tie-Breaking:** In the event of unforeseen issues or in the interest of fairness, the Organizer reserves the right to adjust participant rankings, disqualify results, or declare a tie between two or more Participants. The Organizer’s decision in such matters will be final and binding.
+- **Ranking and Tie-Breaking:** In the event of unforeseen issues or in the interest of fairness, the Organizers reserve the right to adjust participant rankings, disqualify results, or declare a tie between two or more Participants. The Organizers' decision in such matters will be final and binding.
 
-- **Cheating and Unfair Practices:** Any form of cheating, score gaming, or attempt to manipulate the leaderboard or evaluation system is strictly prohibited. The Organizer reserves the right to disqualify any Participant found to be engaging in such activities.
+- **Cheating and Unfair Practices:** Any form of cheating, score gaming, or attempt to manipulate the leaderboard or evaluation system is strictly prohibited. The Organizers reserve the right to disqualify any Participant found to be engaging in such activities.
 
 - **Confidentiality of Submissions:** Participants are strictly prohibited from sharing their submission code, methodologies, or any non-public competition data with other Participants or making them public for the duration of the competition. Violation of this rule will result in immediate disqualification.
 

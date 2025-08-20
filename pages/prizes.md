@@ -14,7 +14,7 @@ We will announce the prize for the **Phase 2** soon.
 
 Eligibility is determined by the Terms and Conditions that all participants must agree with to enter the challenge.
 
-In addition to monetary prizes, a jury will evaluate models for which a short write-up will have been submitted. The models will be evaluated in terms of score, practicality, frugality in terms of resources and novelty.
+In addition to monetary prizes, a jury will evaluate models for which a short write-up will have to be submitted. The models will be evaluated in terms of score, practicality, frugality in terms of resources and novelty.
 
 The special jury prizes will be funded invitations to NeurIPS 2025, to talk during the dedicated session of the competitions workshop.
 
