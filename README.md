@@ -1,33 +1,35 @@
-# FAIR Universe - Cosmology Challenge
+# FAIR Universe - Weak Lensing ML Uncertainty Challenge
 
-This repository consists of material for the Weak Lensing Cosmology ML Challenge. The competition is expected to launch in **June 2025**.
+This repository consists of materials for the Weak Lensing ML Uncertainty Challenge, a NeurIPS 2025 Machine Learning competition that explores uncertainty-aware and out-of-distribution detection AI techniques for **Weak Gravitational Lensing Cosmology**.
+
+The competition will be structured into two phases. The Phase 1 and Phase 2 of the competition are expected to launch in **Early September** and **Late September 2025**, respectively.
+
+Please check the [**<ins>Competition Overview</ins>**](https://fair-universe.lbl.gov/tutorials/WL_Competition_Overview.pdf) for a high-level overview about this competition, the train/test data structure, evaluation metrics, and the expected competition timeline.
 
 ***
 
-## Overview: Weak Gravitational Lensing and ML Challenge
+## Introduction
 Weak gravitational lensing reveals the large-scale structure of the universe by observing subtle distortions in galaxy shapes due to intervening matter. Traditional methods mainly capture Gaussian information through two-point statistics. However, non-Gaussian features present in the cosmic web are crucial for studying the underlying physics of structure formation, dark matter distributions, and cosmological parameters, motivating the use of higher-order statistics and advanced machine learning (ML) techniques to extract richer information from the weak lensing data. The primary difficulty is handling systematic uncertainties arising from simulation inaccuracies and observational biases.
 
-Through this challenge, participants will analyze a suite of carefully designed mock weak lensing maps with known cosmological parameters, constructed to include variations in simulation fidelity and observational systematics. By comparing the performance and robustness of different methods in a controlled setting, the challenge aims to systematically assess their ability to extract cosmological information while quantifying their sensitivity to modeling assumptions and systematics.
+Through this competition, participants will analyze a suite of carefully designed mock weak lensing maps with known cosmological parameters, constructed to include variations in simulation fidelity and observational systematics. By comparing the performance and robustness of different methods in a controlled setting, the competition aims to systematically assess their ability to extract cosmological information while quantifying their sensitivity to modeling assumptions and systematics.
 
-The outcomes of this challenge are expected to guide the development of next-generation weak lensing analysis pipelines, foster cross-disciplinary collaboration between the astrophysics and machine learning communities, and ultimately improve the reliability of cosmological inference from current and upcoming surveys such as LSST, Euclid, and the Roman Space Telescope. By explicitly addressing simulation-model mismatch and the need to quantify systematic uncertainties, this challenge emphasizes scientific robustness and interpretability, aligning with the growing emphasis on trustworthy ML in scientific domains.
+The outcomes of this competition are expected to guide the development of next-generation weak lensing analysis pipelines, foster cross-disciplinary collaboration between the astrophysics and machine learning communities, and ultimately improve the reliability of cosmological inference from current and upcoming surveys such as LSST, Euclid, and the Roman Space Telescope. By explicitly addressing simulation-model mismatch and the need to quantify systematic uncertainties, this competition emphasizes scientific robustness and interpretability, aligning with the growing emphasis on trustworthy ML in scientific domains.
 
 
-## Data
-Participants will work with simulated datasets mimicking observations from the Hyper Suprime-Cam (HSC) survey. The weak lensing shear maps are generated from cosmological simulations with 101 different cosmological models (parameters: $\Omega_m$ and $S_8$) and 6 realistic systematic effects such as the baryonic effect, intrinsic alignment, photometric redshift uncertainty, shear measurement bias, point spread function, and source clustering effect. Some of these systematics are introduced in the data generation process, which we fully sampled in the training set so that the participants can marginalize over them. Some of the systematics can be added to the data as a post-processing step, and we have developed a biasing script capable of introducing these parameterised systematics (distortions) to the given dataset. The free parameters corresponding to these systematic models are nuisance parameters and need to be marginalized during inference. The dataset is further organized into 4 redshift bins per observational field, pixelized with a resolution of 2 arcmin.
+## Dataset
+Participants will work with simulated datasets mimicking observations from the Hyper Suprime-Cam (HSC) survey. The weak lensing convergence maps are generated from cosmological simulations with $101$ different cosmological models (parameters: $\Omega_m$ and $S_8$) and realistic systematic effects such as the baryonic effect and photometric redshift uncertainty. These systematics are introduced in the data generation process, which we fully sampled in the training set so that the participants can marginalize over them. The parameters corresponding to these systematic models are nuisance parameters and need to be marginalized during inference. Each data is a 2D image of dimension $1424 \times 176$, corresponds to the convergence map of redshift BIN 2 of WIDE12H in HSC Y3, pixelized with a resolution of 2 arcmin. 
 
-The figure below shows the example weak lensing shear maps $\gamma_1$ and $\gamma_2$ (top two panels) and weight map (bottom
-panel) of a single redshift bin of subfield *GAMA15H*. The weight map is defined as the inverse noise
-map and indicates the noise level per pixel. Each data contains 6 subfields, and each subfield contains 4 redshift bins.
-<img width="750" alt="image" src="https://github.com/user-attachments/assets/dfc3cab0-6453-4ae3-b4c8-59652ef7056c" />
+The figure below shows some examples of the training data and how they are varied with different nuisance parameters and pixel-level noise.
 
+<center>
+<img src="image-1.png" width="600">
+</center>
 
 ## Competition Tasks
-The competition will be structured into two phases:
-
 ### Phase 1: Cosmological Parameter Estimation
 Participants will develop models that:
-1. Accurately infer cosmological parameters $(\Omega_m, S_8)$ from weak lensing data.
-2. Quantify uncertainties via the 68% confidence intervals of $(\Omega_m, S_8)$.
+1. Accurately infer cosmological parameters $(\hat{\Omega}_m, \hat{S}_8)$ from the weak lensing data.
+2. Quantify the uncertainties $(\hat{\sigma}_{\Omega_m}, \hat{\sigma}_{S_8})$ via the 68% confidence intervals of the estimated cosmological parameters.
 
 ### Phase 2: Out-of-Distribution Detection
 Some test data will be generated with different physical models (OoD), leading to some distribution shifts with respect to the test data in Phase 1. Participants will develop models that:
@@ -36,20 +38,19 @@ Some test data will be generated with different physical models (OoD), leading t
    
 
 ## Getting Started
+### Phase 1: 
+We have prepared a Starting Kit for the Phase 1 competition [<ins>here</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb). You can also directly run the starting kit on Google Colab:
 
-A Starting Kit will be provided, including:
-Setup and installation instructions.
-Code examples for data loading, model training, evaluation, and submission preparation.
-Baseline methods employing standard power spectrum analysis and basic CNN emulators.
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1iySb87VmyCtz6y8Zg367xR6hetD6gKTi?usp=sharing)
+
+The notebook includes a code example for data loading, baseline approach, evaluation, and submission preparation. The Phase 1 baseline apporach is the standard power spectrum analysis. Other baseline methods employing basic CNN emulators will be available soon.
+
+### Phase 2:
+The Starting Kit with a baseline approach for Phase 2 will be available when the Phase 2 starts.
 
 
-
-
-
-
-
-## Challenge Website
-The challenge website is available here: https://www.codabench.org/. Details about how to join the challenge and the challenge description will be available on the website soon.
+## Competition Website
+The competition website is available here: https://www.codabench.org/. Details about how to join the competition will be available on the website soon.
 
 ## Contact
 Visit our website: https://fair-universe.lbl.gov/
