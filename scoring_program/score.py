@@ -114,9 +114,14 @@ class Scoring:
         # Compute the score for Phase 1.
         # The rank on the leaderboard is sorted by this.
         def _score_phase1(true_cosmo, infer_cosmo, errorbar):
-            sq_error = (true_cosmo - infer_cosmo) ** 2
-            scale_factor = 1000  # This is a constant that scales the error term. May be tuned in the future.
-            return - np.sum(sq_error / errorbar ** 2 + np.log(errorbar**2) + scale_factor * sq_error, 1)
+            sq_error = (true_cosmo - infer_cosmo)**2
+            scale_factor = 1000  # This is a constant that scales the error term. 
+            score = - np.sum(sq_error/errorbar**2 + np.log(errorbar**2) + scale_factor * sq_error, 1)
+            score = np.mean(score)
+            if score >= -10**6:  # Set a minimum of the score (to properly display on Codabench)
+                return score
+            else:
+                return -10**6
 
         # Compute the mean of the MSEs of 2 POIs (both are standardized).
         # This is only for reference on the leaderboard.
@@ -144,9 +149,7 @@ class Scoring:
         print("[*] Computing scores")
         means = np.array(self.ingestion_result["means"])
         errorbars = np.array(self.ingestion_result["errorbars"])
-        score = _score_phase1(self.reference_data, means, errorbars)
-
-        avg_score = np.mean(score)
+        avg_score = _score_phase1(self.reference_data, means, errorbars)
         avg_errorbar = np.mean(errorbars, 0)
 
         mse = _mse_phase1(self.reference_data, means)
