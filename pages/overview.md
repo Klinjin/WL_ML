@@ -75,9 +75,10 @@ This competition allows only result submissions. Participants can submit a resul
 - Jordan Dudley
 - Steven Farrell
 - Chris Harris
-- Benjamin Nachman
 - Uroš Seljak
 
+#### Stanford University / SLAC National Accelerator Laboratory
+- Benjamin Nachman
 
 #### University of Washington
 - Yuan-Tang Chou
