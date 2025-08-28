@@ -46,7 +46,7 @@ Some test data will be generated with different physical models (OoD), leading t
 ### Phase 1: Cosmological Parameter Estimation
 We have prepared a Starting Kit for the Phase 1 competition [<ins>here</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb). You can also directly run the starting kit on Google Colab:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1iySb87VmyCtz6y8Zg367xR6hetD6gKTi?usp=sharing)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb)
 
 The notebook includes a code example for data loading, baseline approach, evaluation, and submission preparation. The Phase 1 baseline apporach is the standard power spectrum analysis. Other baseline methods employing basic CNN emulators will be available soon.
 

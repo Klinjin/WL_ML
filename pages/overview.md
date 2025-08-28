@@ -44,7 +44,7 @@ There are several materials regarding the FAIR Universe - Weak Lensing ML Uncert
 * [**<ins>Competition Overview</ins>**](https://fair-universe.lbl.gov/tutorials/WL_Competition_Overview.pdf): This file presents high-level overview about this competition, the train/test data structure, evaluation metrics, and the expected competition timeline.
 
 * [**<ins>GitHub Repository</ins>**](https://github.com/FAIR-Universe/Cosmology_Challenge/tree/master): This repository hosts the code for testing submissions, as well as the [<ins>Phase 1 starting kit notebook</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb). The Phase 1 starting kit is also available over the `Starting Kit` tab of this competition
-or on Google Colab [<ins>Google Colab</ins>](https://colab.research.google.com/drive/1iySb87VmyCtz6y8Zg367xR6hetD6gKTi?usp=sharing).
+or on Google Colab [<ins>Google Colab</ins>](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb).
 
 
 ## How to join this competition?
