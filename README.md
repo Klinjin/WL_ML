@@ -2,9 +2,14 @@
 
 This repository consists of materials for the Weak Lensing ML Uncertainty Challenge, a NeurIPS 2025 Machine Learning competition that explores uncertainty-aware and out-of-distribution detection AI techniques for **Weak Gravitational Lensing Cosmology**.
 
-The competition will be structured into two phases. The Phase 1 and Phase 2 of the competition are expected to launch in **Early September** and **Late September 2025**, respectively.
+The competition is structured into two phases. 
+- **The Phase 1 of the competition has started! We are now accepting submissions until November 16th 2025.**
+- The Phase 2 of the competition is expected to be launched in **Late September 2025**.
 
 Please check the [**<ins>Competition Overview</ins>**](https://fair-universe.lbl.gov/tutorials/WL_Competition_Overview.pdf) for a high-level overview about this competition, the train/test data structure, evaluation metrics, and the expected competition timeline.
+
+## Competition Website
+Interested in joining the competition? Please register as a participant on our [**<ins>Competition Website</ins>**](https://www.codabench.org/competitions/8934/) on Codabench!
 
 ***
 
@@ -17,7 +22,7 @@ The outcomes of this competition are expected to guide the development of next-g
 
 
 ## Dataset
-Participants will work with simulated datasets mimicking observations from the Hyper Suprime-Cam (HSC) survey. The weak lensing convergence maps are generated from cosmological simulations with $101$ different cosmological models (parameters: $\Omega_m$ and $S_8$) and realistic systematic effects such as the baryonic effect and photometric redshift uncertainty. These systematics are introduced in the data generation process, which we fully sampled in the training set so that the participants can marginalize over them. The parameters corresponding to these systematic models are nuisance parameters and need to be marginalized during inference. Each data is a 2D image of dimension $1424 \times 176$, corresponds to the convergence map of redshift BIN 2 of WIDE12H in HSC Y3, pixelized with a resolution of 2 arcmin. 
+Participants will work with simulated datasets mimicking observations from the [Hyper Suprime-Cam (HSC) survey](https://science.jpl.nasa.gov/projects/hyper-suprime-cam/). The weak lensing convergence maps are generated from cosmological simulations with $101$ different cosmological models (parameters: $\Omega_m$ and $S_8$) and realistic systematic effects such as the baryonic effect and photometric redshift uncertainty. These systematics are introduced in the data generation process, which we fully sampled in the training set so that the participants can marginalize over them. The parameters corresponding to these systematic models are nuisance parameters and need to be marginalized during inference. Each data is a 2D image of dimension $1424 \times 176$, corresponds to the convergence map of redshift BIN 2 of WIDE12H in HSC Y3, pixelized with a resolution of 2 arcmin. 
 
 The figure below shows some examples of the training data and how they are varied with different nuisance parameters and pixel-level noise.
 
@@ -38,19 +43,15 @@ Some test data will be generated with different physical models (OoD), leading t
    
 
 ## Getting Started
-### Phase 1: 
+### Phase 1: Cosmological Parameter Estimation
 We have prepared a Starting Kit for the Phase 1 competition [<ins>here</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb). You can also directly run the starting kit on Google Colab:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1iySb87VmyCtz6y8Zg367xR6hetD6gKTi?usp=sharing)
 
 The notebook includes a code example for data loading, baseline approach, evaluation, and submission preparation. The Phase 1 baseline apporach is the standard power spectrum analysis. Other baseline methods employing basic CNN emulators will be available soon.
 
-### Phase 2:
+### Phase 2: Out-of-Distribution Detection
 The Starting Kit with a baseline approach for Phase 2 will be available when the Phase 2 starts.
-
-
-## Competition Website
-The competition website is available here: https://www.codabench.org/. Details about how to join the competition will be available on the website soon.
 
 ## Contact
 Visit our website: https://fair-universe.lbl.gov/

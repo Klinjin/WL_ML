@@ -10,12 +10,13 @@ We have prepared a starting kit to help participants get started with the compet
 
 
 #### ⚠️ Note:
-- To run the starting kit, you will need the public/training data. You can download it from the `Files` tab or from [<ins>Here</ins>](https://www.codabench.org/datasets/download/c99c803a-450a-4e51-b5dc-133686258428/).
+- To run the starting kit locally on your device, please directly clone this repository. The `input_data` directory of this repository contains a downsampled dataset that allows you to run the starting kit with minimal efforts.
+- To fully train the baseline model and generate a dummy submission that can be scored on our competition website, you will need to download the public training data and the Phase 1 test data from the `Data` tab or from [**<ins>Here</ins>**](https://www.codabench.org/datasets/download/c99c803a-450a-4e51-b5dc-133686258428/).
 
 
 
 ### Dummy Sample Submission
-Dummy sample submission is provided to make you understand what is expected as a submission. The sample submission is a zip that only contains one json file named `result.json`. This file contains lists of `means` and `errorbars`. Each list has `NTest` total number of items and  each item of these lists contains 2 values each. The format looks like this:
+Dummy sample submission is provided to make you understand what is expected as a submission. The sample submission is a zip that only contains one json file named `result.json`. This file contains lists of `means` and `errorbars`. Each list has 4000 items and each item of these lists contains 2 values each. The format looks like this:
 
 ```json
 {
