@@ -1,9 +1,11 @@
 # FAIR Universe - Weak Lensing ML Uncertainty Challenge
 *** 
-## Introduction
-
 This NeurIPS 2025 Machine Learning competition explores uncertainty-aware and out-of-distribution detection AI techniques for **Weak Gravitational Lensing Cosmology**.
 
+🚀 **Phase 1** of the competition has started!  
+🚩 To enter the competition, please register through your **affiliation/institutional email**. 
+***
+## Introduction
 The large-scale structure of the universe—the cosmic web of galaxies, galaxy clusters, and dark matter spanning hundreds of millions of light-years—encodes essential information about the composition, evolution, and fundamental laws governing the cosmos. However, the majority of matter in the universe is dark matter, which does not interact with light and can only be observed indirectly through its gravitational effects. According to Einstein’s theory of general relativity, the gravitational field of this large-scale structure bends the path of light traveling through the universe. **Weak gravitational lensing** refers to the subtle, coherent distortions in the observed shapes of distant galaxies caused by the deflection of light as it traverses the inhomogeneous matter distribution of the universe. By statistically analyzing these distortions across large regions of the sky, weak lensing provides a powerful probe of the matter distribution and the underlying cosmological model that governs the expansion of the universe.
 
 Traditional analysis based on two-point correlation functions can only capture limited amount of information from the weak lensing data (2D fields similar to images). To fully exploit the non-Gaussian features present in the cosmic web, higher-order statistics and modern machine learning (ML) methods have become increasingly important. These approaches, including deep learning and simulation-based inference, have been shown to extract significant more information in weak lensing maps than traditional techniques. However, different analyses assume different dataset setups and lead to different results, making it hard to directly compare with existing approaches. Furthermore, most (if not all) of these methods rely heavily on simulations that may not accurately represent real data due to modeling approximations and missing systematics. 
@@ -49,7 +51,9 @@ or on Google Colab [<ins>Google Colab</ins>](https://colab.research.google.com/g
 
 ## How to join this competition?
 ***
-- Login or Create Account on [<ins>Codabench</ins>](https://www.codabench.org/) (please register through your affiliation and the associated email)
+- Login or Create Account on [<ins>Codabench</ins>](https://www.codabench.org/) 
+
+   🚩 **Please register through your affiliation/institutional email.** Contact us if you have any problems with this.
 - Go to the `Starting Kit` tab
 - Download the `Dummy Sample Submission`
 - Go to the `My Submissions` tab
@@ -62,19 +66,26 @@ or on Google Colab [<ins>Google Colab</ins>](https://colab.research.google.com/g
 This competition allows only result submissions. Participants can submit a result submission as instructed in the `Starting Kit` tab.
 
 
+## Timeline
+***
+![alt text](timeline.png)   
+
+
 ## Credits
 ***
 #### Institute for Advanced Study
 - Biwei Dai 
 
-#### Lawrence Berkeley National Laboratory 
+#### Lawrence Berkeley National Laboratory
 - Wahid Bhimji
 - Paolo Calafiura
 - Po-Wen Chang
 - Sascha Diefenbacher
-- Jordan Dudley
 - Steven Farrell
 - Chris Harris
+
+#### University of California, Berkeley
+- Jordan Dudley
 - Uroš Seljak
 
 #### Stanford University / SLAC National Accelerator Laboratory
@@ -101,4 +112,4 @@ Visit our website: <ins>https://fair-universe.lbl.gov/</ins>
 
 Email: <ins>fair-universe@lbl.gov</ins>
 
-Updates will be announced through fair-universe-announcements google group. [<ins>Click to join Google Group</ins>](https://groups.google.com/u/0/a/lbl.gov/g/Fair-Universe-Announcements/).
+Updates will be announced through the [<ins>Codabench forum</ins>](https://www.codabench.org/forums/8787/) or the fair-universe-announcements Google group. [<ins>Click to join Google Group</ins>](https://groups.google.com/u/0/a/lbl.gov/g/Fair-Universe-Announcements/).
