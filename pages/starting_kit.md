@@ -3,15 +3,25 @@
 
 
 ## Phase 1: Cosmological Parameter Estimation
-### Starting Kit
-We have prepared a starting kit to help participants get started with the competition, to understand the data and prepare submissions for Codabench. You can check the starting kit notebook on our GitHub repository or through the Google Colab
-### [<ins>Starting Kit Notebook</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb)  
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb)
+### Starting Kits
+We have prepared three starting kits to help participants get started with the competition, to understand the data and prepare submissions for Codabench. You can check the starting kit notebooks on our GitHub repository or through the Google Colab below:
 
+1. [<ins>**Power Spectrum Analysis**</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb) 
+
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb)
+
+2. [<ins>**Convolutional Neural Network + MCMC**</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_CNN_MCMC.ipynb) 
+
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_CNN_MCMC.ipynb)
+
+3. [<ins>**Convolutional Neural Network Direct Prediction**</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_CNN_Direct.ipynb) 
+
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_CNN_Direct.ipynb)
 
 #### ⚠️ Note:
-- To run the starting kit locally on your device, please directly clone this repository. The `input_data` directory of this repository contains a downsampled dataset that allows you to run the starting kit with minimal efforts.
-- To fully train the baseline model and generate a dummy submission that can be scored on our competition website, you will need to download the public training data and the Phase 1 test data from the `Data` tab or from [**<ins>Here</ins>**](https://www.codabench.org/datasets/download/c99c803a-450a-4e51-b5dc-133686258428/).
+- To run the starting kits locally on your device, please directly clone this repository. The `input_data` directory of this repository contains a downsampled dataset that allows you to run the starting kit with minimal efforts. 
+- To run the CNN baseline methods locally on your device, please make sure that you have installed all required libraries and relevant dependencies. Fore more information, please check [<ins>**our repository**</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/tree/master/docker).
+- To fully train the baseline model and generate a dummy submission that can be scored on our competition website, you will need to download the public training data and the Phase 1 test data from the `Data` tab or from [**<ins>here</ins>**](https://www.codabench.org/datasets/download/c99c803a-450a-4e51-b5dc-133686258428/).
 
 
 

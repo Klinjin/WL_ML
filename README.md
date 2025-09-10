@@ -44,11 +44,19 @@ Some test data will be generated with different physical models (OoD), leading t
 
 ## Getting Started
 ### Phase 1: Cosmological Parameter Estimation
-We have prepared a Starting Kit for the Phase 1 competition [<ins>here</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb). You can also directly run the starting kit on Google Colab:
+We have prepared three Starting Kit for the Phase 1 competition. The notebooks include a code example for data loading, baseline approach, evaluation, and submission preparation. The Phase 1 baseline apporaces are the standard power spectrum analysis and the methods employing basic CNN emulators. You can also directly run the starting kits on Google Colab. 
+1. [<ins>**Power Spectrum Analysis**</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb) 
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb)
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_PSAnalysis.ipynb)
 
-The notebook includes a code example for data loading, baseline approach, evaluation, and submission preparation. The Phase 1 baseline apporach is the standard power spectrum analysis. Other baseline methods employing basic CNN emulators will be available soon.
+2. [<ins>**Convolutional Neural Network + MCMC**</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_CNN_MCMC.ipynb) 
+
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_CNN_MCMC.ipynb)
+
+3. [<ins>**Convolutional Neural Network Direct Prediction**</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_CNN_Direct.ipynb) 
+
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/FAIR-Universe/Cosmology_Challenge/blob/master/Phase_1_Startingkit_WL_CNN_Direct.ipynb)
+
 
 ### Phase 2: Out-of-Distribution Detection
 The Starting Kit with a baseline approach for Phase 2 will be available when the Phase 2 starts.
