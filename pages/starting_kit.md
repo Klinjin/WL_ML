@@ -20,7 +20,7 @@ We have prepared three starting kits to help participants get started with the c
 
 #### ⚠️ Note:
 - To run the starting kits locally on your device, please directly clone this repository. The `input_data` directory of this repository contains a downsampled dataset that allows you to run the starting kit with minimal efforts. 
-- To run the CNN baseline methods locally on your device, please make sure that you have installed all required libraries and relevant dependencies. Fore more information, please check [<ins>**our repository**</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/tree/master/docker).
+- To run the CNN baseline methods locally on your device, please make sure that you have installed all required libraries and relevant dependencies. Fore more information, please check our [<ins>**conda instructions**</ins>](https://github.com/FAIR-Universe/Cosmology_Challenge/tree/master/conda).
 - To fully train the baseline model and generate a dummy submission that can be scored on our competition website, you will need to download the public training data and the Phase 1 test data from the `Data` tab or from [**<ins>here</ins>**](https://www.codabench.org/datasets/download/c99c803a-450a-4e51-b5dc-133686258428/).
 
 
