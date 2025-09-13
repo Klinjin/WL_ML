@@ -1,22 +1,65 @@
+# System files
 .DS_Store
 .DS_Store?
 ._*
-__pycache__
-.ipynb_checkpoints
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.ipynb_checkpoints/
 
-input_data/test_data.npy
-input_data/label.npy
-input_data/test_label.npy
-input_data/WIDE12H_bin2_2arcmin_kappa.npy
-input_data/WIDE12H_bin2_2arcmin_mask.npy
+# Large data files (numpy arrays)
+*.npy
+*.npz
+*.h5
+*.hdf5
 
-reference_data/label.npy
-reference_data/test_label.npy
-reference_data/label_test.npy
+# Model files (usually large)
+*.pth
+*.pt
+*.pkl
+*.pickle
+*.model
+*.weights
+*.ckpt
 
+# Data directories with large files
+input_data/*.npy
+input_data/*.npz
+reference_data/*.npy
+reference_data/*.npz
+trained_model/*.pth
+trained_model/*.pt
 
+# Submission files
+submissions/
+*.zip
 
-input_data.zip
+# Logs and outputs
+*.log
+logs/
+outputs/
+scoring_output/
+sample_result_submission/
 
+# Temporary files
+temp/
+tmp/
+cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Virtual environments
+venv/
+env/
+.env
+
+# Generated files
 PowerSpectrumAnalysis.ipynb
 generate_dummy_submission.py
