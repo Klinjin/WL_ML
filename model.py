@@ -47,7 +47,7 @@ class BigGANUNet2DModel(nn.Module):
             n_channels *= 1 + self.fourier_features.num_features
         nf = 32
         self.ch_mult = ch_mult 
-        self.num_res_blocks = num_res_blocks = 3
+        self.num_res_blocks = num_res_blocks = 1
         self.num_resolutions =num_resolutions= len(ch_mult)
         self.act = nn.SiLU()
         
@@ -90,7 +90,7 @@ class BigGANUNet2DModel(nn.Module):
             modules.append(AttnBlock(channels=in_ch))
         modules.append(ResnetBlock(in_ch=in_ch))
     
-        self._feature_size = in_ch * height * width
+        self._feature_size = in_ch * height//4 * width//4
 
         self.fc_stack = nn.Sequential(
             nn.Flatten(),
@@ -107,14 +107,11 @@ class BigGANUNet2DModel(nn.Module):
 
 
 
-    def forward(self, x, cond=None): #cond(5,)-->MLP score(N,)=weight+bias
-        param = self.MLP(cond)
+    def forward(self, x): #cond(5,)-->MLP score(N,)=weight+bias
         x = self.maybe_concat_fourier(x)
-        x = x.double()
         
         modules = self.all_modules
         m_idx = 0
-        param_idx = 0
         
         # Downsampling block
         hs = [modules[m_idx](x)]
@@ -125,8 +122,6 @@ class BigGANUNet2DModel(nn.Module):
             h = modules[m_idx](hs[-1])
             if isinstance(modules[m_idx], ResnetBlockBigGAN):
                 channels = h.shape[1]
-                h = self.film(h, param[:, param_idx:param_idx + channels * 2])
-                param_idx += channels * 2
             m_idx += 1
             hs.append(h)
     
@@ -134,8 +129,6 @@ class BigGANUNet2DModel(nn.Module):
             h = modules[m_idx](hs[-1])
             if isinstance(modules[m_idx], ResnetBlockBigGAN):
                 channels = h.shape[1]
-                h = self.film(h, param[:, param_idx:param_idx + channels * 2])
-                param_idx += channels * 2
             m_idx += 1
             hs.append(h)
     
