@@ -30,7 +30,7 @@ conv1x1 = layerspp.conv1x1
 
 default_initializer = layers.default_init
 
-
+####### TOO BIG for RAM (~20 GB) 
 
 class BigGANUNet2DModel(nn.Module):
     def __init__(self, height, width, n_classes, n_channels=1, ch_mult = (1, 2, 1), bilinear: bool = False, use_fourier_features: bool = False, attention: bool = False):
@@ -162,3 +162,175 @@ class BigGANUNet2DModel(nn.Module):
         for i, module in enumerate(self.all_modules):
             self.all_modules[i] = torch.utils.checkpoint(module)
 
+
+import torch.nn.functional as F
+
+class ResidualBlock(nn.Module):
+    def __init__(self, in_channels, out_channels, stride=1, downsample=None):
+        super(ResidualBlock, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False)
+        self.bn1 = nn.BatchNorm2d(out_channels)
+        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(out_channels)
+        self.downsample = downsample
+        self.relu = nn.ReLU(inplace=True)
+        
+    def forward(self, x):
+        residual = x
+        
+        out = self.conv1(x)
+        out = self.bn1(out)
+        out = self.relu(out)
+        
+        out = self.conv2(out)
+        out = self.bn2(out)
+        
+        if self.downsample:
+            residual = self.downsample(x)
+            
+        out += residual
+        out = self.relu(out)
+        
+        return out
+
+class ChannelAttention(nn.Module):
+    def __init__(self, in_channels, reduction=16):
+        super(ChannelAttention, self).__init__()
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.max_pool = nn.AdaptiveMaxPool2d(1)
+        
+        self.fc = nn.Sequential(
+            nn.Conv2d(in_channels, in_channels // reduction, 1, bias=False),
+            nn.ReLU(),
+            nn.Conv2d(in_channels // reduction, in_channels, 1, bias=False)
+        )
+        self.sigmoid = nn.Sigmoid()
+        
+    def forward(self, x):
+        avg_out = self.fc(self.avg_pool(x))
+        max_out = self.fc(self.max_pool(x))
+        out = avg_out + max_out
+        return self.sigmoid(out)
+
+class SpatialAttention(nn.Module):
+    def __init__(self, kernel_size=7):
+        super(SpatialAttention, self).__init__()
+        self.conv1 = nn.Conv2d(2, 1, kernel_size, padding=kernel_size//2, bias=False)
+        self.sigmoid = nn.Sigmoid()
+        
+    def forward(self, x):
+        avg_out = torch.mean(x, dim=1, keepdim=True)
+        max_out, _ = torch.max(x, dim=1, keepdim=True)
+        x_cat = torch.cat([avg_out, max_out], dim=1)
+        out = self.conv1(x_cat)
+        return self.sigmoid(out)
+
+class CBAM(nn.Module):
+    def __init__(self, in_channels, reduction=16):
+        super(CBAM, self).__init__()
+        self.channel_attention = ChannelAttention(in_channels, reduction)
+        self.spatial_attention = SpatialAttention()
+        
+    def forward(self, x):
+        out = x * self.channel_attention(x)
+        out = out * self.spatial_attention(out)
+        return out
+
+class ResNetWithAttention(nn.Module):
+    def __init__(self, height, width, num_targets):
+        super(ResNetWithAttention, self).__init__()
+        
+        # Initial convolution
+        self.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
+        self.bn1 = nn.BatchNorm2d(64)
+        self.relu = nn.ReLU(inplace=True)
+        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        
+        # Residual layers
+        self.layer1 = self._make_layer(64, 64, 2, stride=1)
+        self.layer2 = self._make_layer(64, 128, 2, stride=2)
+        self.layer3 = self._make_layer(128, 256, 2, stride=2)
+        self.layer4 = self._make_layer(256, 512, 2, stride=2)
+        
+        # Attention modules
+        self.attention1 = CBAM(64)
+        self.attention2 = CBAM(128)
+        self.attention3 = CBAM(256)
+        self.attention4 = CBAM(512)
+        
+        # Calculate feature size after convolutions
+        self._feature_size = self._get_conv_output_size(height, width)
+        
+        # Fully connected layers
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        self.fc_stack = nn.Sequential(
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(256, 128),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(128, num_targets)
+        )
+        
+    def _make_layer(self, in_channels, out_channels, blocks, stride=1):
+        downsample = None
+        if stride != 1 or in_channels != out_channels:
+            downsample = nn.Sequential(
+                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
+                nn.BatchNorm2d(out_channels)
+            )
+            
+        layers = []
+        layers.append(ResidualBlock(in_channels, out_channels, stride, downsample))
+        for _ in range(1, blocks):
+            layers.append(ResidualBlock(out_channels, out_channels))
+            
+        return nn.Sequential(*layers)
+    
+    def _get_conv_output_size(self, height, width):
+        with torch.no_grad():
+            dummy_input = torch.zeros(1, 1, height, width)
+            x = self.conv1(dummy_input)
+            x = self.bn1(x)
+            x = self.relu(x)
+            x = self.maxpool(x)
+            
+            x = self.layer1(x)
+            x = self.layer2(x)
+            x = self.layer3(x)
+            x = self.layer4(x)
+            x = self.avgpool(x)
+            
+            return int(np.prod(x.size()))
+    
+    def forward(self, x):
+        # Initial convolution
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.maxpool(x)
+        
+        # Residual blocks with attention
+        x = self.layer1(x)
+        x = self.attention1(x)
+        
+        x = self.layer2(x)
+        x = self.attention2(x)
+        
+        x = self.layer3(x)
+        x = self.attention3(x)
+        
+        x = self.layer4(x)
+        x = self.attention4(x)
+        
+        # Global average pooling and classification
+        x = self.avgpool(x)
+        x = torch.flatten(x, 1)
+        x = self.fc_stack(x)
+        
+        means = x[:, :2]
+        log_sigmas = x[:, 2:]
+        sigmas = torch.exp(log_sigmas)
+        
+        return means, sigmas
