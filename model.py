@@ -258,11 +258,13 @@ class ResNetWithAttention(nn.Module):
         self.attention3 = CBAM(256)
         self.attention4 = CBAM(512)
         
+        # Global average pooling
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+
         # Calculate feature size after convolutions
         self._feature_size = self._get_conv_output_size(height, width)
         
         # Fully connected layers
-        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc_stack = nn.Sequential(
             nn.Linear(512, 256),
             nn.ReLU(),
