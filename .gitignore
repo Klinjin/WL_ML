@@ -63,3 +63,4 @@ env/
 # Generated files
 PowerSpectrumAnalysis.ipynb
 generate_dummy_submission.py
+input_data/
