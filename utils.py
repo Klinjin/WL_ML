@@ -125,6 +125,7 @@ class Data:
         self.kappa_test = np.zeros((self.Ntest, *self.shape), dtype=np.float16)
         self.kappa_test[:,self.mask] = Utility.load_np(data_dir=self.data_dir, file_name=self.test_kappa_file) # Test noisy convergence maps
 
+        
 class Visualization:
 
     @staticmethod
@@ -196,6 +197,54 @@ class Score:
         else:
             return -10**6
 
+def KL_div_posterior_loss(pred_means, pred_sigmas, truths):
+    """
+    A KL divergence loss function that directly optimizes the score function
+
+    Inputs:
+    - pred_means:   2D tensor (batch_size, 2)
+    - pred_sigmas:  2D tensor (batch_size, 2)
+    - truths:       2D tensor (batch_size, 2)
+    """
+
+    residuals_sq = (pred_means - truths)**2
+
+    loss_terms = residuals_sq / (pred_sigmas**2)
+    loss_sum = torch.sum(loss_terms, dim=1)
+
+    log_sigma_terms = torch.sum(torch.log(pred_sigmas**2), dim=1)
+    loss = torch.mean(loss_sum + log_sigma_terms)
+
+    return loss
+
+class CosmologyDataset(Dataset):
+    """
+    Custom PyTorch Dataset
+    """
+
+    def __init__(self, data, labels=None,
+                 transform=None,
+                 label_transform=None):
+        self.data = data
+        self.labels = labels
+        self.transform = transform
+        self.label_transform = label_transform
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        image = self.data[idx].astype(np.float64)   
+        if self.transform:
+            image = self.transform(image)
+        if self.labels is not None:
+            label = self.labels[idx].astype(np.float64)
+            label = torch.from_numpy(label)
+            if self.label_transform:
+                label = self.label_transform(label)
+            return image, label
+        else:
+            return image
 
 if __name__ == "__main__":
     root_dir = os.getcwd()

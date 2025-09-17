@@ -1,0 +1,28 @@
+Job started at: Tue 16 Sep 2025 10:20:45 PM PDT
+Running seff for job 42868227...
+Job ID: 42868227
+Cluster: perlmutter
+User/Group: lindajin/lindajin
+State: RUNNING
+Nodes: 1
+Cores per node: 256
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 00:25:36 core-walltime
+Job Wall-clock time: 00:00:06
+Memory Utilized: 0.00 MB
+Memory Efficiency: 0.00% of 476.37 GB (476.37 GB/node)
+WARNING: Efficiency statistics can only be obtained after the job has ended as seff tool is based on the accounting database data.
+Number of MPI tasks: 2
+CPUs per task: 128
+OpenMP threads per task: 32
+Root directory is /pscratch/sd/l/lindajin/WL_ML
+There are 101 cosmological models, each has 256 realizations of nuisance parameters in the training data.
+We assume a galaxy number density of 30 per arcmin², which determines the noise level of the experiment.
+Training and Valiadtion data loaded
+Shape of the split training data = (20604, 1424, 176)
+Shape of the split validation data = (5252, 1424, 176)
+Shape of the split training labels = (20604, 2)
+Shape of the split validation labels = (5252, 2)
+Image stats (from train set): Mean=-0.00014721968909725547, Std=0.020474432036280632
+Label stats (from train set): Mean=[0.29021683 0.81345297], Std=[0.1055216  0.06600116]
+Using device: cpu

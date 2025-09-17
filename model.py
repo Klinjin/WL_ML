@@ -30,7 +30,6 @@ conv1x1 = layerspp.conv1x1
 
 default_initializer = layers.default_init
 
-####### TOO BIG for RAM (~20 GB) 
 
 class BigGANUNet2DModel(nn.Module):
     def __init__(self, height, width, n_classes, n_channels=1, ch_mult = (1, 2, 1), bilinear: bool = False, use_fourier_features: bool = False, attention: bool = False):
@@ -90,7 +89,7 @@ class BigGANUNet2DModel(nn.Module):
             modules.append(AttnBlock(channels=in_ch))
         modules.append(ResnetBlock(in_ch=in_ch))
     
-        self._feature_size = in_ch * height//4 * width//4
+        self._feature_size = in_ch * height * width//(4*(num_resolutions-1)*2)
 
         self.fc_stack = nn.Sequential(
             nn.Flatten(),
@@ -139,10 +138,8 @@ class BigGANUNet2DModel(nn.Module):
             h = modules[m_idx](h)
             m_idx += 1
         h = modules[m_idx](h)
-    
-        assert not hs
-
-        self.fc_stack(h)
+        m_idx += 1    
+        h = self.fc_stack(h)
     
         assert m_idx == len(modules)
         
@@ -274,6 +271,9 @@ class ResNetWithAttention(nn.Module):
             nn.Dropout(0.2),
             nn.Linear(128, num_targets)
         )
+        
+        self.double()
+
         
     def _make_layer(self, in_channels, out_channels, blocks, stride=1):
         downsample = None
