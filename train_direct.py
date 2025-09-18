@@ -5,7 +5,7 @@ root_dir = os.getcwd()
 print("Root directory is", root_dir)
 
 USE_PUBLIC_DATASET = True
-MODEL_NAME = "BigGANUNet2DModel_direct_baseline"    
+MODEL_NAME = "ResNetWithAttention_direct_baseline"    
     
 if not USE_PUBLIC_DATASET:                                         # Testing this startking kit with a tiny sample of the training data (3, 30, 1424, 176)
     DATA_DIR = os.path.join(root_dir, 'input_data/')
@@ -138,12 +138,16 @@ val_dataset = CosmologyDataset(
 train_loader = DataLoader(train_dataset, batch_size=config.BATCH_SIZE, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=config.BATCH_SIZE, shuffle=False)
 
-model = BigGANUNet2DModel(config.IMG_HEIGHT,
+# model = BigGANUNet2DModel(config.IMG_HEIGHT,
+#                     config.IMG_WIDTH,
+#                     config.NUM_TARGETS,
+#                     n_channels=1,
+#                     ch_mult = (1, 2, 1),
+#                      attention = True    ).to(config.DEVICE)
+
+model = ResNetWithAttention(config.IMG_HEIGHT,
                     config.IMG_WIDTH,
-                    config.NUM_TARGETS,
-                    n_channels=1,
-                    ch_mult = (1, 2, 1),
-                     attention = True    ).to(config.DEVICE)
+                    config.NUM_TARGETS).to(config.DEVICE)
 
 USE_PRETRAINED_MODEL = False
 

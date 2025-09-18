@@ -236,6 +236,8 @@ class CBAM(nn.Module):
 class ResNetWithAttention(nn.Module):
     def __init__(self, height, width, num_targets):
         super(ResNetWithAttention, self).__init__()
+
+        self.num_targets = num_targets
         
         # Initial convolution
         self.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
@@ -330,9 +332,12 @@ class ResNetWithAttention(nn.Module):
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc_stack(x)
-        
-        means = x[:, :2]
-        log_sigmas = x[:, 2:]
-        sigmas = torch.exp(log_sigmas)
-        
-        return means, sigmas
+
+        if self.num_targets == 4:
+            means = x[:, :2]
+            log_sigmas = x[:, 2:]
+            sigmas = torch.exp(log_sigmas)
+            
+            return means, sigmas
+        else:
+            return x

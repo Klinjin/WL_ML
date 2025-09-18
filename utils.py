@@ -17,6 +17,9 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+root_dir = os.getcwd()
+print("Root directory is", root_dir)
+
 class Utility:
     @staticmethod
     def add_noise(data, mask, ng, pixel_size=2.):
@@ -247,8 +250,6 @@ class CosmologyDataset(Dataset):
             return image
 
 if __name__ == "__main__":
-    root_dir = os.getcwd()
-    print("Root directory is", root_dir)
 
     USE_PUBLIC_DATASET = True
 
