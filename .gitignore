@@ -25,12 +25,10 @@ __pycache__/
 *.ckpt
 
 # Data directories with large files
-input_data/*.npy
-input_data/*.npz
+input_data/
+trained_model/
 reference_data/*.npy
 reference_data/*.npz
-trained_model/*.pth
-trained_model/*.pt
 
 # Submission files
 submissions/
@@ -63,4 +61,3 @@ env/
 # Generated files
 PowerSpectrumAnalysis.ipynb
 generate_dummy_submission.py
-input_data/
