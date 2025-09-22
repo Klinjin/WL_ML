@@ -1,0 +1,40 @@
+Job started at: Sun 21 Sep 2025 07:52:59 PM PDT
+Running seff for job 42971322...
+Job ID: 42971322
+Cluster: perlmutter
+User/Group: lindajin/lindajin
+State: RUNNING
+Nodes: 1
+Cores per node: 256
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 00:46:56 core-walltime
+Job Wall-clock time: 00:00:11
+Memory Utilized: 0.00 MB
+Memory Efficiency: 0.00% of 476.37 GB (476.37 GB/node)
+WARNING: Efficiency statistics can only be obtained after the job has ended as seff tool is based on the accounting database data.
+Number of MPI tasks: 1
+CPUs per task: 128
+OpenMP threads per task: 32
+JAX/Numpyro not available - only MCMC inference available
+Root directory is /pscratch/sd/l/lindajin/WL_ML
+Root directory is /pscratch/sd/l/lindajin/WL_ML
+Configuration: USE_PUBLIC_DATASET=True, MODEL_NAME=CNN_HMC_v1
+There are 101 cosmological models, each has 256 realizations of nuisance parameters in the training data.
+We assume a galaxy number density of 30 per arcmin², which determines the noise level of the experiment.
+Training and validation data loaded
+Shape of training data = (20604, 1424, 176)
+Shape of validation data = (5252, 1424, 176)
+Shape of training labels = (20604, 2)
+Shape of validation labels = (5252, 2)
+Using device: cpu
+
+=== Step 1: Training CNN for Point Estimates ===
+Image stats: Mean=-0.00014721968909725547, Std=0.020474432036280632
+Label stats: Mean=[0.29021683 0.81345297], Std=[0.1055216  0.06600116]
+Epoch 1/15 | Train Loss: 0.827011 | Val Loss: 0.787473
+  -> New best model saved
+Epoch 2/15 | Train Loss: 0.368759 | Val Loss: 1.065762
+Epoch 3/15 | Train Loss: 0.196372 | Val Loss: 0.233330
+  -> New best model saved
+Epoch 4/15 | Train Loss: 0.152951 | Val Loss: 0.314433
+Epoch 5/15 | Train Loss: 0.141410 | Val Loss: 0.502861

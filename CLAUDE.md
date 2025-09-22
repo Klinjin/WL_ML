@@ -19,9 +19,12 @@ This is the **FAIR Universe - Weak Lensing ML Uncertainty Challenge** repository
 - Supports both public dataset (101 cosmological models, 256 realizations each) and smaller test datasets
 
 ### Training Scripts
-- **train_direct.py**: Direct parameter prediction approach using neural networks
-- **train_HMC.py**: Hamiltonian Monte Carlo-based training approach
-- Both scripts handle cosmological parameter estimation (Ωₘ, S₈) from weak lensing data
+- **train_direct.py**: Direct parameter prediction using KL divergence loss (ResNetWithAttention)
+- **train_HMC.py**: **NEW** - Advanced MCMC/HMC inference with Simple_CNN backbone
+  - **MCMC mode**: Metropolis-Hastings sampling (original CNN_MCMC.ipynb approach)
+  - **HMC mode**: Hamiltonian Monte Carlo using numpyro.infer.NUTS
+  - Better uncertainty quantification than direct methods
+  - Handles parameter correlations and non-Gaussian posteriors
 
 ## Competition Structure
 
@@ -46,15 +49,24 @@ pip install -r conda/requirements.txt
 
 ### Training Models
 ```bash
-# Direct parameter prediction
+# Direct parameter prediction (ResNetWithAttention)
 python train_direct.py
 
-# HMC-based training
-python train_HMC.py
+# MCMC/HMC inference (Simple_CNN + posterior sampling)
+python train_HMC.py                                    # Default: MCMC with public dataset
+python train_HMC.py --method hmc                       # Use HMC inference
+python train_HMC.py --method mcmc --model-name Custom  # Custom model name
+python train_HMC.py --no-public-dataset               # Use small test dataset
 
 # SLURM job submission (for HPC environments)
 sbatch job.sh
 ```
+
+### Command Line Options for train_HMC.py
+- `--method {mcmc,hmc}`: Inference method (default: mcmc)
+- `--use-public-dataset`: Use full public dataset (default: True)
+- `--no-public-dataset`: Use small test dataset instead
+- `--model-name NAME`: Custom name for model and output files
 
 ### Jupyter Notebooks
 - `Phase_1_Startingkit_WL_CNN_Direct.ipynb`: CNN direct prediction baseline

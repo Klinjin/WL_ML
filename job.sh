@@ -4,11 +4,11 @@
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=128
-#SBATCH --time=20:30:00
+#SBATCH --time=10:30:00
 #SBATCH -A m4031
 #SBATCH -J wl_ml_train
-#SBATCH --output=ResNet_baseline.out
-#SBATCH --error=ResNet_baseline.err
+#SBATCH --output=CNN_HMC_nn_err.out
+#SBATCH --error=CNN_HMC_nn_err.err
 #SBATCH --mail-type=begin,end,fail
 #SBATCH --mail-user=lindazjin@berkeley.edu
 
@@ -42,4 +42,5 @@ echo "OpenMP threads per task: $OMP_NUM_THREADS"
 cd /pscratch/sd/l/lindajin/WL_ML
 
 # Run CPU-optimized physics-informed neural network training
-python -u train_direct.py
+# python -u train_direct.py
+python train_HMC.py --method hmc --nn-error-estimate --model-name "CNN_HMC_with_error_prop"

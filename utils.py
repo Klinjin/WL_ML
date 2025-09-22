@@ -4,6 +4,8 @@ import time
 import zipfile
 import datetime
 import warnings
+
+from triton import jit
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
@@ -14,11 +16,139 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
+import jax
+import jax.numpy as jnp
+from jax import grad, jit, vmap
+
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+from scipy.stats import norm
+
+
 root_dir = os.getcwd()
 print("Root directory is", root_dir)
+
+class Probability:
+        
+    @staticmethod 
+    def prior(label): #data_obj.viz_label
+
+        omega_m_values = label[:, 0, 0]  # Shape: (N_cosmo,)
+        s8_values = label[:, 0, 1]       # Shape: (N_cosmo,)
+
+        params = norm.fit(omega_m_values)
+        mu_omega_m, sigma_omega_m = params[0], params[1]
+
+        params = norm.fit(s8_values)
+        mu_s8, sigma_s8 = params[0], params[1]
+
+        return (mu_omega_m, sigma_omega_m), (mu_s8, sigma_s8)
+
+    @staticmethod
+    def get_theta_ranges(label):
+        """
+        Get the ranges of the cosmological parameters from the label data.
+
+        Args:
+            label (np.ndarray): Array of shape (N_cosmo, N_sys, N_params) containing the parameter values.
+
+        Returns:
+            theta_ranges (list): List of tuples specifying the (min, max) range for each parameter.
+        """
+        theta_ranges = []
+        for i in range(label.shape[2]):
+            param_values = label[:, :, i].flatten()
+            theta_ranges.append((np.min(param_values), np.max(param_values)))
+        return theta_ranges
+
+    @jit
+    def bounded_variable_ln_dtheta_dx(x, ln_p_theta, theta_ranges):
+        """
+        For a parameter distributed with prior P(theta) on the range (theta_0, theta_1), we instead
+        transform to the unbounded parameter x, via:
+
+            theta  = theta_0 + (theta_1 - theta_0)*sigmoid(x)
+
+        The prior on theta is given as input ln_p_theta.
+
+        The Jacobian Prob(x) = P(theta) dtheta/dx then implies
+
+            Prob(x) = P(theta) * sigmoid(x) * (1 - sigmoid(x)) * (theta_1 - theta_0)
+
+        which implies the lnProb(x) given by this function.
+
+        Args:
+            x (float or jax.numpy.ndarray):
+                Unbounded parameter vector.
+            ln_p_theta (float or jax.numpy.ndarray):
+                Log prior probability P(theta) at the transformed parameter theta.
+            theta_ranges (tuple or list):
+                Range (theta_0, theta_1) for the bounded parameter.
+
+        Returns:
+            lnP (jax.numpy.ndarray):
+                Log prior probability at the parameter vector. The output shape/type is the same as the input.
+        """
+        
+        # Calculate the range width
+        theta_range_width = theta_ranges[1] - theta_ranges[0]
+        
+        # Log of the Jacobian transformation
+        log_jacobian = jax.nn.log_sigmoid(x) + jnp.log(1.0 - jax.nn.sigmoid(x)) + jnp.log(theta_range_width)
+        
+        return ln_p_theta + log_jacobian
+    
+    @jit
+    def bounded_theta_to_x(theta, theta_ranges):
+        """
+        Transform a bounded paramter vector theta into an unbounded parameter vector x using a logit transformation.
+        This is the single vector function called by the vectorized function in base.
+
+        Args:
+            theta (jax.numpy.ndarray):
+                Parameter vector with shape=(n_params,)
+            theta_range (list):
+                List of length n_params containing 2-d tuples, where each tuple is the range of the parameter.
+                The first element of the tuple is the lower bound, and the second element is the upper bound.
+
+        Returns:
+            x (jax.numpy.ndarray):
+                Transformed parameter vector with shape=(n_params,)
+
+        """
+
+        _theta = jnp.atleast_1d(theta)
+        n_params = _theta.shape[0]
+        x = jnp.zeros(n_params)
+
+        for i in range(n_params):
+            x = x.at[i].set(Probability._bounded_theta_to_x(_theta[i], theta_ranges[i]))
+
+        return jnp.array(x)
+
+    @jit
+    def _bounded_theta_to_x(theta_element, theta_range):
+        """
+        Transform an element of a bounded parameter vector theta into an element of an unbounded parameter vector x using a
+        logit transformation. This is the single element function called by the functions above.
+
+        Args:
+            theta_element (float):
+                Element of a parameter vector.
+            theta_range (tuple):
+                A tuple of length=2 specifying the range of the parameter.
+                The first element of the tuple is the lower bound, and the second element is the upper bound.
+
+        Returns:
+            x_element (float):
+                Transformed parameter vector element.
+
+        """
+
+        return jax.scipy.special.logit(
+            jnp.clip((theta_element - theta_range[0])/(theta_range[1] - theta_range[0]), a_min=1e-7, a_max=1.0 - 1e-7))
+
 
 class Utility:
     @staticmethod
