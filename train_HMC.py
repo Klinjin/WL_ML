@@ -25,11 +25,13 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 from sklearn.preprocessing import StandardScaler
 from scipy.interpolate import LinearNDInterpolator
 from model import BigGANUNet2DModel, ResNetWithAttention, Simple_CNN
+import arviz as az
 
 # JAX/Numpyro imports for HMC
 try:
     import jax
     import jax.numpy as jnp
+    from jax import jit
     import numpyro
     import numpyro.distributions as dist
     from numpyro.infer import NUTS, MCMC as NumpyroMCMC
@@ -69,7 +71,7 @@ class Config:
         
         # Training hyperparameters - matching Simple_CNN baseline
         self.BATCH_SIZE = 64
-        self.EPOCHS = 15
+        self.EPOCHS = 1
         self.LEARNING_RATE = 2e-4
         self.WEIGHT_DECAY = 1e-4
         
@@ -110,7 +112,7 @@ def validate_epoch(model, dataloader, loss_fn, device):
     return total_loss / len(dataloader)
 
 
-def train_cnn_for_point_estimates(config):
+def train_cnn_for_point_estimates(config, USE_PRETRAINED_MODEL=False):
     """Train Simple_CNN for point estimates using MSE loss."""
     
     # Data preprocessing
@@ -137,32 +139,43 @@ def train_cnn_for_point_estimates(config):
     # Initialize model
     model = Simple_CNN(config.IMG_HEIGHT, config.IMG_WIDTH, config.NUM_TARGETS).to(config.DEVICE)
     
-    # Training setup
-    loss_fn = nn.MSELoss()  # MSE for point estimates (not KL divergence)
-    optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE, weight_decay=config.WEIGHT_DECAY)
-    scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5)
-    
-    # Training loop
-    best_val_loss = float('inf')
-    start_time = time.time()
-    
-    for epoch in range(config.EPOCHS):
-        train_loss = train_epoch(model, train_loader, loss_fn, optimizer, config.DEVICE)
-        val_loss = validate_epoch(model, val_loader, loss_fn, config.DEVICE)
+    if not USE_PRETRAINED_MODEL:
+        # Training setup
+        loss_fn = nn.MSELoss()  # MSE for point estimates (not KL divergence)
+        optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE, weight_decay=config.WEIGHT_DECAY)
+        scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5)
         
-        scheduler.step(val_loss)
-        print(f"Epoch {epoch+1}/{config.EPOCHS} | Train Loss: {train_loss:.6f} | Val Loss: {val_loss:.6f}")
+        # Training loop
+        best_val_loss = float('inf')
+        start_time = time.time()
         
-        if val_loss < best_val_loss:
-            best_val_loss = val_loss
-            torch.save(model.state_dict(), config.MODEL_SAVE_PATH)
-            print(f"  -> New best model saved")
+        for epoch in range(config.EPOCHS):
+            train_loss = train_epoch(model, train_loader, loss_fn, optimizer, config.DEVICE)
+            val_loss = validate_epoch(model, val_loader, loss_fn, config.DEVICE)
+            
+            scheduler.step(val_loss)
+            print(f"Epoch {epoch+1}/{config.EPOCHS} | Train Loss: {train_loss:.6f} | Val Loss: {val_loss:.6f}")
+            
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                torch.save(model.state_dict(), config.MODEL_SAVE_PATH)
+                print(f"  -> New best model saved")
+        
+        end_time = time.time()
+        print(f"Training finished in {(end_time - start_time)/60:.2f} minutes.")
+        model.load_state_dict(torch.load(config.MODEL_SAVE_PATH, weights_only=True))
     
-    end_time = time.time()
-    print(f"Training finished in {(end_time - start_time)/60:.2f} minutes.")
-    
-    # Load best model
-    model.load_state_dict(torch.load(config.MODEL_SAVE_PATH, weights_only=True))
+    else:
+        # Check if the pretrained model exists
+        if os.path.exists(config.MODEL_SAVE_PATH):
+            print(f"Loading pretrained model from {config.MODEL_SAVE_PATH}")    
+            # If the pretrained model exists, load the model
+            model.load_state_dict(torch.load(config.MODEL_SAVE_PATH, weights_only=True))
+
+        else:
+            # If the pretrained model doesn't exist, show the warning message
+            warning_msg = f"The path of pretrained model doesn't exist"
+            warnings.warn(warning_msg)
     
     return model, label_scaler, transform
 
@@ -176,25 +189,35 @@ def get_cnn_predictions(model, dataloader, label_scaler, device, nn_error_estima
     with torch.no_grad():
         for batch in tqdm(dataloader, desc="Getting CNN predictions"):
             # Handle both cases: with labels (X, y) and without labels (X only)
-            if isinstance(batch, (list, tuple)) and len(batch) == 2:
-                X, y = batch  # Has labels, ignore them
+            if len(batch) == 2:
+                X, y = batch  # Has labels
+                has_labels = True
             else:
                 X = batch     # No labels, just data
+                has_labels = False
             
             X = X.to(device)
             pred = model(X)
             pred = label_scaler.inverse_transform(pred.cpu().numpy())
             predictions.append(pred)
-            if nn_error_estimate:
+            
+            # Only compute error estimates if we have labels AND error estimation is requested
+            if nn_error_estimate and has_labels:
                 y = y.to(device)
                 y = label_scaler.inverse_transform(y.cpu().numpy())
                 # Compute and store the error estimate
                 error = np.abs(pred - y)
                 error_estimates.append(error)
-    if nn_error_estimate:
+            elif nn_error_estimate and not has_labels:
+                # If error estimation was requested but no labels available, warn once
+                if len(predictions) == 1:  # Only warn on first batch
+                    warnings.warn("Error estimation requested but no labels provided in dataloader. Skipping error estimation.")
+    
+    if nn_error_estimate and len(error_estimates) > 0:
         error_estimates = np.concatenate(error_estimates, axis=0)
+        print(f'error_estimates.shape: {error_estimates.shape}')
         mean_error_estimate = error_estimates.mean(axis=0)
-        covar_nn = np.cov((error_estimates-mean_error_estimate).T)
+        covar_nn = np.cov((error_estimates - mean_error_estimate).T)
         return np.concatenate(predictions, axis=0), mean_error_estimate, covar_nn
     else:
         return np.concatenate(predictions, axis=0)
@@ -361,35 +384,72 @@ def setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmo
     
     # JAX versions for HMC
     if HMC_AVAILABLE:
+
+        theta_ranges = Probability.get_theta_ranges(data_obj.label)
+
+        @jit
+        def _theta_to_x(theta): #theta is in physical dimension
+            x_astro = Probability.bounded_theta_to_x(theta, theta_ranges)
+            return jnp.array(x_astro)
+
+        @jit
+        def theta_to_x(theta, axis=0): #x is in dimensionless parameter space
+            '''
+            Transform theta (nsamples, n_params) or (n_params,) to x
+            '''
+            x_astro = jax.vmap(_theta_to_x, in_axes=axis, out_axes=axis)(jnp.atleast_2d(theta))
+
+            return x_astro.squeeze()
         
-        def log_prior_jax(theta):
-            """JAX version of log prior - matches NumPy Gaussian prior."""
-            # Use same Gaussian priors as NumPy version for consistency
+        @jit
+        def _x_to_theta(x):
+            theta_astro = Probability.x_to_bounded_theta(x, theta_ranges)
+            return jnp.array(theta_astro)
+
+        @jit
+        def x_to_theta(x, axis=0):
+            '''
+            Transform x (nsamples, n_params) or (n_params,) to theta
+            '''
+            theta_astro = jax.vmap(_x_to_theta, in_axes=axis, out_axes=axis)(jnp.atleast_2d(x))
+            return theta_astro.squeeze()
+            
+        @jit
+        def log_prior_jax(x):
+            theta = Probability.x_to_bounded_theta(x, theta_ranges)    
             log_prior_omega_m = norm.logpdf(theta[0], loc=mu_omega_m, scale=sigma_omega_m)
             log_prior_s8 = norm.logpdf(theta[1], loc=mu_s8, scale=sigma_s8)
+            log_prior_x = Probability.bounded_variable_ln_dtheta_dx(x)
 
-            return log_prior_omega_m + log_prior_s8
-        
-        def loglike_jax(theta, data):
+            return log_prior_omega_m + log_prior_s8 + log_prior_x
+
+        @jit
+        def loglike_jax(x, data_x):
             """JAX version of log likelihood using interpolated mean and covariance."""
             # Convert JAX arrays to numpy for interpolation, then back to JAX
-            theta_np = np.array(theta)            
+            theta = Probability.x_to_bounded_theta(x, theta_ranges)
+            data = Probability.x_to_bounded_theta(data_x, theta_ranges)
+
             # Use the same interpolation as NumPy version
-            mean = mean_d_vector_interp(theta_np.reshape(1, -1))
-            cov = cov_d_vector_interp(theta_np.reshape(1, -1))
+            mean = mean_d_vector_interp(np.array(theta))
+            cov = cov_d_vector_interp(np.array(theta))
 
             if mean_error_estimate is not None and covar_nn is not None:
                 data -= jnp.array(mean_error_estimate)
                 cov += jnp.array(covar_nn)
             return multivariate_normal.logpdf(data, mean=jnp.array(mean.flatten()), cov=jnp.array(cov[0]))
         
-        def logp_posterior_jax(theta, data):
+        @jit
+        def logp_posterior_jax(x, data_x):
             """JAX version of log posterior."""
-            return log_prior_jax(theta) + loglike_jax(theta, data)
+            lnP = log_prior_jax(x) + loglike_jax(x, data_x)
+            return -lnP
     else:
         log_prior_jax = None
         loglike_jax = None
         logp_posterior_jax = None
+        theta_to_x = None
+        x_to_theta = None
     
     return {
         'np': {
@@ -400,7 +460,9 @@ def setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmo
         'jax': {
             'log_prior': log_prior_jax,
             'loglike': loglike_jax,
-            'logp_posterior': logp_posterior_jax
+            'logp_posterior': logp_posterior_jax,
+            'theta_to_x': theta_to_x,
+            'x_to_theta': x_to_theta
         }
     }
 
@@ -516,10 +578,10 @@ def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, c
         # Add NN error if provided
         if mean_error_estimate is not None and covar_nn is not None:
             test_pred_corrected = test_pred - jnp.array(mean_error_estimate)
-            cov_total = jnp.array(cov[0]) + jnp.array(covar_nn)
+            cov_total = jnp.array(cov) + jnp.array(covar_nn)
         else:
             test_pred_corrected = test_pred
-            cov_total = jnp.array(cov[0])
+            cov_total = jnp.array(cov)
         
         # Likelihood
         numpyro.sample("obs", dist.MultivariateNormal(jnp.array(mean.flatten()), cov_total), obs=test_pred_corrected)
@@ -548,8 +610,11 @@ def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, c
         rng_key = jax.random.PRNGKey(i)
         
         try:
+            start_time = time.time()
             mcmc.run(rng_key, test_pred_jax)
-            
+            total_time = time.time() - start_time
+            print(f"HMC sampling completed in {total_time:.2f} seconds")
+
             # Extract samples
             samples = mcmc.get_samples()
             omega_m_samples = samples['omega_m']
@@ -560,19 +625,27 @@ def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, c
             mean_s8 = jnp.mean(s8_samples)
             std_omega_m = jnp.std(omega_m_samples)
             std_s8 = jnp.std(s8_samples)
-            
+        
+
+            # Compute the neff and summarize cost
+            az_summary = az.summary(az.from_numpyro(mcmc))
+            neff = az_summary["ess_bulk"].to_numpy()
+            neff_mean = np.mean(neff)
+            r_hat = az_summary["r_hat"].to_numpy()
+            r_hat_mean = np.mean(r_hat)
+            sec_per_neff = (total_time / neff_mean)
+            ms_per_neff = 1e3 * sec_per_neff
+
             results_list.append({
                 'mean': [float(mean_omega_m), float(mean_s8)],
-                'std': [float(std_omega_m), float(std_s8)]
+                'std': [float(std_omega_m), float(std_s8)],
+                'neff_mean': float(neff_mean),
+                'ms_per_neff': float(ms_per_neff),
+                'r_hat_mean': float(r_hat_mean)
             })
             
         except Exception as e:
             print(f"HMC failed for sample {i}: {e}")
-            # Fallback to CNN prediction with larger uncertainty
-            results_list.append({
-                'mean': [float(test_pred[0]), float(test_pred[1])],
-                'std': [0.05, 0.05]  # Conservative uncertainty
-            })
         
         # Progress update
         if (i + 1) % 100 == 0:
@@ -581,10 +654,121 @@ def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, c
     # Convert to arrays
     means = np.array([r['mean'] for r in results_list])
     stds = np.array([r['std'] for r in results_list])
-    
-    print(f"HMC inference completed with {num_chains} chains, {num_samples} samples each")
+
+    neffs_mean = np.array([r['neff_mean'] for r in results_list]).mean()    
+    ms_per_neffs_mean = np.array([r['ms_per_neff'] for r in results_list]).mean()
+    r_hats_mean = np.array([r['r_hat_mean'] for r in results_list]).mean()
+
+    print(f"HMC inference completed for {len(test_predictions)} samples with {num_chains} chains, {num_samples} samples each")
+    print(f"Average neff: {neffs_mean:.1f}")
+    print(f"Average r_hat: {r_hats_mean:.3f})")
+    print(f"Average ms/neff: {ms_per_neffs_mean:.1f} ms")
+
     return means, stds
 
+def hmc_inference_x_transform(test_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate=None, covar_nn=None,
+                  num_samples=8000, num_warmup=2000, num_chains=4, max_tree_depth=10):
+    """
+    HMC sampling using numpyro.infer.NUTS with proper model definition.
+    """
+    if not HMC_AVAILABLE:
+        raise ImportError("JAX/Numpyro not available for HMC inference")
+    
+    print("Running HMC inference with NUTS...")
+    
+    # Setup shared probability functions
+    prob_funcs = setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn)
+    logp_posterior = prob_funcs['jax']['logp_posterior']
+    theta_to_x = prob_funcs['jax']['theta_to_x']
+    x_to_theta = prob_funcs['jax']['x_to_theta']
+
+    @jit
+    def numpyro_potential_fun(data_x): #potential function for numpyro
+        return jax.tree_util.Partial(logp_posterior, data_x=data_x)
+
+    results_list = []
+    
+    print(f"Running HMC for {len(test_predictions)} test samples...")
+    test_predictions_x = theta_to_x(jnp.array(test_predictions))
+
+    for i, test_pred_x in enumerate(tqdm(test_predictions_x, desc="HMC sampling")):
+
+        # Setup NUTS sampler
+        nuts_kernel = NUTS(
+            potential_fn=numpyro_potential_fun(test_pred_x),
+            adapt_step_size=True, 
+            dense_mass=True, 
+            max_tree_depth=max_tree_depth
+        )
+        
+        # Setup MCMC with vectorized chains
+        mcmc = NumpyroMCMC(
+            nuts_kernel, 
+            num_warmup=num_warmup, 
+            num_samples=num_samples,
+            num_chains=num_chains,
+            chain_method='vectorized'
+        )
+        
+        # Run MCMC for this test sample
+        rng_key = jax.random.PRNGKey(i)
+        
+        try:
+            start_time = time.time()
+            mcmc.run(rng_key, test_pred_x)
+            total_time = time.time() - start_time
+            print(f"HMC sampling completed in {total_time:.2f} seconds")
+
+            # Extract samples
+            x_samples = mcmc.get_samples(group_by_chain=False)
+            samples = x_to_theta(x_samples)
+            omega_m_samples = samples[:,0]
+            s8_samples = samples[:,1]
+
+            # Compute posterior statistics
+            mean_omega_m = jnp.mean(omega_m_samples)
+            mean_s8 = jnp.mean(s8_samples)
+            std_omega_m = jnp.std(omega_m_samples)
+            std_s8 = jnp.std(s8_samples)
+
+            # Compute the neff and summarize cost
+            az_summary = az.summary(az.from_numpyro(mcmc))
+            neff = az_summary["ess_bulk"].to_numpy()
+            neff_mean = np.mean(neff)
+            r_hat = az_summary["r_hat"].to_numpy()
+            r_hat_mean = np.mean(r_hat)
+            sec_per_neff = (total_time / neff_mean)
+            ms_per_neff = 1e3 * sec_per_neff
+
+            results_list.append({
+                'mean': [float(mean_omega_m), float(mean_s8)],
+                'std': [float(std_omega_m), float(std_s8)],
+                'neff_mean': float(neff_mean),
+                'ms_per_neff': float(ms_per_neff),
+                'r_hat_mean': float(r_hat_mean)
+            })
+            
+        except Exception as e:
+            print(f"HMC failed for sample {i}: {e}")
+        
+        # Progress update
+        if (i + 1) % 100 == 0:
+            print(f"Completed {i + 1}/{len(test_predictions)} samples")
+    
+    # Convert to arrays
+    means = np.array([r['mean'] for r in results_list])
+    stds = np.array([r['std'] for r in results_list])
+
+    neffs_mean = np.array([r['neff_mean'] for r in results_list]).mean()    
+    ms_per_neffs_mean = np.array([r['ms_per_neff'] for r in results_list]).mean()
+    r_hats_mean = np.array([r['r_hat_mean'] for r in results_list]).mean()
+
+    print(f"HMC inference completed for {len(test_predictions)} samples with {num_chains} chains, {num_samples} samples each")
+    print(f"Average neff: {neffs_mean:.1f}")
+    print(f"Average r_hat: {r_hats_mean:.3f})")
+    print(f"Average ms/neff: {ms_per_neffs_mean:.1f} ms")
+
+    return means, stds
 
 def load_data(use_public_dataset):
     """Load and prepare the training data."""
@@ -643,6 +827,8 @@ def main():
                            help='Name for the model and output files (default: Simple_CNN_HMC_baseline)')
         parser.add_argument('--nn-error-estimate', action='store_true', default=False,  
                            help='Estimate NN error from validation set (default: False)')
+        parser.add_argument('--pretrained', action='store_true', default=False,
+                           help='Use pretrained model (default: False)')
         return parser
     
     args = create_argparser().parse_args()
@@ -652,6 +838,7 @@ def main():
     USE_PUBLIC_DATASET = args.use_public_dataset
     MODEL_NAME = args.model_name
     NN_ERROR_ESTIMATE = args.nn_error_estimate
+    USE_PRETRAINED_MODEL = args.pretrained
     inference_method = args.method
     
     # Set method suffix for file naming
@@ -668,13 +855,22 @@ def main():
     config = Config(data_obj.shape, MODEL_NAME)
     print(f"Using device: {config.DEVICE}")
     
-    # Step 1: Train CNN for point estimates
+    # Step 1: Train CNN for point estimates/ Load Pretrained model
     print("\n=== Step 1: Training CNN for Point Estimates ===")
-    model, label_scaler, transform = train_cnn_for_point_estimates(config)
-    
+    model, label_scaler, transform = train_cnn_for_point_estimates(config, USE_PRETRAINED_MODEL=USE_PRETRAINED_MODEL)
+
     # Step 2: Get all predictions (validation and test) - single call for efficiency
     print("\n=== Step 2: Getting CNN Predictions ===")
-    val_dataset = CosmologyDataset(X_val, transform=transform)
+    
+    # Create validation dataset - include labels if error estimation is needed
+    if NN_ERROR_ESTIMATE:
+        # Need labels for error estimation - use scaled labels as in training
+        y_val_scaled = label_scaler.transform(y_val)
+        val_dataset = CosmologyDataset(X_val, y_val_scaled, transform=transform)
+    else:
+        # No error estimation needed - just use input data
+        val_dataset = CosmologyDataset(X_val, transform=transform)
+        
     val_loader = DataLoader(val_dataset, batch_size=config.BATCH_SIZE, shuffle=False)
     
     test_dataset = CosmologyDataset(data_obj.kappa_test, transform=transform)
