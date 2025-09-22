@@ -33,8 +33,8 @@ try:
     import numpyro
     import numpyro.distributions as dist
     from numpyro.infer import NUTS, MCMC as NumpyroMCMC
-    from jax.scipy.stats import multivariate_normal.logpdf
-    from jax.scipy.stats import norm.logpdf
+    from jax.scipy.stats import multivariate_normal
+    from jax.scipy.stats import norm
     HMC_AVAILABLE = True
     print("JAX/Numpyro available - HMC inference enabled")
 except ImportError:
@@ -365,8 +365,8 @@ def setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmo
         def log_prior_jax(theta):
             """JAX version of log prior - matches NumPy Gaussian prior."""
             # Use same Gaussian priors as NumPy version for consistency
-            log_prior_omega_m = norm.logpdf(x=theta[0], loc=mu_omega_m, scale=sigma_omega_m)
-            log_prior_s8 = norm.logpdf(x=theta[1], loc=mu_s8, scale=sigma_s8)
+            log_prior_omega_m = norm.logpdf(theta[0], loc=mu_omega_m, scale=sigma_omega_m)
+            log_prior_s8 = norm.logpdf(theta[1], loc=mu_s8, scale=sigma_s8)
 
             return log_prior_omega_m + log_prior_s8
         
@@ -381,7 +381,7 @@ def setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmo
             if mean_error_estimate is not None and covar_nn is not None:
                 data -= jnp.array(mean_error_estimate)
                 cov += jnp.array(covar_nn)
-            return multivariate_normal.logpdf(x=data, mean=jnp.array(mean.flatten()), cov=jnp.array(cov[0]))
+            return multivariate_normal.logpdf(data, mean=jnp.array(mean.flatten()), cov=jnp.array(cov[0]))
         
         def logp_posterior_jax(theta, data):
             """JAX version of log posterior."""
@@ -483,7 +483,7 @@ def mcmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, 
 def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate=None, covar_nn=None,
                   num_samples=8000, num_warmup=2000, num_chains=4, max_tree_depth=10):
     """
-    HMC sampling using numpyro.infer.NUTS with proper potential function.
+    HMC sampling using numpyro.infer.NUTS with proper model definition.
     """
     if not HMC_AVAILABLE:
         raise ImportError("JAX/Numpyro not available for HMC inference")
@@ -492,22 +492,44 @@ def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, c
     
     # Setup shared probability functions
     prob_funcs = setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn)
-    logp_posterior_jax = prob_funcs['jax']['logp_posterior']
     
     results_list = []
     
     print(f"Running HMC for {len(test_predictions)} test samples...")
     
+    # Get prior parameters from fitted Gaussians
+    (mu_omega_m, sigma_omega_m), (mu_s8, sigma_s8) = Probability.prior(data_obj.label)
+    
+    def model(test_pred):
+        """Numpyro model definition for HMC."""
+        # Define priors
+        omega_m = numpyro.sample("omega_m", dist.Normal(mu_omega_m, sigma_omega_m))
+        s8 = numpyro.sample("s8", dist.Normal(mu_s8, sigma_s8))
+        
+        theta = jnp.array([omega_m, s8])
+        
+        # Get interpolated mean and covariance
+        theta_np = np.array(theta)
+        mean = mean_d_vector_interp(theta_np.reshape(1, -1))
+        cov = cov_d_vector_interp(theta_np.reshape(1, -1))
+        
+        # Add NN error if provided
+        if mean_error_estimate is not None and covar_nn is not None:
+            test_pred_corrected = test_pred - jnp.array(mean_error_estimate)
+            cov_total = jnp.array(cov[0]) + jnp.array(covar_nn)
+        else:
+            test_pred_corrected = test_pred
+            cov_total = jnp.array(cov[0])
+        
+        # Likelihood
+        numpyro.sample("obs", dist.MultivariateNormal(jnp.array(mean.flatten()), cov_total), obs=test_pred_corrected)
+    
     for i, test_pred in enumerate(tqdm(test_predictions, desc="HMC sampling")):
         test_pred_jax = jnp.array(test_pred)
         
-        # Create potential function for this specific test prediction using shared functions
-        def potential_fn(theta):
-            return -logp_posterior_jax(theta, test_pred_jax)
-        
-        # Setup NUTS sampler with custom potential function
+        # Setup NUTS sampler
         nuts_kernel = NUTS(
-            potential_fn=potential_fn,
+            model,
             adapt_step_size=True, 
             dense_mass=True, 
             max_tree_depth=max_tree_depth
@@ -519,7 +541,6 @@ def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, c
             num_warmup=num_warmup, 
             num_samples=num_samples,
             num_chains=num_chains,
-            jit_model_args=True,
             chain_method='vectorized'
         )
         
@@ -527,18 +548,12 @@ def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, c
         rng_key = jax.random.PRNGKey(i)
         
         try:
-            mcmc.run(rng_key, init_params={'theta': test_pred_jax})
+            mcmc.run(rng_key, test_pred_jax)
             
             # Extract samples
             samples = mcmc.get_samples()
-            if 'theta' in samples:
-                theta_samples = samples['theta']  # Shape: (num_samples, 2)
-                omega_m_samples = theta_samples[:, 0]
-                s8_samples = theta_samples[:, 1]
-            else:
-                # Fallback if theta not found directly
-                omega_m_samples = samples.get('omega_m', test_pred_jax[0])
-                s8_samples = samples.get('s8', test_pred_jax[1])
+            omega_m_samples = samples['omega_m']
+            s8_samples = samples['s8']
             
             # Compute posterior statistics
             mean_omega_m = jnp.mean(omega_m_samples)
