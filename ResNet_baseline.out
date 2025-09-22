@@ -1,20 +1,21 @@
-Job started at: Tue 16 Sep 2025 10:20:45 PM PDT
-Running seff for job 42868227...
-Job ID: 42868227
+Job started at: Fri 19 Sep 2025 12:07:18 PM PDT
+Running seff for job 42920729...
+Job ID: 42920729
 Cluster: perlmutter
 User/Group: lindajin/lindajin
 State: RUNNING
 Nodes: 1
 Cores per node: 256
 CPU Utilized: 00:00:00
-CPU Efficiency: 0.00% of 00:25:36 core-walltime
-Job Wall-clock time: 00:00:06
+CPU Efficiency: 0.00% of 00:34:08 core-walltime
+Job Wall-clock time: 00:00:08
 Memory Utilized: 0.00 MB
 Memory Efficiency: 0.00% of 476.37 GB (476.37 GB/node)
 WARNING: Efficiency statistics can only be obtained after the job has ended as seff tool is based on the accounting database data.
-Number of MPI tasks: 2
+Number of MPI tasks: 1
 CPUs per task: 128
 OpenMP threads per task: 32
+Root directory is /pscratch/sd/l/lindajin/WL_ML
 Root directory is /pscratch/sd/l/lindajin/WL_ML
 There are 101 cosmological models, each has 256 realizations of nuisance parameters in the training data.
 We assume a galaxy number density of 30 per arcmin², which determines the noise level of the experiment.
@@ -26,3 +27,31 @@ Shape of the split validation labels = (5252, 2)
 Image stats (from train set): Mean=-0.00014721968909725547, Std=0.020474432036280632
 Label stats (from train set): Mean=[0.29021683 0.81345297], Std=[0.1055216  0.06600116]
 Using device: cpu
+Epoch 10/15 | Train Loss: -3.499902 | Val Loss: 10.808042
+Epoch 1/15 | Train Loss: -0.492445 | Val Loss: 4.925805
+  -> New best model saved to /pscratch/sd/l/lindajin/WL_ML/trained_model/ResNetWithAttention_direct_baseline.pth
+Epoch 2/15 | Train Loss: -1.524925 | Val Loss: 8.007201
+Epoch 3/15 | Train Loss: -2.072301 | Val Loss: 7.685057
+Epoch 4/15 | Train Loss: -2.412262 | Val Loss: 9.774621
+Epoch 5/15 | Train Loss: -2.694295 | Val Loss: 84.081533
+Epoch 6/15 | Train Loss: -2.908389 | Val Loss: 3.829105
+  -> New best model saved to /pscratch/sd/l/lindajin/WL_ML/trained_model/ResNetWithAttention_direct_baseline.pth
+Epoch 7/15 | Train Loss: -3.070598 | Val Loss: 7.568810
+Epoch 8/15 | Train Loss: -3.199640 | Val Loss: -0.497434
+  -> New best model saved to /pscratch/sd/l/lindajin/WL_ML/trained_model/ResNetWithAttention_direct_baseline.pth
+Epoch 9/15 | Train Loss: -3.380921 | Val Loss: 14.520803
+Epoch 10/15 | Train Loss: -3.429820 | Val Loss: 4.254429
+Epoch 11/15 | Train Loss: -3.552675 | Val Loss: 27.869699
+Epoch 12/15 | Train Loss: -3.637755 | Val Loss: 6.001599
+Epoch 13/15 | Train Loss: -3.692543 | Val Loss: 1.261102
+Epoch 14/15 | Train Loss: -3.772288 | Val Loss: 8.419165
+Epoch 15/15 | Train Loss: -4.047510 | Val Loss: 0.601941
+
+Training finished in 873.47 minutes.
+averaged score: 7.834133327459755
+averaged error bar: [0.02833208 0.02021671]
+  Ω_m: -5.56%
+  S_8: -1.41%
+  Overall: -3.48%
+Validation score saved to scoring_output/ResNetWithAttention_direct_baseline.json: 7.834133327459755
+Submission ZIP saved at: submissions/Submission_ResNetWithAttention_direct_baseline25-09-20-02-49.zip

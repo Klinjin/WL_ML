@@ -2,9 +2,9 @@
 #SBATCH -q preempt
 #SBATCH -C cpu
 #SBATCH -N 1
-#SBATCH --ntasks-per-node=2
+#SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=128
-#SBATCH --time=10:30:00
+#SBATCH --time=20:30:00
 #SBATCH -A m4031
 #SBATCH -J wl_ml_train
 #SBATCH --output=ResNet_baseline.out
