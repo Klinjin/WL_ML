@@ -45,6 +45,10 @@ This is the **FAIR Universe - Weak Lensing ML Uncertainty Challenge** repository
 conda create --name WL_ML_Challenge python=3.12.8
 conda activate WL_ML_Challenge
 pip install -r conda/requirements.txt
+
+# Note: JAX CUDA installation may require additional setup
+# If CUDA is not detected, verify CUDA toolkit installation:
+# conda install nvidia/label/cuda-12.0.0::cuda-toolkit
 ```
 
 ### Training Models

@@ -1,0 +1,82 @@
+Job started at: Mon 22 Sep 2025 06:57:52 PM PDT
+Running seff for job 43003902...
+Job ID: 43003902
+Cluster: perlmutter
+User/Group: lindajin/lindajin
+State: RUNNING
+Nodes: 1
+Cores per node: 256
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 00:25:36 core-walltime
+Job Wall-clock time: 00:00:06
+Memory Utilized: 0.00 MB
+Memory Efficiency: 0.00% of 476.37 GB (476.37 GB/node)
+WARNING: Efficiency statistics can only be obtained after the job has ended as seff tool is based on the accounting database data.
+Number of MPI tasks: 1
+CPUs per task: 128
+OpenMP threads per task: 32
+JAX/Numpyro available - HMC inference enabled
+Root directory is /pscratch/sd/l/lindajin/WL_ML
+Root directory is /pscratch/sd/l/lindajin/WL_ML
+Configuration: USE_PUBLIC_DATASET=True, MODEL_NAME=CNN_MCMC_normprior_with_errorprop, METHOD=MCMC
+There are 101 cosmological models, each has 256 realizations of nuisance parameters in the training data.
+We assume a galaxy number density of 30 per arcmin², which determines the noise level of the experiment.
+Training and validation data loaded
+Shape of training data = (20604, 1424, 176)
+Shape of validation data = (5252, 1424, 176)
+Shape of training labels = (20604, 2)
+Shape of validation labels = (5252, 2)
+Using device: cpu
+
+=== Step 1: Training CNN for Point Estimates ===
+Image stats: Mean=-0.00014721968909725547, Std=0.020474432036280632
+Label stats: Mean=[0.29021683 0.81345297], Std=[0.1055216  0.06600116]
+Epoch 1/1 | Train Loss: 0.849174 | Val Loss: 1.495142
+  -> New best model saved
+Training finished in 4.65 minutes.
+
+=== Step 2: Getting CNN Predictions ===
+Estimating NN error from validation set...
+error_estimates.shape: (5252, 2)
+Validation predictions shape: (5252, 2)
+Test predictions shape: (4000, 2)
+
+=== Step 3: Setting up MCMC Interpolators ===
+Setting up MCMC interpolators from predictions...
+Interpolators created for 101 cosmologies
+
+=== Step 4: Validation Scoring ===
+Using MCMC inference for validation...
+Running MCMC inference...
+Setting up priors: Ω_m ~ N(0.290, 0.106²), S_8 ~ N(0.813, 0.066²)
+Test predictions shape: (5252, 2)
+Current initial shape: (5252, 2)
+Sample initial position: [0.1275     0.95356374] for test: [0.20306559 0.72715189]
+Initial log probabilities range: [-1402.34, 18.75]
+Valid initial probabilities: 5252/5252
+Running 10000 MCMC steps for 5252 test samples...
+  Step 1000/10000, Time: 128.1s, Acceptance: 0.147
+  Step 2000/10000, Time: 127.1s, Acceptance: 0.145
+  Step 3000/10000, Time: 127.0s, Acceptance: 0.144
+  Step 4000/10000, Time: 126.8s, Acceptance: 0.144
+  Step 5000/10000, Time: 126.7s, Acceptance: 0.143
+  Step 6000/10000, Time: 126.6s, Acceptance: 0.143
+  Step 7000/10000, Time: 126.9s, Acceptance: 0.143
+  Step 8000/10000, Time: 127.1s, Acceptance: 0.143
+  Step 9000/10000, Time: 126.8s, Acceptance: 0.143
+  Step 10000/10000, Time: 126.7s, Acceptance: 0.143
+MCMC completed. Final acceptance rate: 0.143
+Validation score: -236.399069
+Average error bar: [0.02482211 0.0253347 ]
+MSE: Ω_m=0.034551, S_8=0.004788
+
+=== Step 5: Test Inference ===
+Using MCMC inference for test predictions...
+Running MCMC inference...
+Setting up priors: Ω_m ~ N(0.290, 0.106²), S_8 ~ N(0.813, 0.066²)
+Test predictions shape: (4000, 2)
+Current initial shape: (4000, 2)
+Sample initial position: [0.2497     0.80047224] for test: [0.23160796 0.75378641]
+Initial log probabilities range: [-1442.23, 18.28]
+Valid initial probabilities: 4000/4000
+Running 10000 MCMC steps for 4000 test samples...

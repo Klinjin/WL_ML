@@ -1,0 +1,4 @@
+  File "/pscratch/sd/l/lindajin/WL_ML/train_HMC.py", line 36
+    from jax.scipy.stats import multivariate_normal.logpdf
+                                                   ^
+SyntaxError: invalid syntax

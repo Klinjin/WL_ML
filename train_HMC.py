@@ -71,7 +71,7 @@ class Config:
         
         # Training hyperparameters - matching Simple_CNN baseline
         self.BATCH_SIZE = 64
-        self.EPOCHS = 1
+        self.EPOCHS = 15
         self.LEARNING_RATE = 2e-4
         self.WEIGHT_DECAY = 1e-4
         
@@ -290,185 +290,185 @@ def setup_mcmc_interpolators_from_predictions(y_pred_val, config=None):
     return mean_d_vector_interp, cov_d_vector_interp, cosmology
 
 
-def setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmology=None, mean_error_estimate=None, covar_nn=None):
+def setup_probability_functions_np(mean_d_vector_interp, cov_d_vector_interp, cosmology=None, mean_error_estimate=None, covar_nn=None, flat_prior=False):
     """
-    Setup shared probability functions for both MCMC and HMC inference.
-    Returns both NumPy and JAX versions.
+    Setup NumPy probability functions for MCMC inference.
     """
     # Get prior parameters from fitted Gaussians
     (mu_omega_m, sigma_omega_m), (mu_s8, sigma_s8) = Probability.prior(data_obj.label)
     
-    print(f"Setting up priors: Ω_m ~ N({mu_omega_m:.3f}, {sigma_omega_m:.3f}²), S_8 ~ N({mu_s8:.3f}, {sigma_s8:.3f}²)")
+    print(f"Setting up NumPy priors: Ω_m ~ N({mu_omega_m:.3f}, {sigma_omega_m:.3f}²), S_8 ~ N({mu_s8:.3f}, {sigma_s8:.3f}²)")
 
-    
-    def log_prior_np(x):
-        """
-        Log prior for NumPy version - handles both single samples and batches.
-        Uses Gaussian priors fitted to training data.
-        """
-        x = np.atleast_2d(x)  # Ensure 2D array (N_samples, 2)
+    if flat_prior:
+        print("Flat priors...")
+        Ncosmo = len(cosmology)
+        logprior_interp = LinearNDInterpolator(cosmology, np.ones(Ncosmo)/Ncosmo, fill_value=0)
+        def log_prior_np(x):
+            logprior = logprior_interp(x).flatten()  # shape = (Ntest, ) 
+            return logprior
+    else:
+        print("Gaussian priors...")
+        def log_prior_np(x):
+            """
+            Log prior for NumPy version - handles both single samples and batches.
+            Uses Gaussian priors fitted to training data.
+            """
+            # Gaussian log prior for each parameter
+            log_prior_omega_m = -0.5 * np.log(2 * np.pi * sigma_omega_m**2) - 0.5 * ((x[:, 0] - mu_omega_m) / sigma_omega_m)**2
+            log_prior_s8 = -0.5 * np.log(2 * np.pi * sigma_s8**2) - 0.5 * ((x[:, 1] - mu_s8) / sigma_s8)**2
+            
+            logprior = log_prior_omega_m + log_prior_s8
+            
+            # Return scalar if input was 1D, array if input was 2D
+            return logprior.flatten()
         
-        # Gaussian log prior for each parameter
-        log_prior_omega_m = -0.5 * np.log(2 * np.pi * sigma_omega_m**2) - 0.5 * ((x[:, 0] - mu_omega_m) / sigma_omega_m)**2
-        log_prior_s8 = -0.5 * np.log(2 * np.pi * sigma_s8**2) - 0.5 * ((x[:, 1] - mu_s8) / sigma_s8)**2
-        
-        logprior = log_prior_omega_m + log_prior_s8
-        
-        # Return scalar if input was 1D, array if input was 2D
-        return logprior.flatten() if x.shape[0] > 1 or len(x.shape) > 1 else float(logprior[0])
-    
     # Gaussian likelihood
     def loglike_np(x, d):
         """
         Log likelihood for NumPy version with proper error handling.
         """
-        x = np.atleast_2d(x)  # Ensure 2D array (N_samples, 2)
-        d = np.atleast_2d(d)  # Ensure 2D array (N_samples, 2)
+        mean = mean_d_vector_interp(x) 
+        cov = cov_d_vector_interp(x)   
+        print(f'cov**0.5/mean: {(np.diag(cov[0])**0.5/mean[0]).mean():.3e}')
+        delta = d - mean               
         
-        try:
-            mean = mean_d_vector_interp(x)  # Shape: (N_samples, 2)
-            cov = cov_d_vector_interp(x)    # Shape: (N_samples, 2, 2)
-            
-            if mean is None or cov is None:
-                return np.full(x.shape[0], -np.inf)
-            
-            delta = d - mean  # Shape: (N_samples, 2)
-            
-            loglike_vals = []
-            for i in range(x.shape[0]):
-                try:
-                    cov_i = cov[i]
-                    delta_i = delta[i]
-                    
-                    # Check for positive definite covariance
-                    eigenvals = np.linalg.eigvals(cov_i)
-                    if np.any(eigenvals <= 0):
-                        loglike_vals.append(-np.inf)
-                        continue
-                    
-                    inv_cov = np.linalg.inv(cov_i)
-                    cov_det = np.linalg.slogdet(cov_i)[1]
-                    
-                    if mean_error_estimate is not None and covar_nn is not None:
-                        # Add NN error covariance
-                        inv_cov += np.linalg.inv(covar_nn)
-                        cov_det += np.linalg.slogdet(covar_nn)[1]
-                        delta_i -= mean_error_estimate
-
-                    loglike_i = -0.5 * cov_det - 0.5 * np.dot(delta_i, np.dot(inv_cov, delta_i))
-                    loglike_vals.append(loglike_i)
-                    
-                except (np.linalg.LinAlgError, RuntimeWarning):
-                    loglike_vals.append(-np.inf)
-            
-            return np.array(loglike_vals)
-            
-        except Exception as e:
-            print(f"Warning: likelihood computation failed: {e}")
-            return np.full(x.shape[0], -np.inf)
+        inv_cov = np.linalg.inv(cov)
+        cov_det = np.linalg.slogdet(cov)[1]
+        
+        return -0.5 * cov_det - 0.5 * np.einsum("ni,nij,nj->n", delta, inv_cov, delta)
     
     def logp_posterior_np(x, d):
         """
         Log posterior for NumPy version with proper array handling.
         """
-        x = np.atleast_2d(x)
-        d = np.atleast_2d(d)
-        
-        logp_prior = log_prior_np(x)
-        logp_like = loglike_np(x, d)
-        
-        logp_posterior = logp_prior + logp_like
-        
-        # Return appropriate format
-        return logp_posterior.flatten() if x.shape[0] > 1 else float(logp_posterior[0])
+        logp_prior = log_prior_np(x)        
+        select = np.isfinite(logp_prior)
+        if np.sum(select) > 0:
+            logp_posterior = logp_prior[select] + loglike_np(x[select], d[select])
+
+        return logp_posterior
     
-    # JAX versions for HMC
-    if HMC_AVAILABLE:
-
-        theta_ranges = Probability.get_theta_ranges(data_obj.label)
-
-        @jit
-        def _theta_to_x(theta): #theta is in physical dimension
-            x_astro = Probability.bounded_theta_to_x(theta, theta_ranges)
-            return jnp.array(x_astro)
-
-        @jit
-        def theta_to_x(theta, axis=0): #x is in dimensionless parameter space
-            '''
-            Transform theta (nsamples, n_params) or (n_params,) to x
-            '''
-            x_astro = jax.vmap(_theta_to_x, in_axes=axis, out_axes=axis)(jnp.atleast_2d(theta))
-
-            return x_astro.squeeze()
-        
-        @jit
-        def _x_to_theta(x):
-            theta_astro = Probability.x_to_bounded_theta(x, theta_ranges)
-            return jnp.array(theta_astro)
-
-        @jit
-        def x_to_theta(x, axis=0):
-            '''
-            Transform x (nsamples, n_params) or (n_params,) to theta
-            '''
-            theta_astro = jax.vmap(_x_to_theta, in_axes=axis, out_axes=axis)(jnp.atleast_2d(x))
-            return theta_astro.squeeze()
-            
-        @jit
-        def log_prior_jax(x):
-            theta = Probability.x_to_bounded_theta(x, theta_ranges)    
-            log_prior_omega_m = norm.logpdf(theta[0], loc=mu_omega_m, scale=sigma_omega_m)
-            log_prior_s8 = norm.logpdf(theta[1], loc=mu_s8, scale=sigma_s8)
-            log_prior_x = Probability.bounded_variable_ln_dtheta_dx(x)
-
-            return log_prior_omega_m + log_prior_s8 + log_prior_x
-
-        @jit
-        def loglike_jax(x, data_x):
-            """JAX version of log likelihood using interpolated mean and covariance."""
-            # Convert JAX arrays to numpy for interpolation, then back to JAX
-            theta = Probability.x_to_bounded_theta(x, theta_ranges)
-            data = Probability.x_to_bounded_theta(data_x, theta_ranges)
-
-            # Use the same interpolation as NumPy version
-            mean = mean_d_vector_interp(np.array(theta))
-            cov = cov_d_vector_interp(np.array(theta))
-
-            if mean_error_estimate is not None and covar_nn is not None:
-                data -= jnp.array(mean_error_estimate)
-                cov += jnp.array(covar_nn)
-            return multivariate_normal.logpdf(data, mean=jnp.array(mean.flatten()), cov=jnp.array(cov[0]))
-        
-        @jit
-        def logp_posterior_jax(x, data_x):
-            """JAX version of log posterior."""
-            lnP = log_prior_jax(x) + loglike_jax(x, data_x)
-            return -lnP
-    else:
-        log_prior_jax = None
-        loglike_jax = None
-        logp_posterior_jax = None
-        theta_to_x = None
-        x_to_theta = None
     
     return {
-        'np': {
-            'log_prior': log_prior_np,
-            'loglike': loglike_np, 
-            'logp_posterior': logp_posterior_np
-        },
-        'jax': {
-            'log_prior': log_prior_jax,
-            'loglike': loglike_jax,
-            'logp_posterior': logp_posterior_jax,
-            'theta_to_x': theta_to_x,
-            'x_to_theta': x_to_theta
-        }
+        'log_prior': log_prior_np,
+        'loglike': loglike_np, 
+        'logp_posterior': logp_posterior_np
     }
 
 
+def setup_probability_functions_jax(model, label_scaler, device, mean_d_vector_interp, cov_d_vector_interp, mean_error_estimate=None, covar_nn=None):
+    """
+    Setup JAX probability functions for HMC inference.
+    """
+    if not HMC_AVAILABLE:
+        raise ImportError("JAX/Numpyro not available for HMC inference")
+    
+    # Get prior parameters from fitted Gaussians
+    (mu_omega_m, sigma_omega_m), (mu_s8, sigma_s8) = Probability.prior(data_obj.label)
+    
+    print(f"Setting up JAX priors: Ω_m ~ N({mu_omega_m:.3f}, {sigma_omega_m:.3f}²), S_8 ~ N({mu_s8:.3f}, {sigma_s8:.3f}²)")
+
+    theta_ranges = Probability.get_theta_ranges(data_obj.label)
+
+    def get_cnn_single_prediction(X):
+        model.eval()
+        with torch.no_grad():
+            X = torch.tensor(X, dtype=torch.float32).unsqueeze(0).to(device)  # Add batch dimension
+            pred = model(X)
+            pred = label_scaler.inverse_transform(pred.cpu().numpy())
+        return pred.flatten()
+
+    def get_cnn_batch_prediction(batch):
+        out = jax.vmap(get_cnn_single_prediction, in_axes=(None,0), out_axes=0)(jnp.atleast_2d(batch))
+        return out
+
+    @jit
+    def _theta_to_x(theta): #theta is in physical dimension
+        x_astro = Probability.bounded_theta_to_x(theta, theta_ranges)
+        return jnp.array(x_astro)
+
+    @jit
+    def theta_to_x(theta, axis=0): #x is in dimensionless parameter space
+        '''
+        Transform theta (nsamples, n_params) or (n_params,) to x
+        '''
+        x_astro = jax.vmap(_theta_to_x, in_axes=axis, out_axes=axis)(jnp.atleast_2d(theta))
+
+        return x_astro.squeeze()
+    
+    @jit
+    def _x_to_theta(x):
+        theta_astro = Probability.x_to_bounded_theta(x, theta_ranges)
+        return jnp.array(theta_astro)
+
+    @jit
+    def x_to_theta(x, axis=0):
+        '''
+        Transform x (nsamples, n_params) or (n_params,) to theta
+        '''
+        theta_astro = jax.vmap(_x_to_theta, in_axes=axis, out_axes=axis)(jnp.atleast_2d(x))
+        return theta_astro.squeeze()
+        
+    @jit
+    def log_prior_jax(x):
+        # Simple JAX-compatible prior - avoid NumPy conversions in Probability functions
+        # Assume x is already in a reasonable parameter space or apply simple transformations
+        
+        # For now, treat x as directly representing [omega_m, s8] parameters
+        # This avoids the problematic Probability.x_to_bounded_theta conversion
+        omega_m = x[0]
+        s8 = x[1]
+        
+        log_prior_omega_m = norm.logpdf(omega_m, loc=mu_omega_m, scale=sigma_omega_m)
+        log_prior_s8 = norm.logpdf(s8, loc=mu_s8, scale=sigma_s8)
+        
+        # Skip the Jacobian term for now to avoid NumPy conversion issues
+        # In practice, you may need to implement a JAX version of the coordinate transform
+        
+        return log_prior_omega_m + log_prior_s8
+
+    @jit
+    def loglike_jax(x, data_x):
+        """JAX version of log likelihood using interpolated mean and covariance."""
+        # Convert JAX arrays to numpy for interpolation, then back to JAX
+        # Avoid coordinate transformation to prevent JAX tracing issues
+        x_np = np.array(x).reshape(1, -1)
+        
+        # Use the same interpolation as NumPy version
+        mean = mean_d_vector_interp(x_np)
+        cov = cov_d_vector_interp(x_np)
+        
+        if mean is None or cov is None:
+            return -jnp.inf
+            
+        mean_jax = jnp.array(mean.flatten())
+        cov_jax = jnp.array(cov[0])
+
+        if mean_error_estimate is not None and covar_nn is not None:
+            data_corrected = data_x - jnp.array(mean_error_estimate)
+            cov_total = cov_jax + jnp.array(covar_nn)
+        else:
+            data_corrected = data_x
+            cov_total = cov_jax
+            
+        return multivariate_normal.logpdf(data_corrected, mean=mean_jax, cov=cov_total)
+    
+    @jit
+    def logp_posterior_jax(x, data_x):
+        """JAX version of log posterior."""
+        lnP = log_prior_jax(x) + loglike_jax(x, data_x)
+        return -lnP
+    
+    return {
+        'log_prior': log_prior_jax,
+        'loglike': loglike_jax,
+        'logp_posterior': logp_posterior_jax,
+        'theta_to_x': theta_to_x,
+        'x_to_theta': x_to_theta
+    }
+
 def mcmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate=None, covar_nn=None,
-                   Nstep=10000, sigma=0.06):
+                   Nstep=10000, sigma=0.06, flat_prior=False):
     """
     Original MCMC sampling using Metropolis-Hastings.
     Based exactly on CNN_MCMC.ipynb implementation.
@@ -476,9 +476,9 @@ def mcmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, 
     print("Running MCMC inference...")
     
     # Setup probability functions
-    prob_funcs = setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn)
-    logp_posterior = prob_funcs['np']['logp_posterior']
-    
+    prob_funcs = setup_probability_functions_np(mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn, flat_prior)
+    logp_posterior = prob_funcs['logp_posterior']
+
     # MCMC sampling
     Ntest = len(test_predictions)
     current = cosmology[np.random.choice(len(cosmology), size=Ntest)] # Shape: (Ntest, 2)
@@ -541,8 +541,12 @@ def mcmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, 
     
     return mean_posterior, std_posterior
 
+##### DEGRADED BUG: 
+# HMC failed for sample 0: The numpy.ndarray conversion method __array__() was called on traced array with shape float64[]
+# The error occurred while tracing the function log_prior_jax at /pscratch/sd/l/lindajin/WL_ML/train_HMC.py:414 for jit. This concrete value was not available in Python because it depends on the value of the argument x.
+# See https://docs.jax.dev/en/latest/errors.html#jax.errors.TracerArrayConversionError
 
-def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate=None, covar_nn=None,
+def hmc_inference(test_predictions, model, mean_d_vector_interp, cov_d_vector_interp, label_scaler, device, cosmology, mean_error_estimate=None, covar_nn=None,
                   num_samples=8000, num_warmup=2000, num_chains=4, max_tree_depth=10):
     """
     HMC sampling using numpyro.infer.NUTS with proper model definition.
@@ -552,8 +556,6 @@ def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, c
     
     print("Running HMC inference with NUTS...")
     
-    # Setup shared probability functions
-    prob_funcs = setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn)
     
     results_list = []
     
@@ -636,32 +638,66 @@ def hmc_inference(test_predictions, mean_d_vector_interp, cov_d_vector_interp, c
             sec_per_neff = (total_time / neff_mean)
             ms_per_neff = 1e3 * sec_per_neff
 
+            # Get potential energy (log probability) - take mean over chains and samples
+            potential_energy = mcmc.get_extra_fields()['potential_energy']
+            mean_logP = float(jnp.mean(potential_energy))
+
             results_list.append({
                 'mean': [float(mean_omega_m), float(mean_s8)],
                 'std': [float(std_omega_m), float(std_s8)],
                 'neff_mean': float(neff_mean),
                 'ms_per_neff': float(ms_per_neff),
-                'r_hat_mean': float(r_hat_mean)
+                'r_hat_mean': float(r_hat_mean),
+                'logP': mean_logP
             })
             
         except Exception as e:
             print(f"HMC failed for sample {i}: {e}")
+            # Add failed sample with default values to maintain indexing
+            results_list.append({
+                'mean': [np.nan, np.nan],
+                'std': [np.nan, np.nan], 
+                'neff_mean': np.nan,
+                'ms_per_neff': np.nan,
+                'r_hat_mean': np.nan,
+                'logP': np.nan
+            })
         
-        # Progress update
+        # Progress update every 100 samples
         if (i + 1) % 100 == 0:
-            print(f"Completed {i + 1}/{len(test_predictions)} samples")
+            valid_count = sum(1 for r in results_list if not np.isnan(r['neff_mean']))
+            if valid_count > 0:
+                valid_results = [r for r in results_list if not np.isnan(r['neff_mean'])]
+                running_neff = np.mean([r['neff_mean'] for r in valid_results])
+                running_rhat = np.mean([r['r_hat_mean'] for r in valid_results])
+                running_logP = np.mean([r['logP'] for r in valid_results])
+                print(f"Completed {i + 1}/{len(test_predictions)} samples ({valid_count} successful) - lnP={running_logP:.2f} | R̂={running_rhat:.3f} | Neff={running_neff:.0f}")
+            else:
+                print(f"Completed {i + 1}/{len(test_predictions)} samples ({valid_count} successful)")
+            
     
-    # Convert to arrays
+    # Convert to arrays and handle NaN values from failed samples
+    valid_results = [r for r in results_list if not np.isnan(r['neff_mean'])]
+    
     means = np.array([r['mean'] for r in results_list])
     stds = np.array([r['std'] for r in results_list])
 
-    neffs_mean = np.array([r['neff_mean'] for r in results_list]).mean()    
-    ms_per_neffs_mean = np.array([r['ms_per_neff'] for r in results_list]).mean()
-    r_hats_mean = np.array([r['r_hat_mean'] for r in results_list]).mean()
+    # Calculate averages only from successful samples
+    if valid_results:
+        neffs_mean = np.mean([r['neff_mean'] for r in valid_results])
+        ms_per_neffs_mean = np.mean([r['ms_per_neff'] for r in valid_results])
+        r_hats_mean = np.mean([r['r_hat_mean'] for r in valid_results])
+        logP_mean = np.mean([r['logP'] for r in valid_results])
+        success_rate = len(valid_results) / len(results_list) * 100
+    else:
+        neffs_mean = ms_per_neffs_mean = r_hats_mean = logP_mean = np.nan
+        success_rate = 0
 
     print(f"HMC inference completed for {len(test_predictions)} samples with {num_chains} chains, {num_samples} samples each")
+    print(f"Success rate: {success_rate:.1f}% ({len(valid_results)}/{len(results_list)} samples)")
+    print(f"Average log potential: {logP_mean:.2f}")
     print(f"Average neff: {neffs_mean:.1f}")
-    print(f"Average r_hat: {r_hats_mean:.3f})")
+    print(f"Average r_hat: {r_hats_mean:.3f}")
     print(f"Average ms/neff: {ms_per_neffs_mean:.1f} ms")
 
     return means, stds
@@ -676,38 +712,55 @@ def hmc_inference_x_transform(test_predictions, mean_d_vector_interp, cov_d_vect
     
     print("Running HMC inference with NUTS...")
     
-    # Setup shared probability functions
-    prob_funcs = setup_probability_functions(mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn)
-    logp_posterior = prob_funcs['jax']['logp_posterior']
-    theta_to_x = prob_funcs['jax']['theta_to_x']
-    x_to_theta = prob_funcs['jax']['x_to_theta']
-
-    @jit
-    def numpyro_potential_fun(data_x): #potential function for numpyro
-        return jax.tree_util.Partial(logp_posterior, data_x=data_x)
-
     results_list = []
     
     print(f"Running HMC for {len(test_predictions)} test samples...")
-    test_predictions_x = theta_to_x(jnp.array(test_predictions))
-
-    for i, test_pred_x in enumerate(tqdm(test_predictions_x, desc="HMC sampling")):
+    
+    # Get prior parameters from fitted Gaussians
+    (mu_omega_m, sigma_omega_m), (mu_s8, sigma_s8) = Probability.prior(data_obj.label)
+    
+    def model_func(test_pred):
+        """Numpyro model definition for HMC."""
+        # Define priors
+        omega_m = numpyro.sample("omega_m", dist.Normal(mu_omega_m, sigma_omega_m))
+        s8 = numpyro.sample("s8", dist.Normal(mu_s8, sigma_s8))
+        
+        theta = jnp.array([omega_m, s8])
+        
+        # Get interpolated mean and covariance
+        theta_np = np.array(theta)
+        mean = mean_d_vector_interp(theta_np.reshape(1, -1))
+        cov = cov_d_vector_interp(theta_np.reshape(1, -1))
+        
+        # Add NN error if provided
+        if mean_error_estimate is not None and covar_nn is not None:
+            test_pred_corrected = test_pred - jnp.array(mean_error_estimate)
+            cov_total = jnp.array(cov) + jnp.array(covar_nn)
+        else:
+            test_pred_corrected = test_pred
+            cov_total = jnp.array(cov)
+        
+        # Likelihood
+        numpyro.sample("obs", dist.MultivariateNormal(jnp.array(mean.flatten()), cov_total), obs=test_pred_corrected)
+    
+    for i, test_pred in enumerate(tqdm(test_predictions, desc="HMC sampling")):
+        test_pred_jax = jnp.array(test_pred)
 
         # Setup NUTS sampler
         nuts_kernel = NUTS(
-            potential_fn=numpyro_potential_fun(test_pred_x),
+            model_func,
             adapt_step_size=True, 
             dense_mass=True, 
             max_tree_depth=max_tree_depth
         )
         
-        # Setup MCMC with vectorized chains
+        # Setup MCMC
         mcmc = NumpyroMCMC(
             nuts_kernel, 
             num_warmup=num_warmup, 
             num_samples=num_samples,
             num_chains=num_chains,
-            chain_method='vectorized'
+            chain_method='vectorized' if num_chains > 1 else 'sequential'
         )
         
         # Run MCMC for this test sample
@@ -715,15 +768,14 @@ def hmc_inference_x_transform(test_predictions, mean_d_vector_interp, cov_d_vect
         
         try:
             start_time = time.time()
-            mcmc.run(rng_key, test_pred_x)
+            mcmc.run(rng_key, test_pred_jax)
             total_time = time.time() - start_time
             print(f"HMC sampling completed in {total_time:.2f} seconds")
 
             # Extract samples
-            x_samples = mcmc.get_samples(group_by_chain=False)
-            samples = x_to_theta(x_samples)
-            omega_m_samples = samples[:,0]
-            s8_samples = samples[:,1]
+            samples = mcmc.get_samples(group_by_chain=False)
+            omega_m_samples = samples['omega_m']
+            s8_samples = samples['s8']
 
             # Compute posterior statistics
             mean_omega_m = jnp.mean(omega_m_samples)
@@ -731,7 +783,7 @@ def hmc_inference_x_transform(test_predictions, mean_d_vector_interp, cov_d_vect
             std_omega_m = jnp.std(omega_m_samples)
             std_s8 = jnp.std(s8_samples)
 
-            # Compute the neff and summarize cost
+            # Compute diagnostic statistics
             az_summary = az.summary(az.from_numpyro(mcmc))
             neff = az_summary["ess_bulk"].to_numpy()
             neff_mean = np.mean(neff)
@@ -740,34 +792,56 @@ def hmc_inference_x_transform(test_predictions, mean_d_vector_interp, cov_d_vect
             sec_per_neff = (total_time / neff_mean)
             ms_per_neff = 1e3 * sec_per_neff
 
+            # Calculate likelihood for monitoring 
+            sample_posterior_mean = jnp.array([mean_omega_m, mean_s8])
+            mean_interp = mean_d_vector_interp(np.array(sample_posterior_mean).reshape(1, -1))
+            cov_interp = cov_d_vector_interp(np.array(sample_posterior_mean).reshape(1, -1))
+            
+            if mean_interp is not None and cov_interp is not None:
+                mean_jax = jnp.array(mean_interp.flatten())
+                cov_jax = jnp.array(cov_interp[0])
+                if mean_error_estimate is not None and covar_nn is not None:
+                    test_pred_corrected = test_pred_jax - jnp.array(mean_error_estimate)
+                    cov_total = cov_jax + jnp.array(covar_nn)
+                else:
+                    test_pred_corrected = test_pred_jax
+                    cov_total = cov_jax
+                likelihood = multivariate_normal.logpdf(test_pred_corrected, mean=mean_jax, cov=cov_total)
+            else:
+                likelihood = -jnp.inf
+
             results_list.append({
                 'mean': [float(mean_omega_m), float(mean_s8)],
                 'std': [float(std_omega_m), float(std_s8)],
                 'neff_mean': float(neff_mean),
                 'ms_per_neff': float(ms_per_neff),
-                'r_hat_mean': float(r_hat_mean)
+                'r_hat_mean': float(r_hat_mean),
+                'likelihood': float(likelihood)
             })
+            
+            # Progress monitoring to console
+            print(f"Sample {i+1}/{len(test_predictions)}: "
+                  f"Ω_m={mean_omega_m:.4f}±{std_omega_m:.4f}, "
+                  f"S_8={mean_s8:.4f}±{std_s8:.4f}, "
+                  f"R̂={r_hat_mean:.3f}, "
+                  f"N_eff={neff_mean:.0f}, "
+                  f"LogLike={likelihood:.2f}")
             
         except Exception as e:
             print(f"HMC failed for sample {i}: {e}")
-        
-        # Progress update
-        if (i + 1) % 100 == 0:
-            print(f"Completed {i + 1}/{len(test_predictions)} samples")
+            results_list.append({
+                'mean': [0.0, 0.0],
+                'std': [1.0, 1.0],
+                'neff_mean': 0.0,
+                'ms_per_neff': float('inf'),
+                'r_hat_mean': float('inf'),
+                'likelihood': float('-inf')
+            })
     
-    # Convert to arrays
+    # Convert results to numpy arrays
     means = np.array([r['mean'] for r in results_list])
     stds = np.array([r['std'] for r in results_list])
-
-    neffs_mean = np.array([r['neff_mean'] for r in results_list]).mean()    
-    ms_per_neffs_mean = np.array([r['ms_per_neff'] for r in results_list]).mean()
-    r_hats_mean = np.array([r['r_hat_mean'] for r in results_list]).mean()
-
-    print(f"HMC inference completed for {len(test_predictions)} samples with {num_chains} chains, {num_samples} samples each")
-    print(f"Average neff: {neffs_mean:.1f}")
-    print(f"Average r_hat: {r_hats_mean:.3f})")
-    print(f"Average ms/neff: {ms_per_neffs_mean:.1f} ms")
-
+    
     return means, stds
 
 def load_data(use_public_dataset):
@@ -829,6 +903,8 @@ def main():
                            help='Estimate NN error from validation set (default: False)')
         parser.add_argument('--pretrained', action='store_true', default=False,
                            help='Use pretrained model (default: False)')
+        parser.add_argument('--flat-priors', action='store_true', default=False,
+                           help='Use flat priors (default: False)')
         return parser
     
     args = create_argparser().parse_args()
@@ -840,6 +916,7 @@ def main():
     NN_ERROR_ESTIMATE = args.nn_error_estimate
     USE_PRETRAINED_MODEL = args.pretrained
     inference_method = args.method
+    flat_priors = args.flat_priors
     
     # Set method suffix for file naming
     method_suffix = "HMC" if (inference_method == 'hmc' and HMC_AVAILABLE) else "MCMC"
@@ -899,12 +976,12 @@ def main():
     print("\n=== Step 4: Validation Scoring ===")
     if inference_method == 'hmc' and HMC_AVAILABLE:
         print("Using HMC inference for validation...")
-        mean_val, errorbar_val = hmc_inference(
+        mean_val, errorbar_val = hmc_inference_x_transform(
             val_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn)
     else:
         print("Using MCMC inference for validation...")
         mean_val, errorbar_val = mcmc_inference(
-            val_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn)
+            val_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn, flat_prior=flat_priors)
     
     # Calculate validation score with error handling
     try:
@@ -925,12 +1002,12 @@ def main():
     print("\n=== Step 5: Test Inference ===")
     if inference_method == 'hmc' and HMC_AVAILABLE:
         print("Using HMC inference for test predictions...")
-        mean_test, errorbar_test = hmc_inference(
+        mean_test, errorbar_test = hmc_inference_x_transform(
             test_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn)
     else:
         print("Using MCMC inference for test predictions...")
         mean_test, errorbar_test = mcmc_inference(
-            test_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn)
+            test_predictions, mean_d_vector_interp, cov_d_vector_interp, cosmology, mean_error_estimate, covar_nn, flat_prior=flat_priors)
     
     # Step 6: Save results
     print("\n=== Step 6: Saving Results ===")
@@ -970,4 +1047,4 @@ def main():
 
 if __name__ == "__main__":
     validation_score = main()
-    print(f"\nFinal validation score: {validation_score:.6f}")
+    print(f"\nFinal validation score: {validation_score:.6f}")                                                                  

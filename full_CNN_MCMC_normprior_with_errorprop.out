@@ -1,0 +1,117 @@
+Job started at: Tue 23 Sep 2025 12:20:38 AM PDT
+Running seff for job 43008759...
+Job ID: 43008759
+Cluster: perlmutter
+User/Group: lindajin/lindajin
+State: RUNNING
+Nodes: 1
+Cores per node: 256
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 00:34:08 core-walltime
+Job Wall-clock time: 00:00:08
+Memory Utilized: 0.00 MB
+Memory Efficiency: 0.00% of 476.37 GB (476.37 GB/node)
+WARNING: Efficiency statistics can only be obtained after the job has ended as seff tool is based on the accounting database data.
+Number of MPI tasks: 1
+CPUs per task: 128
+OpenMP threads per task: 32
+JAX/Numpyro available - HMC inference enabled
+Root directory is /pscratch/sd/l/lindajin/WL_ML
+Root directory is /pscratch/sd/l/lindajin/WL_ML
+Configuration: USE_PUBLIC_DATASET=True, MODEL_NAME=CNN_MCMC_normprior_with_errorprop_epoch15, METHOD=MCMC
+There are 101 cosmological models, each has 256 realizations of nuisance parameters in the training data.
+We assume a galaxy number density of 30 per arcmin², which determines the noise level of the experiment.
+Training and validation data loaded
+Shape of training data = (20604, 1424, 176)
+Shape of validation data = (5252, 1424, 176)
+Shape of training labels = (20604, 2)
+Shape of validation labels = (5252, 2)
+Using device: cpu
+
+=== Step 1: Training CNN for Point Estimates ===
+Image stats: Mean=-0.00014721968909725547, Std=0.020474432036280632
+Label stats: Mean=[0.29021683 0.81345297], Std=[0.1055216  0.06600116]
+Epoch 1/15 | Train Loss: 0.787684 | Val Loss: 0.354242
+  -> New best model saved
+Epoch 2/15 | Train Loss: 0.242034 | Val Loss: 0.414267
+Epoch 3/15 | Train Loss: 0.170963 | Val Loss: 0.224800
+  -> New best model saved
+Epoch 4/15 | Train Loss: 0.156897 | Val Loss: 0.257608
+Epoch 5/15 | Train Loss: 0.128416 | Val Loss: 0.573605
+Epoch 6/15 | Train Loss: 0.114245 | Val Loss: 0.436875
+Epoch 7/15 | Train Loss: 0.107708 | Val Loss: 0.209951
+  -> New best model saved
+Epoch 8/15 | Train Loss: 0.105789 | Val Loss: 0.209544
+  -> New best model saved
+Epoch 9/15 | Train Loss: 0.097584 | Val Loss: 0.215540
+Epoch 10/15 | Train Loss: 0.086621 | Val Loss: 0.218166
+Epoch 11/15 | Train Loss: 0.088625 | Val Loss: 0.253455
+Epoch 12/15 | Train Loss: 0.082199 | Val Loss: 0.216092
+Epoch 13/15 | Train Loss: 0.076970 | Val Loss: 0.353076
+Epoch 14/15 | Train Loss: 0.079456 | Val Loss: 0.237486
+Epoch 15/15 | Train Loss: 0.066147 | Val Loss: 0.206962
+  -> New best model saved
+Training finished in 70.24 minutes.
+
+=== Step 2: Getting CNN Predictions ===
+Estimating NN error from validation set...
+error_estimates.shape: (5252, 2)
+Validation predictions shape: (5252, 2)
+Test predictions shape: (4000, 2)
+
+=== Step 3: Setting up MCMC Interpolators ===
+Setting up MCMC interpolators from predictions...
+Interpolators created for 101 cosmologies
+
+=== Step 4: Validation Scoring ===
+Using MCMC inference for validation...
+Running MCMC inference...
+Setting up priors: Ω_m ~ N(0.290, 0.106²), S_8 ~ N(0.813, 0.066²)
+Test predictions shape: (5252, 2)
+Current initial shape: (5252, 2)
+Sample initial position: [0.1275     0.95356374] for test: [0.29522785 0.78489538]
+Initial log probabilities range: [-391.01, 17.68]
+Valid initial probabilities: 5252/5252
+Running 10000 MCMC steps for 5252 test samples...
+  Step 1000/10000, Time: 166.1s, Acceptance: 0.162
+  Step 2000/10000, Time: 165.7s, Acceptance: 0.161
+  Step 3000/10000, Time: 166.0s, Acceptance: 0.160
+  Step 4000/10000, Time: 165.8s, Acceptance: 0.160
+  Step 5000/10000, Time: 165.5s, Acceptance: 0.160
+  Step 6000/10000, Time: 165.4s, Acceptance: 0.160
+  Step 7000/10000, Time: 165.8s, Acceptance: 0.160
+  Step 8000/10000, Time: 165.6s, Acceptance: 0.160
+  Step 9000/10000, Time: 165.6s, Acceptance: 0.160
+  Step 10000/10000, Time: 165.9s, Acceptance: 0.159
+MCMC completed. Final acceptance rate: 0.159
+Validation score: -1.733627
+Average error bar: [0.0222508  0.01865537]
+MSE: Ω_m=0.003382, S_8=0.001833
+
+=== Step 5: Test Inference ===
+Using MCMC inference for test predictions...
+Running MCMC inference...
+Setting up priors: Ω_m ~ N(0.290, 0.106²), S_8 ~ N(0.813, 0.066²)
+Test predictions shape: (4000, 2)
+Current initial shape: (4000, 2)
+Sample initial position: [0.2825     0.78980458] for test: [0.36028954 0.81085674]
+Initial log probabilities range: [-260.15, 17.69]
+Valid initial probabilities: 4000/4000
+Running 10000 MCMC steps for 4000 test samples...
+  Step 1000/10000, Time: 128.0s, Acceptance: 0.163
+  Step 2000/10000, Time: 127.6s, Acceptance: 0.161
+  Step 3000/10000, Time: 128.0s, Acceptance: 0.161
+  Step 4000/10000, Time: 128.1s, Acceptance: 0.161
+  Step 5000/10000, Time: 128.1s, Acceptance: 0.161
+  Step 6000/10000, Time: 127.4s, Acceptance: 0.160
+  Step 7000/10000, Time: 127.6s, Acceptance: 0.160
+  Step 8000/10000, Time: 127.4s, Acceptance: 0.160
+  Step 9000/10000, Time: 127.3s, Acceptance: 0.160
+  Step 10000/10000, Time: 127.6s, Acceptance: 0.160
+MCMC completed. Final acceptance rate: 0.160
+
+=== Step 6: Saving Results ===
+Validation results saved to scoring_output/CNN_MCMC_normprior_with_errorprop_epoch15_MCMC.json
+Test submission saved: submissions/Submission_CNN_MCMC_normprior_with_errorprop_epoch15_MCMC_25-09-23-02-23.zip
+
+Final validation score: -1.733627

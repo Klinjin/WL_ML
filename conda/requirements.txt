@@ -5,3 +5,11 @@ scikit-learn
 torch
 torchvision
 ipykernel
+scipy
+# JAX with CUDA 12 support for HMC inference
+# Install JAX with CUDA 12 support using the new installation method
+jax[cuda12]>=0.4.33
+# Numpyro for probabilistic programming and MCMC/HMC
+numpyro>=0.13.0
+# Arviz for MCMC diagnostics
+arviz>=0.15.0

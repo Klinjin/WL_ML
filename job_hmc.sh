@@ -1,14 +1,14 @@
 #!/bin/bash
-#SBATCH -q debug
+#SBATCH -q preempt
 #SBATCH -C cpu
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=128
-#SBATCH --time=00:30:00
+#SBATCH --cpus-per-task=64
+#SBATCH --time=10:30:00
 #SBATCH -A m4031
 #SBATCH -J wl_ml_train
-#SBATCH --output=robust_mean_estimator.out
-#SBATCH --error=robust_mean_estimator.err
+#SBATCH --output=full_CNN_jax_HMC_X_with_error_prop.out
+#SBATCH --error=full_CNN_jax_HMC_X_with_error_prop.err
 #SBATCH --mail-type=begin,end,fail
 #SBATCH --mail-user=lindazjin@berkeley.edu
 
@@ -41,4 +41,6 @@ echo "OpenMP threads per task: $OMP_NUM_THREADS"
 # Change to project directory
 cd /pscratch/sd/l/lindajin/WL_ML
 
-python robust_estimator.py
+# Run CPU-optimized physics-informed neural network training
+# python train_HMC.py --method mcmc --model-name "CNN_MCMC_normprior_with_errorprop_epoch15" --pretrained --flat-priors --nn-error-estimate
+python train_HMC.py --method hmc --nn-error-estimate --model-name "CNN_MCMC_normprior_with_errorprop_epoch15" --pretrained

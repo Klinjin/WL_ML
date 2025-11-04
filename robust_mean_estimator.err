@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/pscratch/sd/l/lindajin/WL_ML/robust_estimator.py", line 671, in <module>
+    test_dataset = CosmologyDataset(data_obj.kappa_test, transform=None)
+                                    ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Data' object has no attribute 'kappa_test'
