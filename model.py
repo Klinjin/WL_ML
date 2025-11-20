@@ -395,3 +395,53 @@ class ResNetWithAttention(nn.Module):
             return means, sigmas
         else:
             return x
+
+# Smaller CNN architecture for parameter estimation (mean, sigma) 3M params (0.0068 samples per parameter) --> 150K (200 samples per parameter)
+
+class Small_CNN(nn.Module):
+    def __init__(self, height, width, num_targets):
+        super(Small_CNN, self).__init__()
+        self.num_targets = num_targets
+        # Convolutional layers
+        self.conv_stack = nn.Sequential(
+            nn.Conv2d(1, 16, kernel_size=5, stride=2, padding=2),
+            nn.BatchNorm2d(16),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+            nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
+            nn.BatchNorm2d(128),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2)
+        )
+
+        # Fully connected layers (regressor head)
+        self.fc_stack = nn.Sequential(
+            nn.AdaptiveAvgPool2d((1, 1)),  # Apply BEFORE flatten: [B,128,H,W] → [B,128,1,1]
+            nn.Flatten(),                   # [B,128,1,1] → [B,128]
+            nn.Linear(128, 64),             # Now 128→64 instead of 256→64
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(64, num_targets)
+        )
+    def forward(self, x):
+        x = self.conv_stack(x)
+        x = self.fc_stack(x)
+        if self.num_targets == 4:
+            means = x[:, :2]
+            log_sigmas = x[:, 2:]
+            sigmas = torch.exp(log_sigmas)
+            
+            return means, sigmas
+        else:
+            return x 

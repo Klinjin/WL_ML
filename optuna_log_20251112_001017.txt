@@ -1,0 +1,2098 @@
+[I 2025-11-12 00:10:54,341] A new study created in memory with name: sever_hyperparameter_search
+[I 2025-11-12 01:21:05,036] Trial 0 finished with value: -2.1145899834403075 and parameters: {'VARIANCE_THRESHOLD': 0.5, 'SIGMA': 0.005477225575051661, 'TOP_FRACTION': None, 'MAX_ITR': 5}. Best is trial 0 with value: -2.1145899834403075.
+[I 2025-11-12 01:37:06,422] Trial 1 finished with value: -2.190604923719383 and parameters: {'VARIANCE_THRESHOLD': 1.0, 'SIGMA': None, 'TOP_FRACTION': None, 'MAX_ITR': 20}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 01:53:11,117] Trial 2 finished with value: -2.130431369126561 and parameters: {'VARIANCE_THRESHOLD': 0.75, 'SIGMA': None, 'TOP_FRACTION': 0.02, 'MAX_ITR': 20}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 02:07:25,571] Trial 3 finished with value: -2.0915417865098243 and parameters: {'VARIANCE_THRESHOLD': 0.75, 'SIGMA': None, 'TOP_FRACTION': 0.02, 'MAX_ITR': 20}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 02:38:04,647] Trial 4 finished with value: -2.1058429529867975 and parameters: {'VARIANCE_THRESHOLD': 1.0, 'SIGMA': 0.005477225575051661, 'TOP_FRACTION': None, 'MAX_ITR': 20}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 02:51:34,572] Trial 5 finished with value: -2.116335732391082 and parameters: {'VARIANCE_THRESHOLD': 0.75, 'SIGMA': None, 'TOP_FRACTION': None, 'MAX_ITR': 5}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 06:33:45,892] Trial 6 finished with value: -2.1636721441544684 and parameters: {'VARIANCE_THRESHOLD': 0.5, 'SIGMA': 0.005477225575051661, 'TOP_FRACTION': 0.02, 'MAX_ITR': 20}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 07:15:45,743] Trial 7 finished with value: -2.0929016406277574 and parameters: {'VARIANCE_THRESHOLD': 0.75, 'SIGMA': 0.005477225575051661, 'TOP_FRACTION': None, 'MAX_ITR': 20}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 07:29:08,902] Trial 8 finished with value: -2.156807651720851 and parameters: {'VARIANCE_THRESHOLD': 0.75, 'SIGMA': None, 'TOP_FRACTION': None, 'MAX_ITR': 20}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 07:42:28,624] Trial 9 finished with value: -2.160960192421833 and parameters: {'VARIANCE_THRESHOLD': 1.0, 'SIGMA': None, 'TOP_FRACTION': 0.02, 'MAX_ITR': 20}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 07:55:54,629] Trial 10 finished with value: -2.117531222751342 and parameters: {'VARIANCE_THRESHOLD': 1.0, 'SIGMA': None, 'TOP_FRACTION': None, 'MAX_ITR': 5}. Best is trial 1 with value: -2.190604923719383.
+[I 2025-11-12 11:50:45,998] Trial 11 finished with value: -2.1537317554634736 and parameters: {'VARIANCE_THRESHOLD': 0.5, 'SIGMA': 0.005477225575051661, 'TOP_FRACTION': 0.02, 'MAX_ITR': 20}. Best is trial 1 with value: -2.190604923719383.
+Root directory is /astro/users/lindajin/WL_ML
+================================================================================
+ROBUST OPTUNA HYPERPARAMETER SEARCH
+Started at: 2025-11-12 00:10:41.131084
+================================================================================
+
+Loading data...
+Train: (20604, 1424, 176), Val: (5252, 1424, 176)
+Image stats: Mean=-0.0001, Std=0.0205
+Label stats: Mean=[0.29021683 0.81345297], Std=[0.1055216  0.06600116]
+
+*** STARTING NEW STUDY ***
+
+
+*** Running 20 remaining trials (out of 20 total) ***
+
+
+################################################################################
+# STARTING TRIAL 0
+# Time: 2025-11-12 00:10:54.341939
+################################################################################
+
+============================================================
+Trial 0 - SEVER Configuration:
+  variance_threshold: 0.5
+  sigma: 0.005477225575051661
+  top_fraction: None
+  max_iterations: 5
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.808439 | Val: 1.509864
+  Epoch 2/50 | Train: 1.056111 | Val: 0.415098
+  Epoch 3/50 | Train: -0.055594 | Val: -0.767822
+  Epoch 4/50 | Train: -0.618901 | Val: -1.020814
+  Epoch 6/50 | Train: -0.960633 | Val: -1.442101
+  Epoch 8/50 | Train: -1.134480 | Val: -1.505986
+  Epoch 9/50 | Train: -1.170963 | Val: -1.600810
+  Epoch 11/50 | Train: -1.267453 | Val: -1.552811
+  Epoch 12/50 | Train: -1.311664 | Val: -1.716561
+  Epoch 14/50 | Train: -1.313615 | Val: -1.831267
+  Epoch 16/50 | Train: -1.394187 | Val: -1.500986
+  Epoch 21/50 | Train: -1.504165 | Val: -1.650613
+  Epoch 23/50 | Train: -1.514893 | Val: -1.857212
+  Epoch 24/50 | Train: -1.546066 | Val: -1.915053
+  Epoch 26/50 | Train: -1.560741 | Val: -1.954425
+  Epoch 27/50 | Train: -1.560489 | Val: -1.958620
+  Epoch 31/50 | Train: -1.591558 | Val: -1.925049
+  Epoch 36/50 | Train: -1.648558 | Val: -2.012166
+  Epoch 40/50 | Train: -1.668520 | Val: -2.054606
+  Epoch 41/50 | Train: -1.664257 | Val: -1.975784
+  Epoch 42/50 | Train: -1.661293 | Val: -2.057229
+  Epoch 46/50 | Train: -1.677340 | Val: -1.972786
+  Epoch 50/50 | Train: -1.695432 | Val: -2.065259
+  *** Global best updated: -2.065259
+  Running SEVER filtering...
+Remove with random threshold 0.022970316184388998
+  Removing 543 points (top 2.64%)
+  Variance: 4.52e-03 > threshold 2.74e-03
+  Final dataset: 20061 samples (97.4% retained)
+  Filtered 543 outliers | Remaining: 20061
+
+--- Iteration 1 ---
+  Epoch 1/50 | Train: 1.594997 | Val: 1.069719
+  Epoch 2/50 | Train: 0.725281 | Val: 0.163502
+  Epoch 3/50 | Train: -0.208404 | Val: -0.691712
+  Epoch 4/50 | Train: -0.674204 | Val: -0.962649
+  Epoch 5/50 | Train: -0.893522 | Val: -1.113462
+  Epoch 6/50 | Train: -1.016969 | Val: -1.152821
+  Epoch 8/50 | Train: -1.167592 | Val: -1.512125
+  Epoch 11/50 | Train: -1.363467 | Val: -1.702205
+  Epoch 12/50 | Train: -1.389240 | Val: -1.899732
+  Epoch 16/50 | Train: -1.517962 | Val: -1.430301
+  Epoch 21/50 | Train: -1.604061 | Val: -1.917188
+  Epoch 22/50 | Train: -1.607218 | Val: -1.997367
+  Epoch 26/50 | Train: -1.619067 | Val: -1.751828
+  Epoch 28/50 | Train: -1.653355 | Val: -2.000734
+  Epoch 30/50 | Train: -1.651055 | Val: -2.034400
+  Epoch 31/50 | Train: -1.681320 | Val: -1.412852
+  Epoch 36/50 | Train: -1.714422 | Val: -1.881021
+  Epoch 37/50 | Train: -1.762737 | Val: -2.094780
+  Epoch 41/50 | Train: -1.752020 | Val: -1.938403
+  Epoch 46/50 | Train: -1.752899 | Val: -2.114590
+  *** Global best updated: -2.114590
+  Running SEVER filtering...
+Remove with random threshold 0.02639143318262288
+  Removing 569 points (top 2.84%)
+  Variance: 5.41e-03 > threshold 2.74e-03
+  Final dataset: 19492 samples (97.2% retained)
+  Filtered 569 outliers | Remaining: 19492
+
+--- Iteration 2 ---
+  Epoch 1/50 | Train: 1.551219 | Val: 1.138875
+  Epoch 3/50 | Train: -0.485783 | Val: -0.853746
+  Epoch 5/50 | Train: -0.943932 | Val: -1.186454
+  Epoch 6/50 | Train: -1.040198 | Val: -1.353731
+  Epoch 8/50 | Train: -1.221828 | Val: -1.570430
+  Epoch 11/50 | Train: -1.337640 | Val: -1.726275
+  Epoch 16/50 | Train: -1.493267 | Val: -1.535021
+  Epoch 21/50 | Train: -1.632687 | Val: -1.865511
+  Epoch 22/50 | Train: -1.620137 | Val: -1.915302
+  Epoch 26/50 | Train: -1.637637 | Val: -1.825452
+  Epoch 28/50 | Train: -1.698097 | Val: -1.960327
+  Epoch 31/50 | Train: -1.694689 | Val: -1.733952
+  Epoch 34/50 | Train: -1.718199 | Val: -1.963331
+  Epoch 36/50 | Train: -1.765040 | Val: -2.032065
+  Epoch 41/50 | Train: -1.737330 | Val: -2.022094
+  Epoch 44/50 | Train: -1.791589 | Val: -2.077087
+  Epoch 46/50 | Train: -1.801949 | Val: -1.791607
+  Epoch 49/50 | Train: -1.829388 | Val: -2.089341
+  Running SEVER filtering...
+Remove with random threshold 0.08898787775445571
+  Removing 1 points (top 0.01%)
+  Variance: 4.18e-03 > threshold 2.74e-03
+  Final dataset: 19491 samples (100.0% retained)
+  Filtered 1 outliers | Remaining: 19491
+
+--- Iteration 3 ---
+  Epoch 1/50 | Train: 1.755547 | Val: 2.068681
+  Epoch 2/50 | Train: 0.657504 | Val: -0.102995
+  Epoch 3/50 | Train: -0.315180 | Val: -0.508503
+  Epoch 4/50 | Train: -0.746849 | Val: -0.590062
+  Epoch 5/50 | Train: -0.936925 | Val: -1.183464
+  Epoch 6/50 | Train: -1.038351 | Val: -1.518813
+  Epoch 11/50 | Train: -1.349990 | Val: -1.372746
+  Epoch 13/50 | Train: -1.426726 | Val: -1.789236
+  Epoch 15/50 | Train: -1.448328 | Val: -1.831072
+  Epoch 16/50 | Train: -1.449785 | Val: -1.756848
+  Epoch 17/50 | Train: -1.469995 | Val: -1.863048
+  Epoch 20/50 | Train: -1.518753 | Val: -1.938366
+  Epoch 21/50 | Train: -1.546727 | Val: -1.866783
+  Epoch 24/50 | Train: -1.557089 | Val: -1.960490
+  Epoch 25/50 | Train: -1.548665 | Val: -1.979284
+  Epoch 26/50 | Train: -1.597090 | Val: -1.865476
+  Epoch 28/50 | Train: -1.592733 | Val: -1.991787
+  Epoch 31/50 | Train: -1.614933 | Val: -1.997234
+  Epoch 36/50 | Train: -1.643314 | Val: -1.987205
+  Epoch 37/50 | Train: -1.653160 | Val: -2.007368
+  Epoch 41/50 | Train: -1.684508 | Val: -1.642182
+  Epoch 44/50 | Train: -1.702950 | Val: -2.047941
+  Epoch 46/50 | Train: -1.718127 | Val: -1.660042
+  Running SEVER filtering...
+Remove with random threshold 0.022240398825616185
+  Removing 323 points (top 1.66%)
+  Variance: 3.78e-03 > threshold 2.74e-03
+  Final dataset: 19168 samples (98.3% retained)
+  Filtered 323 outliers | Remaining: 19168
+
+--- Iteration 4 ---
+  Epoch 1/50 | Train: 1.638735 | Val: 0.815024
+  Epoch 2/50 | Train: 0.396479 | Val: -0.350649
+  Epoch 3/50 | Train: -0.453733 | Val: -0.846347
+  Epoch 4/50 | Train: -0.727847 | Val: -1.022080
+  Epoch 6/50 | Train: -1.020735 | Val: -0.376425
+  Epoch 7/50 | Train: -1.082824 | Val: -1.304453
+  Epoch 10/50 | Train: -1.250433 | Val: -1.507419
+  Epoch 11/50 | Train: -1.328620 | Val: 1.011562
+  Epoch 14/50 | Train: -1.369271 | Val: -1.769003
+  Epoch 16/50 | Train: -1.410513 | Val: -1.453566
+  Epoch 21/50 | Train: -1.538115 | Val: -1.835465
+  Epoch 22/50 | Train: -1.571795 | Val: -1.899099
+  Epoch 26/50 | Train: -1.607537 | Val: -1.826065
+  Epoch 30/50 | Train: -1.670036 | Val: -1.929442
+  Epoch 31/50 | Train: -1.646878 | Val: -2.036563
+  Epoch 36/50 | Train: -1.660980 | Val: -1.987975
+  Epoch 41/50 | Train: -1.678734 | Val: -1.982540
+  Early stopping at epoch 43
+  Running SEVER filtering...
+Remove with random threshold 0.0020987770875917247
+  Removing 9002 points (top 46.96%)
+  Variance: 4.17e-03 > threshold 2.74e-03
+  Final dataset: 10166 samples (53.0% retained)
+  Filtered 9002 outliers | Remaining: 10166
+
+Trial 0 completed | Best val loss: -2.114590
+
+Trial 0 SUCCEEDED | Loss: -2.114590
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 1/20
+
+
+################################################################################
+# STARTING TRIAL 1
+# Time: 2025-11-12 01:21:05.136577
+################################################################################
+
+============================================================
+Trial 1 - SEVER Configuration:
+  variance_threshold: 1.0
+  sigma: None
+  top_fraction: None
+  max_iterations: 20
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.683231 | Val: 1.322533
+  Epoch 2/50 | Train: 1.137849 | Val: 0.986503
+  Epoch 3/50 | Train: 0.208317 | Val: -0.401690
+  Epoch 4/50 | Train: -0.579878 | Val: -0.956099
+  Epoch 5/50 | Train: -0.856634 | Val: -1.130692
+  Epoch 6/50 | Train: -1.018796 | Val: -1.364818
+  Epoch 7/50 | Train: -1.138457 | Val: -1.497380
+  Epoch 9/50 | Train: -1.261333 | Val: -1.672087
+  Epoch 10/50 | Train: -1.335880 | Val: -1.706752
+  Epoch 11/50 | Train: -1.337564 | Val: -1.338855
+  Epoch 14/50 | Train: -1.482740 | Val: -1.833850
+  Epoch 16/50 | Train: -1.506090 | Val: -1.874359
+  Epoch 21/50 | Train: -1.611294 | Val: 0.191291
+  Epoch 22/50 | Train: -1.612308 | Val: -1.966540
+  Epoch 25/50 | Train: -1.662009 | Val: -2.000269
+  Epoch 26/50 | Train: -1.692468 | Val: -1.317858
+  Epoch 28/50 | Train: -1.735284 | Val: -2.060609
+  Epoch 31/50 | Train: -1.739257 | Val: -1.681874
+  Epoch 32/50 | Train: -1.750379 | Val: -2.072616
+  Epoch 36/50 | Train: -1.812765 | Val: -1.611575
+  Epoch 41/50 | Train: -1.877519 | Val: -2.046343
+  Epoch 44/50 | Train: -1.840375 | Val: -2.075554
+  Epoch 46/50 | Train: -1.913550 | Val: -1.980732
+  Epoch 47/50 | Train: -1.909017 | Val: -2.171662
+  Epoch 50/50 | Train: -1.919584 | Val: -2.190605
+  *** Global best updated: -2.190605
+  Running SEVER filtering...
+  Clean data detected (variance=0.01 ≤ 0.07)
+  Filtered 0 outliers | Remaining: 20604
+  Stopping: no outliers or val_loss <= -4
+
+Trial 1 completed | Best val loss: -2.190605
+
+Trial 1 SUCCEEDED | Loss: -2.190605
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 2/20
+
+
+################################################################################
+# STARTING TRIAL 2
+# Time: 2025-11-12 01:37:06.425257
+################################################################################
+
+============================================================
+Trial 2 - SEVER Configuration:
+  variance_threshold: 0.75
+  sigma: None
+  top_fraction: 0.02
+  max_iterations: 20
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.700721 | Val: 1.274343
+  Epoch 2/50 | Train: 0.924787 | Val: 0.473516
+  Epoch 3/50 | Train: -0.162206 | Val: -0.299130
+  Epoch 4/50 | Train: -0.590696 | Val: -0.697133
+  Epoch 5/50 | Train: -0.791280 | Val: -1.245612
+  Epoch 6/50 | Train: -0.935700 | Val: -1.262894
+  Epoch 9/50 | Train: -1.174188 | Val: -1.529950
+  Epoch 11/50 | Train: -1.262266 | Val: -1.430810
+  Epoch 12/50 | Train: -1.311960 | Val: -1.536109
+  Epoch 14/50 | Train: -1.363186 | Val: -1.580796
+  Epoch 16/50 | Train: -1.455553 | Val: -0.614009
+  Epoch 17/50 | Train: -1.444019 | Val: -1.814973
+  Epoch 19/50 | Train: -1.486428 | Val: -1.863842
+  Epoch 20/50 | Train: -1.531217 | Val: -1.934795
+  Epoch 21/50 | Train: -1.554414 | Val: -1.895776
+  Epoch 22/50 | Train: -1.548747 | Val: -1.946707
+  Epoch 26/50 | Train: -1.591967 | Val: -1.848414
+  Epoch 31/50 | Train: -1.678937 | Val: -2.024701
+  Epoch 36/50 | Train: -1.708193 | Val: -2.061158
+  Epoch 41/50 | Train: -1.750968 | Val: -1.444596
+  Epoch 44/50 | Train: -1.760412 | Val: -2.082562
+  Epoch 46/50 | Train: -1.795238 | Val: -2.130431
+  *** Global best updated: -2.130431
+  Running SEVER filtering...
+  Clean data detected (variance=0.00 ≤ 0.05)
+  Filtered 0 outliers | Remaining: 20604
+  Stopping: no outliers or val_loss <= -4
+
+Trial 2 completed | Best val loss: -2.130431
+
+Trial 2 SUCCEEDED | Loss: -2.130431
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 3/20
+
+
+################################################################################
+# STARTING TRIAL 3
+# Time: 2025-11-12 01:53:11.187437
+################################################################################
+
+============================================================
+Trial 3 - SEVER Configuration:
+  variance_threshold: 0.75
+  sigma: None
+  top_fraction: 0.02
+  max_iterations: 20
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.750306 | Val: 1.489182
+  Epoch 2/50 | Train: 0.349109 | Val: -0.433932
+  Epoch 3/50 | Train: -0.463421 | Val: -0.748653
+  Epoch 4/50 | Train: -0.730005 | Val: -1.179142
+  Epoch 6/50 | Train: -0.998077 | Val: -1.208458
+  Epoch 11/50 | Train: -1.370767 | Val: -1.581871
+  Epoch 13/50 | Train: -1.410083 | Val: -1.599920
+  Epoch 14/50 | Train: -1.446859 | Val: -1.783110
+  Epoch 16/50 | Train: -1.469800 | Val: -1.200244
+  Epoch 17/50 | Train: -1.518762 | Val: -1.892249
+  Epoch 20/50 | Train: -1.596858 | Val: -1.911213
+  Epoch 21/50 | Train: -1.591598 | Val: -1.885424
+  Epoch 22/50 | Train: -1.623894 | Val: -1.917196
+  Epoch 26/50 | Train: -1.658018 | Val: -1.972451
+  Epoch 27/50 | Train: -1.658395 | Val: -1.984701
+  Epoch 31/50 | Train: -1.704443 | Val: -1.135379
+  Epoch 32/50 | Train: -1.719589 | Val: -2.091542
+  Epoch 36/50 | Train: -1.748265 | Val: -2.037118
+  Epoch 41/50 | Train: -1.830827 | Val: -2.076373
+  Early stopping at epoch 44
+  *** Global best updated: -2.091542
+  Running SEVER filtering...
+  Clean data detected (variance=0.01 ≤ 0.06)
+  Filtered 0 outliers | Remaining: 20604
+  Stopping: no outliers or val_loss <= -4
+
+Trial 3 completed | Best val loss: -2.091542
+
+Trial 3 SUCCEEDED | Loss: -2.091542
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 4/20
+
+
+################################################################################
+# STARTING TRIAL 4
+# Time: 2025-11-12 02:07:25.646244
+################################################################################
+
+============================================================
+Trial 4 - SEVER Configuration:
+  variance_threshold: 1.0
+  sigma: 0.005477225575051661
+  top_fraction: None
+  max_iterations: 20
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.530277 | Val: 0.653817
+  Epoch 2/50 | Train: 0.114019 | Val: 0.166349
+  Epoch 3/50 | Train: -0.620457 | Val: -0.951547
+  Epoch 4/50 | Train: -0.840558 | Val: -1.159822
+  Epoch 6/50 | Train: -1.090303 | Val: -1.085719
+  Epoch 7/50 | Train: -1.194213 | Val: -1.418162
+  Epoch 9/50 | Train: -1.298007 | Val: -1.689253
+  Epoch 11/50 | Train: -1.381635 | Val: -1.559389
+  Epoch 14/50 | Train: -1.460305 | Val: -1.791899
+  Epoch 16/50 | Train: -1.560337 | Val: -1.784532
+  Epoch 17/50 | Train: -1.542883 | Val: -1.828350
+  Epoch 21/50 | Train: -1.600449 | Val: -1.624085
+  Epoch 22/50 | Train: -1.650255 | Val: -1.887869
+  Epoch 26/50 | Train: -1.699669 | Val: -1.805940
+  Epoch 27/50 | Train: -1.728030 | Val: -1.955055
+  Epoch 31/50 | Train: -1.753534 | Val: 1.218204
+  Epoch 35/50 | Train: -1.803554 | Val: -1.974347
+  Epoch 36/50 | Train: -1.811321 | Val: -2.051155
+  Epoch 41/50 | Train: -1.857791 | Val: -1.969691
+  Epoch 42/50 | Train: -1.844343 | Val: -2.078436
+  Epoch 46/50 | Train: -1.854060 | Val: -2.088430
+  *** Global best updated: -2.088430
+  Running SEVER filtering...
+Remove with random threshold 0.03044431239102396
+  Removing 693 points (top 3.36%)
+  Variance: 6.85e-03 > threshold 5.48e-03
+  Final dataset: 19911 samples (96.6% retained)
+  Filtered 693 outliers | Remaining: 19911
+
+--- Iteration 1 ---
+  Epoch 1/50 | Train: 1.706394 | Val: 1.206182
+  Epoch 2/50 | Train: 0.892125 | Val: 0.762399
+  Epoch 3/50 | Train: -0.086526 | Val: -0.439136
+  Epoch 4/50 | Train: -0.661335 | Val: -0.799530
+  Epoch 5/50 | Train: -0.891638 | Val: -0.799644
+  Epoch 6/50 | Train: -1.004207 | Val: -1.375597
+  Epoch 7/50 | Train: -1.074684 | Val: -1.424204
+  Epoch 10/50 | Train: -1.284326 | Val: -1.437492
+  Epoch 11/50 | Train: -1.296815 | Val: -0.754657
+  Epoch 13/50 | Train: -1.398624 | Val: -1.594698
+  Epoch 16/50 | Train: -1.451797 | Val: -1.630581
+  Epoch 18/50 | Train: -1.489358 | Val: -1.709554
+  Epoch 19/50 | Train: -1.505814 | Val: -1.845612
+  Epoch 21/50 | Train: -1.545267 | Val: -1.582359
+  Epoch 26/50 | Train: -1.648538 | Val: -2.005964
+  Epoch 27/50 | Train: -1.671215 | Val: -2.023754
+  Epoch 31/50 | Train: -1.647035 | Val: -1.952742
+  Epoch 33/50 | Train: -1.705768 | Val: -2.047030
+  Epoch 36/50 | Train: -1.711781 | Val: -1.915013
+  Epoch 40/50 | Train: -1.719200 | Val: -2.079249
+  Epoch 41/50 | Train: -1.722397 | Val: -1.984571
+  Epoch 46/50 | Train: -1.762702 | Val: -2.053382
+  Epoch 49/50 | Train: -1.774443 | Val: -2.105843
+  *** Global best updated: -2.105843
+  Running SEVER filtering...
+  Clean data detected (variance=0.01 ≤ 0.01)
+  Filtered 0 outliers | Remaining: 19911
+  Stopping: no outliers or val_loss <= -4
+
+Trial 4 completed | Best val loss: -2.105843
+
+Trial 4 SUCCEEDED | Loss: -2.105843
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 5/20
+
+
+################################################################################
+# STARTING TRIAL 5
+# Time: 2025-11-12 02:38:04.729292
+################################################################################
+
+============================================================
+Trial 5 - SEVER Configuration:
+  variance_threshold: 0.75
+  sigma: None
+  top_fraction: None
+  max_iterations: 5
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.738523 | Val: 1.542761
+  Epoch 2/50 | Train: 1.003880 | Val: 0.566371
+  Epoch 3/50 | Train: -0.063807 | Val: -0.730841
+  Epoch 4/50 | Train: -0.663208 | Val: -1.101000
+  Epoch 5/50 | Train: -0.867340 | Val: -1.284745
+  Epoch 6/50 | Train: -1.006071 | Val: -1.353079
+  Epoch 9/50 | Train: -1.258430 | Val: -1.449515
+  Epoch 10/50 | Train: -1.285788 | Val: -1.553009
+  Epoch 11/50 | Train: -1.347043 | Val: -1.178768
+  Epoch 14/50 | Train: -1.460962 | Val: -1.831207
+  Epoch 16/50 | Train: -1.473802 | Val: -1.830661
+  Epoch 18/50 | Train: -1.532802 | Val: -1.837035
+  Epoch 21/50 | Train: -1.592160 | Val: -1.922716
+  Epoch 22/50 | Train: -1.625051 | Val: -1.979954
+  Epoch 26/50 | Train: -1.659681 | Val: -1.795843
+  Epoch 29/50 | Train: -1.734071 | Val: -2.079833
+  Epoch 31/50 | Train: -1.736592 | Val: -2.055482
+  Epoch 36/50 | Train: -1.764032 | Val: -2.086653
+  Epoch 41/50 | Train: -1.799180 | Val: -2.040678
+  Epoch 44/50 | Train: -1.806685 | Val: -2.099288
+  Epoch 46/50 | Train: -1.815795 | Val: -2.115786
+  Epoch 47/50 | Train: -1.822668 | Val: -2.116336
+  *** Global best updated: -2.116336
+  Running SEVER filtering...
+  Clean data detected (variance=0.00 ≤ 0.05)
+  Filtered 0 outliers | Remaining: 20604
+  Stopping: no outliers or val_loss <= -4
+
+Trial 5 completed | Best val loss: -2.116336
+
+Trial 5 SUCCEEDED | Loss: -2.116336
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 6/20
+
+
+################################################################################
+# STARTING TRIAL 6
+# Time: 2025-11-12 02:51:34.667078
+################################################################################
+
+============================================================
+Trial 6 - SEVER Configuration:
+  variance_threshold: 0.5
+  sigma: 0.005477225575051661
+  top_fraction: 0.02
+  max_iterations: 20
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.741678 | Val: 1.442170
+  Epoch 2/50 | Train: 0.574037 | Val: -0.198109
+  Epoch 4/50 | Train: -0.807562 | Val: -1.245540
+  Epoch 5/50 | Train: -0.954159 | Val: -1.264817
+  Epoch 6/50 | Train: -1.060090 | Val: -1.065332
+  Epoch 7/50 | Train: -1.160460 | Val: -1.503599
+  Epoch 8/50 | Train: -1.214397 | Val: -1.551792
+  Epoch 10/50 | Train: -1.285090 | Val: -1.626869
+  Epoch 11/50 | Train: -1.348583 | Val: -1.771647
+  Epoch 16/50 | Train: -1.480511 | Val: -1.571083
+  Epoch 17/50 | Train: -1.502822 | Val: -1.931440
+  Epoch 20/50 | Train: -1.551091 | Val: -1.960781
+  Epoch 21/50 | Train: -1.565004 | Val: -1.933099
+  Epoch 23/50 | Train: -1.599269 | Val: -2.033505
+  Epoch 26/50 | Train: -1.627257 | Val: -1.969304
+  Epoch 30/50 | Train: -1.745740 | Val: -2.094347
+  Epoch 31/50 | Train: -1.691020 | Val: -2.048396
+  Epoch 36/50 | Train: -1.720898 | Val: -1.897878
+  Epoch 37/50 | Train: -1.745427 | Val: -2.104825
+  Epoch 41/50 | Train: -1.772709 | Val: -2.082628
+  Epoch 44/50 | Train: -1.797149 | Val: -2.124236
+  Epoch 45/50 | Train: -1.786968 | Val: -2.129265
+  Epoch 46/50 | Train: -1.797458 | Val: -2.135822
+  Epoch 50/50 | Train: -1.790344 | Val: -2.140778
+  *** Global best updated: -2.140778
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 413 points (top 2.00%)
+  Variance: 4.75e-03 > threshold 2.74e-03
+  Final dataset: 20191 samples (98.0% retained)
+  Filtered 413 outliers | Remaining: 20191
+
+--- Iteration 1 ---
+  Epoch 1/50 | Train: 1.586288 | Val: 1.027042
+  Epoch 2/50 | Train: 0.572625 | Val: 0.308905
+  Epoch 3/50 | Train: -0.324456 | Val: -0.735173
+  Epoch 5/50 | Train: -0.815764 | Val: -1.284248
+  Epoch 6/50 | Train: -0.952703 | Val: -0.419581
+  Epoch 7/50 | Train: -1.098392 | Val: -1.478233
+  Epoch 11/50 | Train: -1.351105 | Val: -1.403278
+  Epoch 13/50 | Train: -1.439273 | Val: -1.692561
+  Epoch 16/50 | Train: -1.525607 | Val: -1.913677
+  Epoch 21/50 | Train: -1.647651 | Val: -1.383895
+  Epoch 23/50 | Train: -1.659518 | Val: -1.948927
+  Epoch 24/50 | Train: -1.695446 | Val: -1.975421
+  Epoch 26/50 | Train: -1.668108 | Val: -1.216525
+  Epoch 27/50 | Train: -1.735427 | Val: -2.048457
+  Epoch 30/50 | Train: -1.760987 | Val: -2.067418
+  Epoch 31/50 | Train: -1.749472 | Val: -1.977428
+  Epoch 33/50 | Train: -1.756940 | Val: -2.103190
+  Epoch 36/50 | Train: -1.781894 | Val: -1.939331
+  Epoch 41/50 | Train: -1.835014 | Val: -2.132547
+  Epoch 46/50 | Train: -1.829100 | Val: -2.163672
+  *** Global best updated: -2.163672
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 404 points (top 2.00%)
+  Variance: 5.15e-03 > threshold 2.74e-03
+  Final dataset: 19787 samples (98.0% retained)
+  Filtered 404 outliers | Remaining: 19787
+
+--- Iteration 2 ---
+  Epoch 1/50 | Train: 1.638135 | Val: 1.131181
+  Epoch 2/50 | Train: 0.422777 | Val: -0.069406
+  Epoch 3/50 | Train: -0.478339 | Val: -0.765728
+  Epoch 4/50 | Train: -0.770507 | Val: -1.035388
+  Epoch 5/50 | Train: -0.964787 | Val: -1.384235
+  Epoch 6/50 | Train: -1.093000 | Val: -0.699950
+  Epoch 7/50 | Train: -1.221185 | Val: -1.441755
+  Epoch 9/50 | Train: -1.337927 | Val: -1.644552
+  Epoch 11/50 | Train: -1.435098 | Val: -1.748136
+  Epoch 12/50 | Train: -1.492962 | Val: -1.766023
+  Epoch 13/50 | Train: -1.488574 | Val: -1.852353
+  Epoch 16/50 | Train: -1.578369 | Val: -0.522571
+  Epoch 17/50 | Train: -1.634751 | Val: -1.901490
+  Epoch 21/50 | Train: -1.670370 | Val: -1.947852
+  Epoch 22/50 | Train: -1.730544 | Val: -2.054713
+  Epoch 26/50 | Train: -1.720304 | Val: -1.720933
+  Epoch 31/50 | Train: -1.856799 | Val: -1.990368
+  Early stopping at epoch 34
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 396 points (top 2.00%)
+  Variance: 7.32e-03 > threshold 2.74e-03
+  Final dataset: 19391 samples (98.0% retained)
+  Filtered 396 outliers | Remaining: 19391
+
+--- Iteration 3 ---
+  Epoch 1/50 | Train: 1.737023 | Val: 1.247237
+  Epoch 2/50 | Train: 0.687328 | Val: 0.219027
+  Epoch 3/50 | Train: -0.398216 | Val: -0.547007
+  Epoch 4/50 | Train: -0.783114 | Val: -0.618613
+  Epoch 5/50 | Train: -0.952477 | Val: -1.017194
+  Epoch 6/50 | Train: -1.081079 | Val: -1.235400
+  Epoch 7/50 | Train: -1.164938 | Val: -1.585615
+  Epoch 8/50 | Train: -1.234891 | Val: -1.634126
+  Epoch 11/50 | Train: -1.397277 | Val: -1.812498
+  Epoch 16/50 | Train: -1.565387 | Val: -1.749487
+  Epoch 18/50 | Train: -1.581905 | Val: -1.928373
+  Epoch 21/50 | Train: -1.615303 | Val: -1.595327
+  Epoch 24/50 | Train: -1.624474 | Val: -1.931449
+  Epoch 26/50 | Train: -1.672190 | Val: -1.930575
+  Epoch 31/50 | Train: -1.720822 | Val: -2.028095
+  Epoch 36/50 | Train: -1.734189 | Val: -1.980923
+  Epoch 39/50 | Train: -1.767006 | Val: -2.040890
+  Epoch 41/50 | Train: -1.742735 | Val: -2.041335
+  Epoch 42/50 | Train: -1.749915 | Val: -2.053102
+  Epoch 46/50 | Train: -1.742396 | Val: -2.010580
+  Epoch 49/50 | Train: -1.776390 | Val: -2.063374
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 388 points (top 2.00%)
+  Variance: 4.71e-03 > threshold 2.74e-03
+  Final dataset: 19003 samples (98.0% retained)
+  Filtered 388 outliers | Remaining: 19003
+
+--- Iteration 4 ---
+  Epoch 1/50 | Train: 1.745566 | Val: 1.660783
+  Epoch 2/50 | Train: 0.749746 | Val: 0.269957
+  Epoch 3/50 | Train: -0.323668 | Val: -0.354240
+  Epoch 4/50 | Train: -0.726714 | Val: -0.687562
+  Epoch 6/50 | Train: -1.012618 | Val: -1.349993
+  Epoch 7/50 | Train: -1.085771 | Val: -1.432824
+  Epoch 11/50 | Train: -1.300527 | Val: -1.516644
+  Epoch 16/50 | Train: -1.406151 | Val: -1.597232
+  Epoch 20/50 | Train: -1.512600 | Val: -1.784678
+  Epoch 21/50 | Train: -1.512800 | Val: -1.628066
+  Epoch 25/50 | Train: -1.552345 | Val: -1.798700
+  Epoch 26/50 | Train: -1.554835 | Val: -0.564773
+  Epoch 30/50 | Train: -1.643631 | Val: -1.798951
+  Epoch 31/50 | Train: -1.658098 | Val: -1.742639
+  Epoch 34/50 | Train: -1.696412 | Val: -1.821584
+  Epoch 36/50 | Train: -1.697572 | Val: -1.969504
+  Epoch 39/50 | Train: -1.705794 | Val: -1.990549
+  Epoch 41/50 | Train: -1.740117 | Val: -1.765923
+  Epoch 46/50 | Train: -1.816547 | Val: -2.081335
+  Epoch 47/50 | Train: -1.809398 | Val: -2.095747
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 381 points (top 2.00%)
+  Variance: 6.41e-03 > threshold 2.74e-03
+  Final dataset: 18622 samples (98.0% retained)
+  Filtered 381 outliers | Remaining: 18622
+
+--- Iteration 5 ---
+  Epoch 1/50 | Train: 1.864423 | Val: 1.498144
+  Epoch 2/50 | Train: 0.953363 | Val: 0.449033
+  Epoch 3/50 | Train: 0.093009 | Val: -0.540620
+  Epoch 5/50 | Train: -0.800888 | Val: -0.662924
+  Epoch 6/50 | Train: -0.975138 | Val: -0.901891
+  Epoch 7/50 | Train: -1.046694 | Val: -0.925000
+  Epoch 9/50 | Train: -1.229734 | Val: -1.029211
+  Epoch 10/50 | Train: -1.292475 | Val: -1.478898
+  Epoch 11/50 | Train: -1.333810 | Val: -1.687283
+  Epoch 14/50 | Train: -1.452195 | Val: -1.690303
+  Epoch 16/50 | Train: -1.513062 | Val: -1.501735
+  Epoch 20/50 | Train: -1.564195 | Val: -1.937706
+  Epoch 21/50 | Train: -1.626452 | Val: -1.829927
+  Epoch 22/50 | Train: -1.614090 | Val: -1.952641
+  Epoch 26/50 | Train: -1.680016 | Val: -0.166539
+  Epoch 29/50 | Train: -1.735042 | Val: -2.021520
+  Epoch 31/50 | Train: -1.745979 | Val: -1.984195
+  Epoch 35/50 | Train: -1.758930 | Val: -2.043023
+  Epoch 36/50 | Train: -1.818319 | Val: -1.865074
+  Epoch 37/50 | Train: -1.784133 | Val: -2.055659
+  Epoch 41/50 | Train: -1.805161 | Val: -1.969103
+  Epoch 44/50 | Train: -1.832363 | Val: -2.107552
+  Epoch 46/50 | Train: -1.869997 | Val: -2.035341
+  Epoch 47/50 | Train: -1.878109 | Val: -2.114146
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 373 points (top 2.00%)
+  Variance: 4.42e-03 > threshold 2.74e-03
+  Final dataset: 18249 samples (98.0% retained)
+  Filtered 373 outliers | Remaining: 18249
+
+--- Iteration 6 ---
+  Epoch 1/50 | Train: 1.834135 | Val: 1.487163
+  Epoch 2/50 | Train: 0.789365 | Val: 0.319404
+  Epoch 3/50 | Train: -0.333932 | Val: -0.896956
+  Epoch 5/50 | Train: -0.861518 | Val: -1.105872
+  Epoch 6/50 | Train: -0.956533 | Val: -0.473002
+  Epoch 7/50 | Train: -1.030032 | Val: -1.265544
+  Epoch 8/50 | Train: -1.105054 | Val: -1.520491
+  Epoch 10/50 | Train: -1.197822 | Val: -1.587291
+  Epoch 11/50 | Train: -1.227500 | Val: -1.645341
+  Epoch 12/50 | Train: -1.257324 | Val: -1.749463
+  Epoch 15/50 | Train: -1.375867 | Val: -1.801196
+  Epoch 16/50 | Train: -1.410135 | Val: -1.710486
+  Epoch 21/50 | Train: -1.524070 | Val: -1.829022
+  Epoch 23/50 | Train: -1.561028 | Val: -1.840674
+  Epoch 25/50 | Train: -1.575414 | Val: -1.931234
+  Epoch 26/50 | Train: -1.596302 | Val: -1.971215
+  Epoch 31/50 | Train: -1.658911 | Val: -1.828337
+  Epoch 32/50 | Train: -1.655780 | Val: -2.072074
+  Epoch 36/50 | Train: -1.722376 | Val: -1.931433
+  Epoch 41/50 | Train: -1.794143 | Val: -1.956250
+  Early stopping at epoch 44
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 365 points (top 2.00%)
+  Variance: 3.96e-03 > threshold 2.74e-03
+  Final dataset: 17884 samples (98.0% retained)
+  Filtered 365 outliers | Remaining: 17884
+
+--- Iteration 7 ---
+  Epoch 1/50 | Train: 1.673663 | Val: 1.290622
+  Epoch 2/50 | Train: 0.825849 | Val: 0.540836
+  Epoch 3/50 | Train: -0.126225 | Val: -0.617170
+  Epoch 4/50 | Train: -0.720917 | Val: -1.094153
+  Epoch 6/50 | Train: -1.042513 | Val: -1.410708
+  Epoch 7/50 | Train: -1.129094 | Val: -1.465605
+  Epoch 8/50 | Train: -1.184099 | Val: -1.492629
+  Epoch 10/50 | Train: -1.292353 | Val: -1.548387
+  Epoch 11/50 | Train: -1.314436 | Val: -1.544231
+  Epoch 12/50 | Train: -1.370761 | Val: -1.568618
+  Epoch 13/50 | Train: -1.365901 | Val: -1.793326
+  Epoch 14/50 | Train: -1.439768 | Val: -1.809635
+  Epoch 16/50 | Train: -1.469801 | Val: -1.750745
+  Epoch 18/50 | Train: -1.498632 | Val: -1.829834
+  Epoch 19/50 | Train: -1.548834 | Val: -1.887860
+  Epoch 21/50 | Train: -1.553317 | Val: -1.938057
+  Epoch 26/50 | Train: -1.615557 | Val: -1.956231
+  Epoch 30/50 | Train: -1.666223 | Val: -2.013305
+  Epoch 31/50 | Train: -1.672426 | Val: -0.844583
+  Epoch 36/50 | Train: -1.749675 | Val: -1.238667
+  Epoch 37/50 | Train: -1.743229 | Val: -2.062220
+  Epoch 41/50 | Train: -1.805761 | Val: -2.000322
+  Epoch 42/50 | Train: -1.816548 | Val: -2.114574
+  Epoch 46/50 | Train: -1.810792 | Val: -2.047137
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 358 points (top 2.00%)
+  Variance: 4.65e-03 > threshold 2.74e-03
+  Final dataset: 17526 samples (98.0% retained)
+  Filtered 358 outliers | Remaining: 17526
+
+--- Iteration 8 ---
+  Epoch 1/50 | Train: 1.828726 | Val: 1.296669
+  Epoch 2/50 | Train: 0.839700 | Val: 0.973781
+  Epoch 3/50 | Train: -0.095409 | Val: -0.057042
+  Epoch 6/50 | Train: -0.993180 | Val: -1.094537
+  Epoch 7/50 | Train: -1.084367 | Val: -1.378891
+  Epoch 9/50 | Train: -1.185686 | Val: -1.433969
+  Epoch 11/50 | Train: -1.334823 | Val: -1.481612
+  Epoch 14/50 | Train: -1.425754 | Val: -1.605542
+  Epoch 15/50 | Train: -1.460799 | Val: -1.767079
+  Epoch 16/50 | Train: -1.490292 | Val: -1.841257
+  Epoch 21/50 | Train: -1.608509 | Val: -0.264957
+  Epoch 23/50 | Train: -1.634589 | Val: -1.877457
+  Epoch 26/50 | Train: -1.686467 | Val: -1.822346
+  Epoch 30/50 | Train: -1.743010 | Val: -2.008414
+  Epoch 31/50 | Train: -1.724542 | Val: -1.751526
+  Epoch 36/50 | Train: -1.727650 | Val: -1.754082
+  Epoch 38/50 | Train: -1.789164 | Val: -2.043081
+  Epoch 41/50 | Train: -1.772676 | Val: -2.033343
+  Epoch 42/50 | Train: -1.770633 | Val: -2.065293
+  Epoch 46/50 | Train: -1.773311 | Val: -1.959309
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 351 points (top 2.00%)
+  Variance: 4.98e-03 > threshold 2.74e-03
+  Final dataset: 17175 samples (98.0% retained)
+  Filtered 351 outliers | Remaining: 17175
+
+--- Iteration 9 ---
+  Epoch 1/50 | Train: 1.756408 | Val: 1.500075
+  Epoch 2/50 | Train: 0.812092 | Val: 0.132132
+  Epoch 3/50 | Train: -0.311761 | Val: -0.880512
+  Epoch 5/50 | Train: -0.876238 | Val: -1.227608
+  Epoch 6/50 | Train: -0.993327 | Val: -1.418434
+  Epoch 7/50 | Train: -1.107618 | Val: -1.519874
+  Epoch 8/50 | Train: -1.147335 | Val: -1.597071
+  Epoch 11/50 | Train: -1.310512 | Val: -1.683491
+  Epoch 14/50 | Train: -1.410906 | Val: -1.818536
+  Epoch 16/50 | Train: -1.454128 | Val: -1.006011
+  Epoch 21/50 | Train: -1.576709 | Val: -1.837018
+  Epoch 22/50 | Train: -1.583913 | Val: -1.863854
+  Epoch 24/50 | Train: -1.560675 | Val: -1.886880
+  Epoch 25/50 | Train: -1.607832 | Val: -1.978899
+  Epoch 26/50 | Train: -1.610089 | Val: -1.918238
+  Epoch 31/50 | Train: -1.676514 | Val: -1.995118
+  Epoch 36/50 | Train: -1.676250 | Val: -1.148438
+  Epoch 39/50 | Train: -1.711748 | Val: -1.998127
+  Epoch 40/50 | Train: -1.734083 | Val: -2.020115
+  Epoch 41/50 | Train: -1.728347 | Val: -2.031970
+  Epoch 46/50 | Train: -1.710685 | Val: -2.064142
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 344 points (top 2.00%)
+  Variance: 4.93e-03 > threshold 2.74e-03
+  Final dataset: 16831 samples (98.0% retained)
+  Filtered 344 outliers | Remaining: 16831
+
+--- Iteration 10 ---
+  Epoch 1/50 | Train: 1.765551 | Val: 1.586069
+  Epoch 2/50 | Train: 0.866735 | Val: 0.118628
+  Epoch 3/50 | Train: -0.223511 | Val: -0.662695
+  Epoch 6/50 | Train: -0.945356 | Val: -1.002321
+  Epoch 7/50 | Train: -1.030755 | Val: -1.360459
+  Epoch 8/50 | Train: -1.110217 | Val: -1.491276
+  Epoch 10/50 | Train: -1.232607 | Val: -1.553022
+  Epoch 11/50 | Train: -1.310535 | Val: -0.915188
+  Epoch 15/50 | Train: -1.428618 | Val: -1.687484
+  Epoch 16/50 | Train: -1.459000 | Val: -0.840814
+  Epoch 18/50 | Train: -1.487018 | Val: -1.762667
+  Epoch 19/50 | Train: -1.530415 | Val: -1.845215
+  Epoch 20/50 | Train: -1.530430 | Val: -1.868279
+  Epoch 21/50 | Train: -1.561671 | Val: -0.170842
+  Epoch 26/50 | Train: -1.640044 | Val: -1.119700
+  Epoch 28/50 | Train: -1.657286 | Val: -2.029482
+  Epoch 31/50 | Train: -1.673539 | Val: -1.471716
+  Epoch 36/50 | Train: -1.733642 | Val: -2.033514
+  Epoch 37/50 | Train: -1.680507 | Val: -2.038019
+  Epoch 41/50 | Train: -1.738345 | Val: -2.028821
+  Epoch 45/50 | Train: -1.732992 | Val: -2.041660
+  Epoch 46/50 | Train: -1.771406 | Val: -2.060643
+  Epoch 48/50 | Train: -1.766275 | Val: -2.066691
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 337 points (top 2.00%)
+  Variance: 4.66e-03 > threshold 2.74e-03
+  Final dataset: 16494 samples (98.0% retained)
+  Filtered 337 outliers | Remaining: 16494
+
+--- Iteration 11 ---
+  Epoch 1/50 | Train: 1.801542 | Val: 1.795772
+  Epoch 2/50 | Train: 0.833888 | Val: 0.980669
+  Epoch 3/50 | Train: -0.161249 | Val: -0.482417
+  Epoch 4/50 | Train: -0.654554 | Val: -1.082953
+  Epoch 5/50 | Train: -0.824695 | Val: -1.225318
+  Epoch 6/50 | Train: -0.972038 | Val: -1.208254
+  Epoch 9/50 | Train: -1.232282 | Val: -1.449754
+  Epoch 10/50 | Train: -1.283718 | Val: -1.626218
+  Epoch 11/50 | Train: -1.338022 | Val: 0.383026
+  Epoch 15/50 | Train: -1.463248 | Val: -1.728734
+  Epoch 16/50 | Train: -1.489456 | Val: 1.226315
+  Epoch 21/50 | Train: -1.560731 | Val: -0.859902
+  Epoch 22/50 | Train: -1.649593 | Val: -1.888758
+  Epoch 23/50 | Train: -1.637868 | Val: -1.922694
+  Epoch 24/50 | Train: -1.653003 | Val: -1.927631
+  Epoch 25/50 | Train: -1.660362 | Val: -1.957442
+  Epoch 26/50 | Train: -1.683582 | Val: -1.507475
+  Epoch 31/50 | Train: -1.721544 | Val: -1.873434
+  Epoch 33/50 | Train: -1.752225 | Val: -1.962412
+  Epoch 34/50 | Train: -1.709427 | Val: -1.969330
+  Epoch 35/50 | Train: -1.744757 | Val: -1.978896
+  Epoch 36/50 | Train: -1.749962 | Val: -2.001487
+  Epoch 38/50 | Train: -1.731358 | Val: -2.007707
+  Epoch 41/50 | Train: -1.739322 | Val: -1.850308
+  Epoch 45/50 | Train: -1.800529 | Val: -2.034555
+  Epoch 46/50 | Train: -1.801846 | Val: -2.058397
+  Epoch 50/50 | Train: -1.773988 | Val: -2.071050
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 330 points (top 2.00%)
+  Variance: 4.82e-03 > threshold 2.74e-03
+  Final dataset: 16164 samples (98.0% retained)
+  Filtered 330 outliers | Remaining: 16164
+
+--- Iteration 12 ---
+  Epoch 1/50 | Train: 1.780396 | Val: 1.315459
+  Epoch 2/50 | Train: 0.784722 | Val: 0.228537
+  Epoch 3/50 | Train: -0.062783 | Val: -0.503708
+  Epoch 4/50 | Train: -0.592762 | Val: -0.944057
+  Epoch 6/50 | Train: -0.927402 | Val: -1.266214
+  Epoch 8/50 | Train: -1.156452 | Val: -1.407384
+  Epoch 10/50 | Train: -1.235515 | Val: -1.618640
+  Epoch 11/50 | Train: -1.304403 | Val: -1.653992
+  Epoch 15/50 | Train: -1.447226 | Val: -1.734691
+  Epoch 16/50 | Train: -1.471145 | Val: -1.807278
+  Epoch 19/50 | Train: -1.543368 | Val: -1.914412
+  Epoch 21/50 | Train: -1.593904 | Val: -1.879773
+  Epoch 23/50 | Train: -1.572212 | Val: -1.936406
+  Epoch 26/50 | Train: -1.680484 | Val: -1.699048
+  Epoch 27/50 | Train: -1.694419 | Val: -1.955100
+  Epoch 31/50 | Train: -1.729079 | Val: -1.781203
+  Epoch 34/50 | Train: -1.783452 | Val: -2.043358
+  Epoch 36/50 | Train: -1.772222 | Val: -2.070072
+  Epoch 41/50 | Train: -1.800477 | Val: -1.430313
+  Epoch 43/50 | Train: -1.815716 | Val: -2.104891
+  Epoch 46/50 | Train: -1.840178 | Val: -1.878733
+  Epoch 49/50 | Train: -1.869976 | Val: -2.119819
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 324 points (top 2.00%)
+  Variance: 4.57e-03 > threshold 2.74e-03
+  Final dataset: 15840 samples (98.0% retained)
+  Filtered 324 outliers | Remaining: 15840
+
+--- Iteration 13 ---
+  Epoch 1/50 | Train: 1.848591 | Val: 1.575052
+  Epoch 2/50 | Train: 0.912221 | Val: 1.448994
+  Epoch 3/50 | Train: -0.054180 | Val: -0.205535
+  Epoch 4/50 | Train: -0.466825 | Val: -0.966981
+  Epoch 6/50 | Train: -0.776109 | Val: -0.579914
+  Epoch 7/50 | Train: -0.880546 | Val: -1.091517
+  Epoch 8/50 | Train: -0.974053 | Val: -1.107950
+  Epoch 10/50 | Train: -1.061685 | Val: -1.413334
+  Epoch 11/50 | Train: -1.151406 | Val: -1.433656
+  Epoch 13/50 | Train: -1.198765 | Val: -1.449348
+  Epoch 14/50 | Train: -1.270748 | Val: -1.595215
+  Epoch 16/50 | Train: -1.348490 | Val: -1.614446
+  Epoch 21/50 | Train: -1.445145 | Val: -1.397052
+  Epoch 22/50 | Train: -1.485142 | Val: -1.684107
+  Epoch 23/50 | Train: -1.483063 | Val: -1.827411
+  Epoch 26/50 | Train: -1.525546 | Val: -1.812650
+  Epoch 30/50 | Train: -1.595828 | Val: -1.898413
+  Epoch 31/50 | Train: -1.632402 | Val: -1.966187
+  Epoch 35/50 | Train: -1.639301 | Val: -2.006808
+  Epoch 36/50 | Train: -1.639164 | Val: -1.320079
+  Epoch 41/50 | Train: -1.671738 | Val: -1.367398
+  Epoch 42/50 | Train: -1.670153 | Val: -2.029812
+  Epoch 46/50 | Train: -1.697773 | Val: -1.981213
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 317 points (top 2.00%)
+  Variance: 4.69e-03 > threshold 2.74e-03
+  Final dataset: 15523 samples (98.0% retained)
+  Filtered 317 outliers | Remaining: 15523
+
+--- Iteration 14 ---
+  Epoch 1/50 | Train: 1.830953 | Val: 1.931766
+  Epoch 2/50 | Train: 1.263579 | Val: 1.076397
+  Epoch 3/50 | Train: 0.656328 | Val: 0.044664
+  Epoch 4/50 | Train: -0.214282 | Val: -0.709199
+  Epoch 5/50 | Train: -0.553698 | Val: -0.876821
+  Epoch 6/50 | Train: -0.747662 | Val: -0.673579
+  Epoch 7/50 | Train: -0.909481 | Val: -1.304028
+  Epoch 9/50 | Train: -1.091031 | Val: -1.327891
+  Epoch 11/50 | Train: -1.198805 | Val: -1.622125
+  Epoch 16/50 | Train: -1.337206 | Val: -1.733370
+  Epoch 21/50 | Train: -1.468109 | Val: -1.322511
+  Epoch 22/50 | Train: -1.492426 | Val: -1.907326
+  Epoch 26/50 | Train: -1.575412 | Val: -1.568241
+  Epoch 29/50 | Train: -1.614706 | Val: -1.913709
+  Epoch 30/50 | Train: -1.584207 | Val: -1.914284
+  Epoch 31/50 | Train: -1.629276 | Val: -1.911732
+  Epoch 32/50 | Train: -1.629408 | Val: -1.937670
+  Epoch 33/50 | Train: -1.619584 | Val: -1.990642
+  Epoch 36/50 | Train: -1.677905 | Val: -1.938506
+  Epoch 41/50 | Train: -1.687978 | Val: -1.971627
+  Epoch 44/50 | Train: -1.682366 | Val: -2.018124
+  Epoch 46/50 | Train: -1.701837 | Val: -2.014431
+  Epoch 47/50 | Train: -1.686841 | Val: -2.032476
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 311 points (top 2.00%)
+  Variance: 4.10e-03 > threshold 2.74e-03
+  Final dataset: 15212 samples (98.0% retained)
+  Filtered 311 outliers | Remaining: 15212
+
+--- Iteration 15 ---
+  Epoch 1/50 | Train: 1.908666 | Val: 2.084794
+  Epoch 2/50 | Train: 1.336990 | Val: 1.072084
+  Epoch 3/50 | Train: 0.803025 | Val: 0.320548
+  Epoch 4/50 | Train: 0.077525 | Val: -0.439979
+  Epoch 5/50 | Train: -0.480165 | Val: -0.855859
+  Epoch 6/50 | Train: -0.696760 | Val: -1.020866
+  Epoch 7/50 | Train: -0.841972 | Val: -1.028621
+  Epoch 9/50 | Train: -0.992774 | Val: -1.196923
+  Epoch 11/50 | Train: -1.168854 | Val: -0.397187
+  Epoch 12/50 | Train: -1.167706 | Val: -1.476883
+  Epoch 14/50 | Train: -1.267323 | Val: -1.594828
+  Epoch 15/50 | Train: -1.314846 | Val: -1.673892
+  Epoch 16/50 | Train: -1.348160 | Val: -1.605946
+  Epoch 18/50 | Train: -1.391747 | Val: -1.749423
+  Epoch 20/50 | Train: -1.410935 | Val: -1.765090
+  Epoch 21/50 | Train: -1.442917 | Val: -1.740819
+  Epoch 22/50 | Train: -1.472239 | Val: -1.827558
+  Epoch 23/50 | Train: -1.488451 | Val: -1.862488
+  Epoch 26/50 | Train: -1.492810 | Val: -1.874400
+  Epoch 30/50 | Train: -1.567469 | Val: -1.892713
+  Epoch 31/50 | Train: -1.592122 | Val: -1.879422
+  Epoch 36/50 | Train: -1.633827 | Val: -1.761744
+  Epoch 39/50 | Train: -1.667904 | Val: -1.933003
+  Epoch 41/50 | Train: -1.669400 | Val: -2.000818
+  Epoch 46/50 | Train: -1.711793 | Val: -1.967698
+  Epoch 47/50 | Train: -1.717893 | Val: -2.062552
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 305 points (top 2.00%)
+  Variance: 4.04e-03 > threshold 2.74e-03
+  Final dataset: 14907 samples (98.0% retained)
+  Filtered 305 outliers | Remaining: 14907
+
+--- Iteration 16 ---
+  Epoch 1/50 | Train: 1.682090 | Val: 2.637633
+  Epoch 2/50 | Train: 0.934731 | Val: 0.920173
+  Epoch 3/50 | Train: 0.414787 | Val: -0.139624
+  Epoch 4/50 | Train: -0.299745 | Val: -0.196458
+  Epoch 5/50 | Train: -0.697555 | Val: -1.115804
+  Epoch 6/50 | Train: -0.847236 | Val: -1.307165
+  Epoch 11/50 | Train: -1.206561 | Val: -1.413383
+  Epoch 15/50 | Train: -1.320456 | Val: -1.621055
+  Epoch 16/50 | Train: -1.368477 | Val: -1.757779
+  Epoch 19/50 | Train: -1.464722 | Val: -1.769597
+  Epoch 21/50 | Train: -1.456173 | Val: -1.756700
+  Epoch 24/50 | Train: -1.525093 | Val: -1.847330
+  Epoch 26/50 | Train: -1.592346 | Val: -1.778979
+  Epoch 27/50 | Train: -1.576822 | Val: -1.875496
+  Epoch 31/50 | Train: -1.607699 | Val: -1.939490
+  Epoch 36/50 | Train: -1.654627 | Val: -1.660092
+  Epoch 38/50 | Train: -1.703552 | Val: -2.040743
+  Epoch 41/50 | Train: -1.709587 | Val: -1.456564
+  Epoch 42/50 | Train: -1.747857 | Val: -2.046276
+  Epoch 44/50 | Train: -1.758189 | Val: -2.064326
+  Epoch 46/50 | Train: -1.733143 | Val: -1.928597
+  Epoch 48/50 | Train: -1.759345 | Val: -2.077319
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 299 points (top 2.01%)
+  Variance: 4.18e-03 > threshold 2.74e-03
+  Final dataset: 14608 samples (98.0% retained)
+  Filtered 299 outliers | Remaining: 14608
+
+--- Iteration 17 ---
+  Epoch 1/50 | Train: 1.756227 | Val: 1.727598
+  Epoch 2/50 | Train: 0.973090 | Val: 0.596346
+  Epoch 3/50 | Train: 0.302481 | Val: -0.289562
+  Epoch 4/50 | Train: -0.379776 | Val: -0.873895
+  Epoch 5/50 | Train: -0.657325 | Val: -0.955546
+  Epoch 6/50 | Train: -0.798287 | Val: -0.556257
+  Epoch 8/50 | Train: -0.985773 | Val: -1.293118
+  Epoch 9/50 | Train: -1.085545 | Val: -1.378248
+  Epoch 11/50 | Train: -1.180100 | Val: -0.319377
+  Epoch 12/50 | Train: -1.210330 | Val: -1.622234
+  Epoch 13/50 | Train: -1.259255 | Val: -1.672522
+  Epoch 16/50 | Train: -1.391923 | Val: -1.619436
+  Epoch 18/50 | Train: -1.400996 | Val: -1.728472
+  Epoch 21/50 | Train: -1.429981 | Val: -1.836980
+  Epoch 24/50 | Train: -1.565390 | Val: -1.863295
+  Epoch 26/50 | Train: -1.530417 | Val: -1.903979
+  Epoch 31/50 | Train: -1.632483 | Val: -1.352346
+  Epoch 32/50 | Train: -1.599249 | Val: -1.950889
+  Epoch 36/50 | Train: -1.693328 | Val: -1.958741
+  Epoch 40/50 | Train: -1.724377 | Val: -1.972316
+  Epoch 41/50 | Train: -1.704499 | Val: -1.481311
+  Epoch 45/50 | Train: -1.749493 | Val: -2.113074
+  Epoch 46/50 | Train: -1.770300 | Val: -1.920182
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 293 points (top 2.01%)
+  Variance: 4.86e-03 > threshold 2.74e-03
+  Final dataset: 14315 samples (98.0% retained)
+  Filtered 293 outliers | Remaining: 14315
+
+--- Iteration 18 ---
+  Epoch 1/50 | Train: 1.943635 | Val: 1.954959
+  Epoch 2/50 | Train: 1.418759 | Val: 1.224786
+  Epoch 3/50 | Train: 0.823360 | Val: 0.240522
+  Epoch 4/50 | Train: -0.091122 | Val: -0.576309
+  Epoch 5/50 | Train: -0.538932 | Val: -0.919852
+  Epoch 6/50 | Train: -0.710740 | Val: -0.130305
+  Epoch 8/50 | Train: -0.934858 | Val: -1.264144
+  Epoch 9/50 | Train: -0.993545 | Val: -1.353380
+  Epoch 11/50 | Train: -1.122611 | Val: -1.527762
+  Epoch 16/50 | Train: -1.310341 | Val: -0.934551
+  Epoch 17/50 | Train: -1.310071 | Val: -1.674802
+  Epoch 19/50 | Train: -1.355020 | Val: -1.725285
+  Epoch 20/50 | Train: -1.390215 | Val: -1.743720
+  Epoch 21/50 | Train: -1.404370 | Val: -1.755315
+  Epoch 25/50 | Train: -1.457873 | Val: -1.788262
+  Epoch 26/50 | Train: -1.496056 | Val: -1.832061
+  Epoch 27/50 | Train: -1.524312 | Val: -1.844468
+  Epoch 28/50 | Train: -1.512508 | Val: -1.844776
+  Epoch 29/50 | Train: -1.505968 | Val: -1.919426
+  Epoch 31/50 | Train: -1.546000 | Val: -1.693855
+  Epoch 36/50 | Train: -1.625422 | Val: -1.548549
+  Epoch 39/50 | Train: -1.650776 | Val: -1.973121
+  Epoch 41/50 | Train: -1.647629 | Val: -1.804977
+  Epoch 45/50 | Train: -1.678329 | Val: -1.989779
+  Epoch 46/50 | Train: -1.698049 | Val: -1.646911
+  Epoch 50/50 | Train: -1.714309 | Val: -1.991803
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 287 points (top 2.00%)
+  Variance: 4.18e-03 > threshold 2.74e-03
+  Final dataset: 14028 samples (98.0% retained)
+  Filtered 287 outliers | Remaining: 14028
+
+--- Iteration 19 ---
+  Epoch 1/50 | Train: 1.877147 | Val: 2.029604
+  Epoch 2/50 | Train: 1.232439 | Val: 0.989775
+  Epoch 3/50 | Train: 0.180658 | Val: -0.465279
+  Epoch 5/50 | Train: -0.637821 | Val: -0.803626
+  Epoch 6/50 | Train: -0.798402 | Val: -1.058497
+  Epoch 9/50 | Train: -1.045445 | Val: -1.357137
+  Epoch 10/50 | Train: -1.116511 | Val: -1.470418
+  Epoch 11/50 | Train: -1.169064 | Val: -0.671330
+  Epoch 13/50 | Train: -1.244673 | Val: -1.582437
+  Epoch 15/50 | Train: -1.280090 | Val: -1.641628
+  Epoch 16/50 | Train: -1.310878 | Val: -1.532100
+  Epoch 21/50 | Train: -1.377858 | Val: -1.136832
+  Epoch 22/50 | Train: -1.436885 | Val: -1.676989
+  Epoch 23/50 | Train: -1.446089 | Val: -1.832428
+  Epoch 26/50 | Train: -1.477396 | Val: -1.646317
+  Epoch 28/50 | Train: -1.499492 | Val: -1.878281
+  Epoch 30/50 | Train: -1.531552 | Val: -1.922147
+  Epoch 31/50 | Train: -1.510122 | Val: -1.791517
+  Epoch 36/50 | Train: -1.547230 | Val: -1.254086
+  Epoch 41/50 | Train: -1.575308 | Val: -1.884317
+  Early stopping at epoch 42
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 281 points (top 2.00%)
+  Variance: 5.44e-03 > threshold 2.74e-03
+  Final dataset: 13747 samples (98.0% retained)
+  Filtered 281 outliers | Remaining: 13747
+
+Trial 6 completed | Best val loss: -2.163672
+
+Trial 6 SUCCEEDED | Loss: -2.163672
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 7/20
+
+
+################################################################################
+# STARTING TRIAL 7
+# Time: 2025-11-12 06:33:46.061496
+################################################################################
+
+============================================================
+Trial 7 - SEVER Configuration:
+  variance_threshold: 0.75
+  sigma: 0.005477225575051661
+  top_fraction: None
+  max_iterations: 20
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.462776 | Val: 0.781423
+  Epoch 2/50 | Train: 0.227540 | Val: -0.313463
+  Epoch 3/50 | Train: -0.612573 | Val: -0.744632
+  Epoch 4/50 | Train: -0.859880 | Val: -1.101904
+  Epoch 6/50 | Train: -1.124625 | Val: -0.613226
+  Epoch 7/50 | Train: -1.216343 | Val: -1.153903
+  Epoch 8/50 | Train: -1.279496 | Val: -1.384839
+  Epoch 10/50 | Train: -1.358166 | Val: -1.386922
+  Epoch 11/50 | Train: -1.395582 | Val: -0.951198
+  Epoch 16/50 | Train: -1.551839 | Val: -1.505107
+  Epoch 17/50 | Train: -1.577109 | Val: -1.902479
+  Epoch 21/50 | Train: -1.668653 | Val: -1.776497
+  Epoch 25/50 | Train: -1.727901 | Val: -2.034066
+  Epoch 26/50 | Train: -1.728632 | Val: -1.965734
+  Epoch 29/50 | Train: -1.763161 | Val: -2.092902
+  Epoch 31/50 | Train: -1.774487 | Val: -1.800979
+  Epoch 36/50 | Train: -1.796225 | Val: -1.922393
+  Epoch 41/50 | Train: -1.840655 | Val: -2.004246
+  Early stopping at epoch 41
+  *** Global best updated: -2.092902
+  Running SEVER filtering...
+Remove with random threshold 0.0021824231445559425
+  Removing 9791 points (top 47.52%)
+  Variance: 4.38e-03 > threshold 4.11e-03
+  Final dataset: 10813 samples (52.5% retained)
+  Filtered 9791 outliers | Remaining: 10813
+
+--- Iteration 1 ---
+  Epoch 1/50 | Train: 1.907790 | Val: 1.928885
+  Epoch 2/50 | Train: 1.268168 | Val: 1.344905
+  Epoch 3/50 | Train: 0.699850 | Val: 0.606299
+  Epoch 4/50 | Train: 0.105431 | Val: -0.433573
+  Epoch 5/50 | Train: -0.383766 | Val: -0.789695
+  Epoch 6/50 | Train: -0.551799 | Val: -0.073858
+  Epoch 7/50 | Train: -0.709330 | Val: -1.086362
+  Epoch 8/50 | Train: -0.848499 | Val: -1.177406
+  Epoch 11/50 | Train: -1.037225 | Val: -1.396992
+  Epoch 12/50 | Train: -1.114707 | Val: -1.443929
+  Epoch 16/50 | Train: -1.271756 | Val: -1.588333
+  Epoch 21/50 | Train: -1.367114 | Val: -1.641953
+  Epoch 23/50 | Train: -1.428604 | Val: -1.674317
+  Epoch 26/50 | Train: -1.488807 | Val: -1.533473
+  Epoch 30/50 | Train: -1.554833 | Val: -1.846522
+  Epoch 31/50 | Train: -1.599423 | Val: -1.895413
+  Epoch 36/50 | Train: -1.610803 | Val: -1.733796
+  Epoch 40/50 | Train: -1.646691 | Val: -1.911318
+  Epoch 41/50 | Train: -1.647407 | Val: -1.903700
+  Epoch 44/50 | Train: -1.662148 | Val: -1.943533
+  Epoch 46/50 | Train: -1.645314 | Val: -1.747596
+  Epoch 48/50 | Train: -1.705283 | Val: -1.943848
+  Running SEVER filtering...
+Remove with random threshold 0.05071079477073831
+  Removing 16 points (top 0.15%)
+  Variance: 4.68e-03 > threshold 4.11e-03
+  Final dataset: 10797 samples (99.9% retained)
+  Filtered 16 outliers | Remaining: 10797
+
+--- Iteration 2 ---
+  Epoch 1/50 | Train: 1.979285 | Val: 2.024952
+  Epoch 2/50 | Train: 1.404439 | Val: 1.060222
+  Epoch 3/50 | Train: 0.856679 | Val: 0.657602
+  Epoch 4/50 | Train: 0.286969 | Val: -0.192919
+  Epoch 5/50 | Train: -0.299200 | Val: -0.802651
+  Epoch 6/50 | Train: -0.566547 | Val: -0.270796
+  Epoch 7/50 | Train: -0.743551 | Val: -1.029920
+  Epoch 8/50 | Train: -0.830261 | Val: -1.161219
+  Epoch 11/50 | Train: -1.036980 | Val: -1.446837
+  Epoch 12/50 | Train: -1.067651 | Val: -1.479978
+  Epoch 16/50 | Train: -1.267755 | Val: -1.013870
+  Epoch 18/50 | Train: -1.305409 | Val: -1.657077
+  Epoch 20/50 | Train: -1.328590 | Val: -1.683099
+  Epoch 21/50 | Train: -1.378056 | Val: -1.204622
+  Epoch 22/50 | Train: -1.401294 | Val: -1.694596
+  Epoch 23/50 | Train: -1.425821 | Val: -1.731867
+  Epoch 26/50 | Train: -1.452178 | Val: -1.852677
+  Epoch 31/50 | Train: -1.530295 | Val: -0.888492
+  Epoch 36/50 | Train: -1.597669 | Val: -1.903239
+  Epoch 41/50 | Train: -1.611515 | Val: -1.903979
+  Epoch 46/50 | Train: -1.648448 | Val: -1.875086
+  Epoch 47/50 | Train: -1.689348 | Val: -1.953403
+  Epoch 50/50 | Train: -1.657441 | Val: -1.975386
+  Running SEVER filtering...
+Remove with random threshold 0.020090772328699446
+  Removing 357 points (top 3.31%)
+  Variance: 4.36e-03 > threshold 4.11e-03
+  Final dataset: 10440 samples (96.7% retained)
+  Filtered 357 outliers | Remaining: 10440
+
+--- Iteration 3 ---
+  Epoch 1/50 | Train: 1.948628 | Val: 1.949484
+  Epoch 2/50 | Train: 1.490858 | Val: 1.177076
+  Epoch 3/50 | Train: 0.770222 | Val: 0.357855
+  Epoch 4/50 | Train: 0.097007 | Val: -0.343924
+  Epoch 5/50 | Train: -0.474035 | Val: -0.486035
+  Epoch 6/50 | Train: -0.617304 | Val: -0.920572
+  Epoch 8/50 | Train: -0.864303 | Val: -1.284620
+  Epoch 10/50 | Train: -1.015721 | Val: -1.355741
+  Epoch 11/50 | Train: -1.105368 | Val: -1.085901
+  Epoch 16/50 | Train: -1.267336 | Val: -1.341414
+  Epoch 17/50 | Train: -1.294109 | Val: -1.512844
+  Epoch 20/50 | Train: -1.330899 | Val: -1.621098
+  Epoch 21/50 | Train: -1.333220 | Val: -1.439932
+  Epoch 24/50 | Train: -1.349648 | Val: -1.749325
+  Epoch 26/50 | Train: -1.407804 | Val: -1.735662
+  Epoch 31/50 | Train: -1.446226 | Val: -1.709441
+  Epoch 32/50 | Train: -1.475044 | Val: -1.758201
+  Epoch 33/50 | Train: -1.454416 | Val: -1.769151
+  Epoch 36/50 | Train: -1.504551 | Val: -1.816334
+  Epoch 38/50 | Train: -1.496616 | Val: -1.838855
+  Epoch 40/50 | Train: -1.460696 | Val: -1.844722
+  Epoch 41/50 | Train: -1.480758 | Val: -1.786089
+  Epoch 46/50 | Train: -1.488704 | Val: -1.786596
+  Running SEVER filtering...
+Remove with random threshold 1.090874506664694
+  Removing 1 points (top 0.01%)
+  Variance: 4.86e-03 > threshold 4.11e-03
+  Final dataset: 10439 samples (100.0% retained)
+  Filtered 1 outliers | Remaining: 10439
+
+--- Iteration 4 ---
+  Epoch 1/50 | Train: 1.992920 | Val: 1.925175
+  Epoch 2/50 | Train: 1.446374 | Val: 1.091278
+  Epoch 3/50 | Train: 0.716030 | Val: 0.942013
+  Epoch 4/50 | Train: 0.034087 | Val: -0.311954
+  Epoch 6/50 | Train: -0.655479 | Val: -0.799452
+  Epoch 7/50 | Train: -0.774176 | Val: -1.184993
+  Epoch 9/50 | Train: -0.975004 | Val: -1.338216
+  Epoch 10/50 | Train: -0.998126 | Val: -1.450433
+  Epoch 11/50 | Train: -1.112162 | Val: -0.685415
+  Epoch 14/50 | Train: -1.229808 | Val: -1.510762
+  Epoch 16/50 | Train: -1.299214 | Val: -0.730290
+  Epoch 17/50 | Train: -1.316081 | Val: -1.557180
+  Epoch 21/50 | Train: -1.392417 | Val: -1.623145
+  Epoch 26/50 | Train: -1.500341 | Val: -0.459708
+  Epoch 28/50 | Train: -1.530583 | Val: -1.849010
+  Epoch 31/50 | Train: -1.556516 | Val: -0.972466
+  Epoch 36/50 | Train: -1.593268 | Val: -1.620888
+  Epoch 38/50 | Train: -1.593921 | Val: -1.893709
+  Epoch 41/50 | Train: -1.641508 | Val: -1.697689
+  Epoch 43/50 | Train: -1.638694 | Val: -1.895296
+  Epoch 45/50 | Train: -1.613361 | Val: -1.900713
+  Epoch 46/50 | Train: -1.603072 | Val: -1.570187
+  Running SEVER filtering...
+  Clean data detected (variance=0.00 ≤ 0.00)
+  Filtered 0 outliers | Remaining: 10439
+  Stopping: no outliers or val_loss <= -4
+
+Trial 7 completed | Best val loss: -2.092902
+
+Trial 7 SUCCEEDED | Loss: -2.092902
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 8/20
+
+
+################################################################################
+# STARTING TRIAL 8
+# Time: 2025-11-12 07:15:45.843856
+################################################################################
+
+============================================================
+Trial 8 - SEVER Configuration:
+  variance_threshold: 0.75
+  sigma: None
+  top_fraction: None
+  max_iterations: 20
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.725891 | Val: 1.372882
+  Epoch 2/50 | Train: 0.861976 | Val: 0.068163
+  Epoch 3/50 | Train: -0.298953 | Val: -0.731252
+  Epoch 4/50 | Train: -0.684400 | Val: -0.970438
+  Epoch 5/50 | Train: -0.880650 | Val: -1.263744
+  Epoch 6/50 | Train: -0.989716 | Val: -1.316587
+  Epoch 8/50 | Train: -1.157756 | Val: -1.573615
+  Epoch 9/50 | Train: -1.204284 | Val: -1.615276
+  Epoch 11/50 | Train: -1.244856 | Val: -0.457076
+  Epoch 13/50 | Train: -1.324171 | Val: -1.625725
+  Epoch 14/50 | Train: -1.369710 | Val: -1.664286
+  Epoch 16/50 | Train: -1.446926 | Val: -1.814036
+  Epoch 19/50 | Train: -1.516962 | Val: -1.849039
+  Epoch 21/50 | Train: -1.546766 | Val: -1.505596
+  Epoch 23/50 | Train: -1.597966 | Val: -1.888026
+  Epoch 24/50 | Train: -1.611461 | Val: -1.927635
+  Epoch 26/50 | Train: -1.614428 | Val: -1.953566
+  Epoch 30/50 | Train: -1.710174 | Val: -1.967028
+  Epoch 31/50 | Train: -1.702070 | Val: -1.736301
+  Epoch 36/50 | Train: -1.775406 | Val: -1.644292
+  Epoch 37/50 | Train: -1.806436 | Val: -2.089095
+  Epoch 40/50 | Train: -1.814222 | Val: -2.120397
+  Epoch 41/50 | Train: -1.831998 | Val: -1.719207
+  Epoch 46/50 | Train: -1.860956 | Val: -1.451993
+  Epoch 48/50 | Train: -1.864010 | Val: -2.139778
+  Epoch 49/50 | Train: -1.853197 | Val: -2.156808
+  *** Global best updated: -2.156808
+  Running SEVER filtering...
+  Clean data detected (variance=0.01 ≤ 0.06)
+  Filtered 0 outliers | Remaining: 20604
+  Stopping: no outliers or val_loss <= -4
+
+Trial 8 completed | Best val loss: -2.156808
+
+Trial 8 SUCCEEDED | Loss: -2.156808
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 9/20
+
+
+################################################################################
+# STARTING TRIAL 9
+# Time: 2025-11-12 07:29:08.905643
+################################################################################
+
+============================================================
+Trial 9 - SEVER Configuration:
+  variance_threshold: 1.0
+  sigma: None
+  top_fraction: 0.02
+  max_iterations: 20
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.722607 | Val: 1.219105
+  Epoch 2/50 | Train: 0.774368 | Val: 0.121091
+  Epoch 3/50 | Train: -0.303978 | Val: -0.965739
+  Epoch 4/50 | Train: -0.750589 | Val: -1.206961
+  Epoch 5/50 | Train: -0.927874 | Val: -1.344923
+  Epoch 6/50 | Train: -1.053958 | Val: -1.442200
+  Epoch 8/50 | Train: -1.232364 | Val: -1.593266
+  Epoch 11/50 | Train: -1.369625 | Val: -1.470168
+  Epoch 13/50 | Train: -1.410335 | Val: -1.716803
+  Epoch 16/50 | Train: -1.516839 | Val: -1.690226
+  Epoch 17/50 | Train: -1.533120 | Val: -1.834736
+  Epoch 19/50 | Train: -1.598457 | Val: -1.922162
+  Epoch 20/50 | Train: -1.613309 | Val: -2.006438
+  Epoch 21/50 | Train: -1.611795 | Val: -1.419527
+  Epoch 26/50 | Train: -1.689709 | Val: -1.264566
+  Epoch 27/50 | Train: -1.738245 | Val: -2.029852
+  Epoch 31/50 | Train: -1.776012 | Val: -1.697317
+  Epoch 33/50 | Train: -1.778106 | Val: -2.082841
+  Epoch 36/50 | Train: -1.840511 | Val: -1.233528
+  Epoch 40/50 | Train: -1.822997 | Val: -2.127777
+  Epoch 41/50 | Train: -1.855020 | Val: -2.145390
+  Epoch 46/50 | Train: -1.876580 | Val: -2.143115
+  Epoch 49/50 | Train: -1.887619 | Val: -2.160960
+  *** Global best updated: -2.160960
+  Running SEVER filtering...
+  Clean data detected (variance=0.01 ≤ 0.07)
+  Filtered 0 outliers | Remaining: 20604
+  Stopping: no outliers or val_loss <= -4
+
+Trial 9 completed | Best val loss: -2.160960
+
+Trial 9 SUCCEEDED | Loss: -2.160960
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 10/20
+
+
+################################################################################
+# STARTING TRIAL 10
+# Time: 2025-11-12 07:42:28.627764
+################################################################################
+
+============================================================
+Trial 10 - SEVER Configuration:
+  variance_threshold: 1.0
+  sigma: None
+  top_fraction: None
+  max_iterations: 5
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.821591 | Val: 1.942423
+  Epoch 2/50 | Train: 1.117984 | Val: 0.643669
+  Epoch 3/50 | Train: 0.034290 | Val: -0.029336
+  Epoch 5/50 | Train: -0.725832 | Val: -1.119728
+  Epoch 6/50 | Train: -0.866434 | Val: -0.496416
+  Epoch 8/50 | Train: -1.087773 | Val: -1.124891
+  Epoch 9/50 | Train: -1.185720 | Val: -1.482391
+  Epoch 11/50 | Train: -1.276872 | Val: -1.585971
+  Epoch 14/50 | Train: -1.410725 | Val: -1.707884
+  Epoch 16/50 | Train: -1.453283 | Val: -1.290349
+  Epoch 19/50 | Train: -1.504392 | Val: -1.751942
+  Epoch 20/50 | Train: -1.556602 | Val: -1.900623
+  Epoch 21/50 | Train: -1.558031 | Val: -1.905819
+  Epoch 24/50 | Train: -1.605670 | Val: -1.926711
+  Epoch 26/50 | Train: -1.664405 | Val: -1.763513
+  Epoch 31/50 | Train: -1.724009 | Val: -1.736064
+  Epoch 32/50 | Train: -1.709582 | Val: -1.997243
+  Epoch 36/50 | Train: -1.755375 | Val: -1.756039
+  Epoch 39/50 | Train: -1.780252 | Val: -2.006540
+  Epoch 41/50 | Train: -1.783428 | Val: -2.082897
+  Epoch 46/50 | Train: -1.776627 | Val: -2.081342
+  Epoch 47/50 | Train: -1.814684 | Val: -2.111361
+  Epoch 50/50 | Train: -1.814514 | Val: -2.117531
+  *** Global best updated: -2.117531
+  Running SEVER filtering...
+  Clean data detected (variance=0.00 ≤ 0.07)
+  Filtered 0 outliers | Remaining: 20604
+  Stopping: no outliers or val_loss <= -4
+
+Trial 10 completed | Best val loss: -2.117531
+
+Trial 10 SUCCEEDED | Loss: -2.117531
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 11/20
+
+
+################################################################################
+# STARTING TRIAL 11
+# Time: 2025-11-12 07:55:54.633163
+################################################################################
+
+============================================================
+Trial 11 - SEVER Configuration:
+  variance_threshold: 0.5
+  sigma: 0.005477225575051661
+  top_fraction: 0.02
+  max_iterations: 20
+============================================================
+
+
+--- Iteration 0 ---
+  Epoch 1/50 | Train: 1.705782 | Val: 1.256711
+  Epoch 2/50 | Train: 0.699318 | Val: 0.113099
+  Epoch 3/50 | Train: -0.316896 | Val: -0.893177
+  Epoch 4/50 | Train: -0.707549 | Val: -1.127709
+  Epoch 6/50 | Train: -1.016350 | Val: 0.674617
+  Epoch 10/50 | Train: -1.273326 | Val: -1.642185
+  Epoch 11/50 | Train: -1.360456 | Val: -1.713462
+  Epoch 12/50 | Train: -1.358774 | Val: -1.744841
+  Epoch 16/50 | Train: -1.534855 | Val: -1.913893
+  Epoch 21/50 | Train: -1.617058 | Val: -1.894804
+  Epoch 22/50 | Train: -1.653004 | Val: -1.998101
+  Epoch 26/50 | Train: -1.718686 | Val: -1.910052
+  Epoch 30/50 | Train: -1.758622 | Val: -2.029615
+  Epoch 31/50 | Train: -1.766273 | Val: -1.926143
+  Epoch 36/50 | Train: -1.806746 | Val: -1.949540
+  Epoch 38/50 | Train: -1.839580 | Val: -2.082745
+  Epoch 39/50 | Train: -1.825477 | Val: -2.094008
+  Epoch 40/50 | Train: -1.845088 | Val: -2.136415
+  Epoch 41/50 | Train: -1.845167 | Val: -2.119887
+  Epoch 46/50 | Train: -1.839203 | Val: -2.083324
+  *** Global best updated: -2.136415
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 413 points (top 2.00%)
+  Variance: 4.70e-03 > threshold 2.74e-03
+  Final dataset: 20191 samples (98.0% retained)
+  Filtered 413 outliers | Remaining: 20191
+
+--- Iteration 1 ---
+  Epoch 1/50 | Train: 1.853570 | Val: 1.836001
+  Epoch 2/50 | Train: 1.007853 | Val: 0.367149
+  Epoch 3/50 | Train: -0.098133 | Val: -0.787103
+  Epoch 5/50 | Train: -0.849393 | Val: -1.292674
+  Epoch 6/50 | Train: -1.007675 | Val: -1.413926
+  Epoch 9/50 | Train: -1.229214 | Val: -1.511483
+  Epoch 10/50 | Train: -1.304697 | Val: -1.682761
+  Epoch 11/50 | Train: -1.291578 | Val: -1.701289
+  Epoch 16/50 | Train: -1.454959 | Val: -1.619091
+  Epoch 17/50 | Train: -1.493195 | Val: -1.757832
+  Epoch 20/50 | Train: -1.548430 | Val: -1.839101
+  Epoch 21/50 | Train: -1.559552 | Val: -1.708403
+  Epoch 22/50 | Train: -1.602495 | Val: -1.898856
+  Epoch 24/50 | Train: -1.626579 | Val: -1.990332
+  Epoch 26/50 | Train: -1.635991 | Val: 0.091317
+  Epoch 30/50 | Train: -1.694281 | Val: -2.028964
+  Epoch 31/50 | Train: -1.700068 | Val: -1.789135
+  Epoch 32/50 | Train: -1.688410 | Val: -2.043383
+  Epoch 36/50 | Train: -1.751698 | Val: -0.526446
+  Epoch 39/50 | Train: -1.806607 | Val: -2.116463
+  Epoch 41/50 | Train: -1.781719 | Val: -2.038230
+  Epoch 46/50 | Train: -1.881130 | Val: -2.051888
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 404 points (top 2.00%)
+  Variance: 4.19e-03 > threshold 2.74e-03
+  Final dataset: 19787 samples (98.0% retained)
+  Filtered 404 outliers | Remaining: 19787
+
+--- Iteration 2 ---
+  Epoch 1/50 | Train: 1.791101 | Val: 1.552190
+  Epoch 2/50 | Train: 1.013712 | Val: 0.481022
+  Epoch 3/50 | Train: -0.121539 | Val: -0.713560
+  Epoch 6/50 | Train: -1.079151 | Val: -1.138532
+  Epoch 7/50 | Train: -1.159562 | Val: -1.367179
+  Epoch 10/50 | Train: -1.318855 | Val: -1.725549
+  Epoch 11/50 | Train: -1.329700 | Val: -1.685791
+  Epoch 16/50 | Train: -1.482024 | Val: -1.845569
+  Epoch 21/50 | Train: -1.560901 | Val: -1.566287
+  Epoch 23/50 | Train: -1.625241 | Val: -1.919674
+  Epoch 26/50 | Train: -1.680308 | Val: -1.360564
+  Epoch 28/50 | Train: -1.660997 | Val: -1.972164
+  Epoch 31/50 | Train: -1.678157 | Val: -2.037754
+  Epoch 36/50 | Train: -1.706146 | Val: -1.340202
+  Epoch 41/50 | Train: -1.737022 | Val: -1.951446
+  Epoch 42/50 | Train: -1.745941 | Val: -2.075028
+  Epoch 44/50 | Train: -1.758747 | Val: -2.105330
+  Epoch 46/50 | Train: -1.764117 | Val: -2.027057
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 396 points (top 2.00%)
+  Variance: 6.17e-03 > threshold 2.74e-03
+  Final dataset: 19391 samples (98.0% retained)
+  Filtered 396 outliers | Remaining: 19391
+
+--- Iteration 3 ---
+  Epoch 1/50 | Train: 1.791865 | Val: 1.522223
+  Epoch 2/50 | Train: 0.693731 | Val: -0.100280
+  Epoch 3/50 | Train: -0.355754 | Val: -0.374590
+  Epoch 4/50 | Train: -0.628417 | Val: -1.063267
+  Epoch 5/50 | Train: -0.830286 | Val: -1.276735
+  Epoch 6/50 | Train: -0.964662 | Val: -0.661912
+  Epoch 8/50 | Train: -1.102735 | Val: -1.475364
+  Epoch 10/50 | Train: -1.210388 | Val: -1.669373
+  Epoch 11/50 | Train: -1.258800 | Val: -1.509239
+  Epoch 12/50 | Train: -1.292741 | Val: -1.680221
+  Epoch 15/50 | Train: -1.397291 | Val: -1.846706
+  Epoch 16/50 | Train: -1.442192 | Val: -1.859657
+  Epoch 17/50 | Train: -1.442722 | Val: -1.888352
+  Epoch 21/50 | Train: -1.514717 | Val: -1.732476
+  Epoch 24/50 | Train: -1.617952 | Val: -1.990481
+  Epoch 26/50 | Train: -1.593311 | Val: -1.876576
+  Epoch 31/50 | Train: -1.661844 | Val: -1.990140
+  Epoch 32/50 | Train: -1.673150 | Val: -2.003358
+  Epoch 34/50 | Train: -1.688524 | Val: -2.042246
+  Epoch 35/50 | Train: -1.689795 | Val: -2.047167
+  Epoch 36/50 | Train: -1.669953 | Val: -1.924927
+  Epoch 41/50 | Train: -1.691075 | Val: -2.068496
+  Epoch 46/50 | Train: -1.715247 | Val: -2.016170
+  Epoch 47/50 | Train: -1.722268 | Val: -2.069004
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 388 points (top 2.00%)
+  Variance: 4.18e-03 > threshold 2.74e-03
+  Final dataset: 19003 samples (98.0% retained)
+  Filtered 388 outliers | Remaining: 19003
+
+--- Iteration 4 ---
+  Epoch 1/50 | Train: 1.757482 | Val: 1.363219
+  Epoch 2/50 | Train: 0.913248 | Val: 0.347714
+  Epoch 3/50 | Train: -0.259178 | Val: -0.148676
+  Epoch 4/50 | Train: -0.786948 | Val: -1.129180
+  Epoch 5/50 | Train: -0.981509 | Val: -1.385932
+  Epoch 6/50 | Train: -1.055467 | Val: -1.144247
+  Epoch 7/50 | Train: -1.184800 | Val: -1.450744
+  Epoch 9/50 | Train: -1.302368 | Val: -1.510249
+  Epoch 11/50 | Train: -1.370849 | Val: -1.711065
+  Epoch 13/50 | Train: -1.405042 | Val: -1.742641
+  Epoch 15/50 | Train: -1.485880 | Val: -1.809673
+  Epoch 16/50 | Train: -1.487891 | Val: -1.593147
+  Epoch 18/50 | Train: -1.551779 | Val: -1.940130
+  Epoch 21/50 | Train: -1.558808 | Val: -1.833166
+  Epoch 24/50 | Train: -1.653088 | Val: -1.953783
+  Epoch 26/50 | Train: -1.651759 | Val: -1.280914
+  Epoch 29/50 | Train: -1.701867 | Val: -1.999420
+  Epoch 31/50 | Train: -1.730116 | Val: -2.005768
+  Epoch 34/50 | Train: -1.761241 | Val: -2.115347
+  Epoch 36/50 | Train: -1.760071 | Val: -1.977971
+  Epoch 41/50 | Train: -1.842514 | Val: -2.131535
+  Epoch 42/50 | Train: -1.828194 | Val: -2.133514
+  Epoch 46/50 | Train: -1.875266 | Val: -1.735504
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 381 points (top 2.00%)
+  Variance: 5.17e-03 > threshold 2.74e-03
+  Final dataset: 18622 samples (98.0% retained)
+  Filtered 381 outliers | Remaining: 18622
+
+--- Iteration 5 ---
+  Epoch 1/50 | Train: 1.757374 | Val: 1.363360
+  Epoch 2/50 | Train: 0.452989 | Val: 0.222424
+  Epoch 3/50 | Train: -0.588145 | Val: -0.932003
+  Epoch 4/50 | Train: -0.827998 | Val: -1.169927
+  Epoch 6/50 | Train: -1.100503 | Val: -1.470546
+  Epoch 8/50 | Train: -1.252430 | Val: -1.542489
+  Epoch 11/50 | Train: -1.361199 | Val: 0.214228
+  Epoch 12/50 | Train: -1.401701 | Val: -1.681971
+  Epoch 15/50 | Train: -1.481978 | Val: -1.861151
+  Epoch 16/50 | Train: -1.478026 | Val: -1.738520
+  Epoch 20/50 | Train: -1.588817 | Val: -1.933858
+  Epoch 21/50 | Train: -1.600883 | Val: -1.812903
+  Epoch 26/50 | Train: -1.673306 | Val: -1.340076
+  Epoch 31/50 | Train: -1.732732 | Val: -1.831210
+  Epoch 32/50 | Train: -1.721583 | Val: -2.027498
+  Epoch 35/50 | Train: -1.764281 | Val: -2.089143
+  Epoch 36/50 | Train: -1.751177 | Val: -2.041382
+  Epoch 41/50 | Train: -1.791404 | Val: -0.882635
+  Epoch 42/50 | Train: -1.815118 | Val: -2.093047
+  Epoch 46/50 | Train: -1.825345 | Val: -2.023611
+  Epoch 48/50 | Train: -1.842056 | Val: -2.126691
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 373 points (top 2.00%)
+  Variance: 4.92e-03 > threshold 2.74e-03
+  Final dataset: 18249 samples (98.0% retained)
+  Filtered 373 outliers | Remaining: 18249
+
+--- Iteration 6 ---
+  Epoch 1/50 | Train: 1.837018 | Val: 1.829382
+  Epoch 2/50 | Train: 0.744967 | Val: 0.125304
+  Epoch 3/50 | Train: -0.299579 | Val: -0.670673
+  Epoch 4/50 | Train: -0.710645 | Val: -0.803658
+  Epoch 5/50 | Train: -0.921094 | Val: -0.880260
+  Epoch 6/50 | Train: -1.030766 | Val: -0.632713
+  Epoch 9/50 | Train: -1.253293 | Val: -0.952293
+  Epoch 10/50 | Train: -1.277925 | Val: -1.611194
+  Epoch 11/50 | Train: -1.357208 | Val: -1.724317
+  Epoch 16/50 | Train: -1.516096 | Val: -1.458822
+  Epoch 18/50 | Train: -1.570355 | Val: -1.822740
+  Epoch 20/50 | Train: -1.597790 | Val: -1.826762
+  Epoch 21/50 | Train: -1.608390 | Val: -1.824505
+  Epoch 22/50 | Train: -1.624169 | Val: -2.005279
+  Epoch 26/50 | Train: -1.653011 | Val: -1.974867
+  Epoch 27/50 | Train: -1.674483 | Val: -2.046999
+  Epoch 31/50 | Train: -1.703530 | Val: -1.802230
+  Epoch 34/50 | Train: -1.735548 | Val: -2.097979
+  Epoch 36/50 | Train: -1.735957 | Val: -2.059596
+  Epoch 41/50 | Train: -1.770814 | Val: -2.007068
+  Epoch 46/50 | Train: -1.803305 | Val: -2.085212
+  Early stopping at epoch 46
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 365 points (top 2.00%)
+  Variance: 4.89e-03 > threshold 2.74e-03
+  Final dataset: 17884 samples (98.0% retained)
+  Filtered 365 outliers | Remaining: 17884
+
+--- Iteration 7 ---
+  Epoch 1/50 | Train: 1.765400 | Val: 1.886013
+  Epoch 2/50 | Train: 0.918208 | Val: 0.204784
+  Epoch 3/50 | Train: -0.226676 | Val: -0.830862
+  Epoch 4/50 | Train: -0.681583 | Val: -1.128370
+  Epoch 6/50 | Train: -1.023219 | Val: -0.912894
+  Epoch 7/50 | Train: -1.070507 | Val: -1.454902
+  Epoch 11/50 | Train: -1.358882 | Val: -1.738196
+  Epoch 14/50 | Train: -1.437904 | Val: -1.748773
+  Epoch 16/50 | Train: -1.479108 | Val: -1.480547
+  Epoch 18/50 | Train: -1.550914 | Val: -1.868501
+  Epoch 19/50 | Train: -1.557660 | Val: -1.910848
+  Epoch 20/50 | Train: -1.582872 | Val: -1.927172
+  Epoch 21/50 | Train: -1.649431 | Val: -1.039126
+  Epoch 22/50 | Train: -1.640662 | Val: -2.024849
+  Epoch 26/50 | Train: -1.707206 | Val: -1.897482
+  Epoch 29/50 | Train: -1.727698 | Val: -2.096849
+  Epoch 31/50 | Train: -1.754361 | Val: -2.013568
+  Epoch 34/50 | Train: -1.796463 | Val: -2.139767
+  Epoch 36/50 | Train: -1.778755 | Val: -2.029361
+  Epoch 41/50 | Train: -1.826809 | Val: -2.133962
+  Epoch 44/50 | Train: -1.840028 | Val: -2.153732
+  Epoch 46/50 | Train: -1.864861 | Val: -2.144863
+  *** Global best updated: -2.153732
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 358 points (top 2.00%)
+  Variance: 4.39e-03 > threshold 2.74e-03
+  Final dataset: 17526 samples (98.0% retained)
+  Filtered 358 outliers | Remaining: 17526
+
+--- Iteration 8 ---
+  Epoch 1/50 | Train: 1.727612 | Val: 1.357489
+  Epoch 2/50 | Train: 0.840266 | Val: 0.217644
+  Epoch 3/50 | Train: -0.225343 | Val: -0.656984
+  Epoch 4/50 | Train: -0.663229 | Val: -1.111458
+  Epoch 5/50 | Train: -0.895394 | Val: -1.312881
+  Epoch 6/50 | Train: -1.056193 | Val: -1.431572
+  Epoch 8/50 | Train: -1.264469 | Val: -1.540150
+  Epoch 9/50 | Train: -1.263083 | Val: -1.599348
+  Epoch 11/50 | Train: -1.388756 | Val: -1.663737
+  Epoch 16/50 | Train: -1.534723 | Val: 1.411069
+  Epoch 17/50 | Train: -1.603102 | Val: -1.757807
+  Epoch 18/50 | Train: -1.582484 | Val: -1.962839
+  Epoch 21/50 | Train: -1.665468 | Val: -1.837063
+  Epoch 26/50 | Train: -1.769370 | Val: -2.069072
+  Epoch 31/50 | Train: -1.789403 | Val: -2.073069
+  Epoch 35/50 | Train: -1.816139 | Val: -2.087792
+  Epoch 36/50 | Train: -1.813473 | Val: -1.712476
+  Epoch 41/50 | Train: -1.808282 | Val: -1.391356
+  Epoch 42/50 | Train: -1.801342 | Val: -2.092587
+  Epoch 46/50 | Train: -1.843054 | Val: -2.110201
+  Epoch 47/50 | Train: -1.860395 | Val: -2.117535
+  Epoch 48/50 | Train: -1.872912 | Val: -2.137210
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 351 points (top 2.00%)
+  Variance: 4.78e-03 > threshold 2.74e-03
+  Final dataset: 17175 samples (98.0% retained)
+  Filtered 351 outliers | Remaining: 17175
+
+--- Iteration 9 ---
+  Epoch 1/50 | Train: 1.729429 | Val: 1.723490
+  Epoch 2/50 | Train: 0.896039 | Val: 0.247323
+  Epoch 3/50 | Train: -0.125063 | Val: -0.434838
+  Epoch 4/50 | Train: -0.566202 | Val: -0.904073
+  Epoch 5/50 | Train: -0.751075 | Val: -1.148183
+  Epoch 6/50 | Train: -0.903768 | Val: -0.935936
+  Epoch 7/50 | Train: -1.006654 | Val: -1.380465
+  Epoch 11/50 | Train: -1.199217 | Val: -1.481861
+  Epoch 16/50 | Train: -1.380020 | Val: -1.439252
+  Epoch 18/50 | Train: -1.422311 | Val: -1.738642
+  Epoch 19/50 | Train: -1.465613 | Val: -1.772984
+  Epoch 21/50 | Train: -1.471678 | Val: -1.839127
+  Epoch 22/50 | Train: -1.481546 | Val: -1.880460
+  Epoch 26/50 | Train: -1.511910 | Val: -1.754309
+  Epoch 27/50 | Train: -1.515548 | Val: -1.944864
+  Epoch 31/50 | Train: -1.586091 | Val: -1.754001
+  Epoch 35/50 | Train: -1.599367 | Val: -1.962821
+  Epoch 36/50 | Train: -1.621887 | Val: -1.898757
+  Epoch 37/50 | Train: -1.615592 | Val: -1.974770
+  Epoch 40/50 | Train: -1.622567 | Val: -1.997290
+  Epoch 41/50 | Train: -1.648888 | Val: -1.985705
+  Epoch 42/50 | Train: -1.671304 | Val: -2.019795
+  Epoch 46/50 | Train: -1.657784 | Val: -1.975935
+  Epoch 49/50 | Train: -1.705304 | Val: -2.027989
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 344 points (top 2.00%)
+  Variance: 4.32e-03 > threshold 2.74e-03
+  Final dataset: 16831 samples (98.0% retained)
+  Filtered 344 outliers | Remaining: 16831
+
+--- Iteration 10 ---
+  Epoch 1/50 | Train: 1.812833 | Val: 1.473363
+  Epoch 2/50 | Train: 0.561842 | Val: 0.153267
+  Epoch 4/50 | Train: -0.685672 | Val: -0.911972
+  Epoch 6/50 | Train: -0.982864 | Val: -0.887775
+  Epoch 7/50 | Train: -1.117247 | Val: -1.061895
+  Epoch 9/50 | Train: -1.229177 | Val: -1.617989
+  Epoch 11/50 | Train: -1.314972 | Val: -1.715202
+  Epoch 15/50 | Train: -1.448399 | Val: -1.919927
+  Epoch 16/50 | Train: -1.465419 | Val: -1.689246
+  Epoch 21/50 | Train: -1.617396 | Val: -1.472701
+  Epoch 23/50 | Train: -1.659037 | Val: -1.992027
+  Epoch 26/50 | Train: -1.629202 | Val: -1.969422
+  Epoch 30/50 | Train: -1.714646 | Val: -2.042845
+  Epoch 31/50 | Train: -1.726194 | Val: -2.081080
+  Epoch 36/50 | Train: -1.765944 | Val: -2.043699
+  Epoch 41/50 | Train: -1.793364 | Val: -2.084048
+  Epoch 44/50 | Train: -1.754234 | Val: -2.084710
+  Epoch 46/50 | Train: -1.774235 | Val: -2.048678
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 337 points (top 2.00%)
+  Variance: 4.46e-03 > threshold 2.74e-03
+  Final dataset: 16494 samples (98.0% retained)
+  Filtered 337 outliers | Remaining: 16494
+
+--- Iteration 11 ---
+  Epoch 1/50 | Train: 1.863735 | Val: 1.855308
+  Epoch 2/50 | Train: 1.030962 | Val: 0.651479
+  Epoch 3/50 | Train: 0.094039 | Val: -0.481830
+  Epoch 4/50 | Train: -0.541665 | Val: -0.732440
+  Epoch 6/50 | Train: -0.926404 | Val: -0.783270
+  Epoch 7/50 | Train: -1.012989 | Val: -1.341624
+  Epoch 8/50 | Train: -1.111454 | Val: -1.471733
+  Epoch 10/50 | Train: -1.230988 | Val: -1.477543
+  Epoch 11/50 | Train: -1.294888 | Val: -1.406307
+  Epoch 12/50 | Train: -1.326579 | Val: -1.632462
+  Epoch 15/50 | Train: -1.439871 | Val: -1.744586
+  Epoch 16/50 | Train: -1.480543 | Val: -1.619466
+  Epoch 17/50 | Train: -1.506439 | Val: -1.820044
+  Epoch 21/50 | Train: -1.557095 | Val: -1.968805
+  Epoch 26/50 | Train: -1.626938 | Val: -1.892557
+  Epoch 31/50 | Train: -1.702641 | Val: -1.958350
+  Early stopping at epoch 33
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 330 points (top 2.00%)
+  Variance: 3.91e-03 > threshold 2.74e-03
+  Final dataset: 16164 samples (98.0% retained)
+  Filtered 330 outliers | Remaining: 16164
+
+--- Iteration 12 ---
+  Epoch 1/50 | Train: 1.698956 | Val: 2.071122
+  Epoch 2/50 | Train: 0.608261 | Val: 0.108733
+  Epoch 3/50 | Train: -0.228783 | Val: -0.657428
+  Epoch 5/50 | Train: -0.751611 | Val: -1.089000
+  Epoch 6/50 | Train: -0.899050 | Val: -1.025775
+  Epoch 9/50 | Train: -1.167967 | Val: -1.552106
+  Epoch 11/50 | Train: -1.309006 | Val: -1.382270
+  Epoch 13/50 | Train: -1.350834 | Val: -1.626097
+  Epoch 14/50 | Train: -1.391023 | Val: -1.795667
+  Epoch 16/50 | Train: -1.469427 | Val: -1.310094
+  Epoch 17/50 | Train: -1.512868 | Val: -1.834437
+  Epoch 20/50 | Train: -1.550997 | Val: -1.856522
+  Epoch 21/50 | Train: -1.578574 | Val: -1.738775
+  Epoch 23/50 | Train: -1.599771 | Val: -1.903024
+  Epoch 26/50 | Train: -1.621628 | Val: -1.138894
+  Epoch 30/50 | Train: -1.755809 | Val: -1.981572
+  Epoch 31/50 | Train: -1.720698 | Val: -1.688771
+  Epoch 32/50 | Train: -1.704150 | Val: -2.032283
+  Epoch 33/50 | Train: -1.750481 | Val: -2.043520
+  Epoch 36/50 | Train: -1.750996 | Val: -1.445851
+  Epoch 39/50 | Train: -1.748028 | Val: -2.052352
+  Epoch 41/50 | Train: -1.766203 | Val: -2.068853
+  Epoch 42/50 | Train: -1.811446 | Val: -2.070536
+  Epoch 46/50 | Train: -1.828767 | Val: -1.897032
+  Epoch 47/50 | Train: -1.807676 | Val: -2.072374
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 324 points (top 2.00%)
+  Variance: 5.94e-03 > threshold 2.74e-03
+  Final dataset: 15840 samples (98.0% retained)
+  Filtered 324 outliers | Remaining: 15840
+
+--- Iteration 13 ---
+  Epoch 1/50 | Train: 1.773282 | Val: 1.500553
+  Epoch 2/50 | Train: 0.714472 | Val: 0.899983
+  Epoch 3/50 | Train: -0.247917 | Val: -0.754570
+  Epoch 4/50 | Train: -0.624158 | Val: -0.964936
+  Epoch 5/50 | Train: -0.821013 | Val: -1.283782
+  Epoch 6/50 | Train: -0.938208 | Val: 0.048531
+  Epoch 11/50 | Train: -1.233419 | Val: -1.318790
+  Epoch 13/50 | Train: -1.325768 | Val: -1.747036
+  Epoch 16/50 | Train: -1.375498 | Val: -1.740347
+  Epoch 17/50 | Train: -1.390308 | Val: -1.787335
+  Epoch 21/50 | Train: -1.486741 | Val: -1.771665
+  Epoch 22/50 | Train: -1.466495 | Val: -1.822957
+  Epoch 26/50 | Train: -1.532507 | Val: -1.758088
+  Epoch 29/50 | Train: -1.576724 | Val: -1.887163
+  Epoch 30/50 | Train: -1.594591 | Val: -1.937359
+  Epoch 31/50 | Train: -1.628356 | Val: -1.961434
+  Epoch 36/50 | Train: -1.641325 | Val: -1.288644
+  Epoch 37/50 | Train: -1.661218 | Val: -2.001669
+  Epoch 38/50 | Train: -1.675006 | Val: -2.020893
+  Epoch 40/50 | Train: -1.676481 | Val: -2.021433
+  Epoch 41/50 | Train: -1.673023 | Val: -2.026146
+  Epoch 46/50 | Train: -1.680172 | Val: -1.650930
+  Epoch 48/50 | Train: -1.719107 | Val: -2.039978
+  Epoch 50/50 | Train: -1.747140 | Val: -2.054992
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 317 points (top 2.00%)
+  Variance: 4.86e-03 > threshold 2.74e-03
+  Final dataset: 15523 samples (98.0% retained)
+  Filtered 317 outliers | Remaining: 15523
+
+--- Iteration 14 ---
+  Epoch 1/50 | Train: 1.862077 | Val: 1.826618
+  Epoch 2/50 | Train: 1.203332 | Val: 0.978153
+  Epoch 3/50 | Train: 0.333344 | Val: -0.341553
+  Epoch 4/50 | Train: -0.531720 | Val: -0.854361
+  Epoch 6/50 | Train: -0.901552 | Val: -0.363266
+  Epoch 7/50 | Train: -1.034532 | Val: -1.485367
+  Epoch 10/50 | Train: -1.215622 | Val: -1.491642
+  Epoch 11/50 | Train: -1.261855 | Val: -0.859062
+  Epoch 13/50 | Train: -1.297023 | Val: -1.680882
+  Epoch 16/50 | Train: -1.396156 | Val: -1.579877
+  Epoch 18/50 | Train: -1.473712 | Val: -1.799167
+  Epoch 20/50 | Train: -1.470428 | Val: -1.876764
+  Epoch 21/50 | Train: -1.511353 | Val: -1.834134
+  Epoch 26/50 | Train: -1.603043 | Val: 0.234804
+  Epoch 27/50 | Train: -1.614037 | Val: -1.948307
+  Epoch 31/50 | Train: -1.658202 | Val: -1.995790
+  Epoch 34/50 | Train: -1.654094 | Val: -2.013900
+  Epoch 36/50 | Train: -1.676923 | Val: -1.997609
+  Epoch 41/50 | Train: -1.686646 | Val: -2.029273
+  Epoch 42/50 | Train: -1.721663 | Val: -2.033890
+  Epoch 46/50 | Train: -1.745519 | Val: -2.054676
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 311 points (top 2.00%)
+  Variance: 4.63e-03 > threshold 2.74e-03
+  Final dataset: 15212 samples (98.0% retained)
+  Filtered 311 outliers | Remaining: 15212
+
+--- Iteration 15 ---
+  Epoch 1/50 | Train: 1.806225 | Val: 1.870141
+  Epoch 2/50 | Train: 0.969128 | Val: 0.551790
+  Epoch 3/50 | Train: 0.219925 | Val: 0.200634
+  Epoch 4/50 | Train: -0.514967 | Val: -0.660548
+  Epoch 5/50 | Train: -0.816943 | Val: -0.876504
+  Epoch 6/50 | Train: -0.938591 | Val: -0.616273
+  Epoch 7/50 | Train: -1.054641 | Val: -1.396551
+  Epoch 9/50 | Train: -1.198035 | Val: -1.598534
+  Epoch 11/50 | Train: -1.312635 | Val: -1.528057
+  Epoch 13/50 | Train: -1.352963 | Val: -1.630225
+  Epoch 14/50 | Train: -1.386313 | Val: -1.735341
+  Epoch 16/50 | Train: -1.457469 | Val: -1.477435
+  Epoch 20/50 | Train: -1.558826 | Val: -1.782898
+  Epoch 21/50 | Train: -1.564933 | Val: -0.795599
+  Epoch 26/50 | Train: -1.630893 | Val: -1.431687
+  Epoch 27/50 | Train: -1.696446 | Val: -1.968382
+  Epoch 28/50 | Train: -1.707633 | Val: -2.031483
+  Epoch 31/50 | Train: -1.691492 | Val: -2.001208
+  Epoch 35/50 | Train: -1.737384 | Val: -2.038541
+  Epoch 36/50 | Train: -1.728410 | Val: -2.019873
+  Epoch 37/50 | Train: -1.718603 | Val: -2.039352
+  Epoch 41/50 | Train: -1.779299 | Val: -2.051981
+  Epoch 45/50 | Train: -1.811834 | Val: -2.086786
+  Epoch 46/50 | Train: -1.770502 | Val: -2.073866
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 305 points (top 2.00%)
+  Variance: 4.39e-03 > threshold 2.74e-03
+  Final dataset: 14907 samples (98.0% retained)
+  Filtered 305 outliers | Remaining: 14907
+
+--- Iteration 16 ---
+  Epoch 1/50 | Train: 1.878277 | Val: 1.953774
+  Epoch 2/50 | Train: 1.306224 | Val: 1.180736
+  Epoch 3/50 | Train: 0.868701 | Val: 0.571386
+  Epoch 4/50 | Train: 0.016009 | Val: -0.159808
+  Epoch 5/50 | Train: -0.549699 | Val: -0.183798
+  Epoch 6/50 | Train: -0.763678 | Val: -0.658353
+  Epoch 7/50 | Train: -0.883378 | Val: -1.171797
+  Epoch 9/50 | Train: -1.094411 | Val: -1.502167
+  Epoch 11/50 | Train: -1.210841 | Val: -0.697616
+  Epoch 13/50 | Train: -1.260390 | Val: -1.572762
+  Epoch 14/50 | Train: -1.294576 | Val: -1.745490
+  Epoch 16/50 | Train: -1.365903 | Val: -1.543645
+  Epoch 21/50 | Train: -1.459442 | Val: -1.807768
+  Epoch 23/50 | Train: -1.496263 | Val: -1.850697
+  Epoch 24/50 | Train: -1.491783 | Val: -1.888089
+  Epoch 26/50 | Train: -1.474659 | Val: -1.589335
+  Epoch 31/50 | Train: -1.554949 | Val: -1.884139
+  Epoch 32/50 | Train: -1.543835 | Val: -1.904910
+  Epoch 36/50 | Train: -1.576644 | Val: -1.929062
+  Epoch 37/50 | Train: -1.595004 | Val: -1.932833
+  Epoch 39/50 | Train: -1.582299 | Val: -1.938133
+  Epoch 41/50 | Train: -1.590276 | Val: -1.937403
+  Epoch 45/50 | Train: -1.615696 | Val: -1.958784
+  Epoch 46/50 | Train: -1.597296 | Val: -1.942049
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 299 points (top 2.01%)
+  Variance: 4.09e-03 > threshold 2.74e-03
+  Final dataset: 14608 samples (98.0% retained)
+  Filtered 299 outliers | Remaining: 14608
+
+--- Iteration 17 ---
+  Epoch 1/50 | Train: 1.934828 | Val: 2.105130
+  Epoch 2/50 | Train: 1.398384 | Val: 1.385647
+  Epoch 3/50 | Train: 1.154663 | Val: 1.006317
+  Epoch 4/50 | Train: 0.608587 | Val: 0.165683
+  Epoch 6/50 | Train: -0.654576 | Val: -0.951556
+  Epoch 7/50 | Train: -0.830750 | Val: -1.208555
+  Epoch 9/50 | Train: -1.052357 | Val: -1.297965
+  Epoch 10/50 | Train: -1.073781 | Val: -1.400565
+  Epoch 11/50 | Train: -1.159223 | Val: -1.206727
+  Epoch 13/50 | Train: -1.223406 | Val: -1.633858
+  Epoch 16/50 | Train: -1.291276 | Val: -1.663285
+  Epoch 19/50 | Train: -1.402326 | Val: -1.735161
+  Epoch 21/50 | Train: -1.421432 | Val: -1.621879
+  Epoch 22/50 | Train: -1.450452 | Val: -1.753197
+  Epoch 26/50 | Train: -1.498606 | Val: -1.459742
+  Epoch 28/50 | Train: -1.562073 | Val: -1.857563
+  Epoch 31/50 | Train: -1.574893 | Val: -0.389307
+  Epoch 34/50 | Train: -1.586099 | Val: -1.927046
+  Epoch 36/50 | Train: -1.604742 | Val: -1.757418
+  Epoch 40/50 | Train: -1.660574 | Val: -1.928407
+  Epoch 41/50 | Train: -1.660336 | Val: -1.422652
+  Epoch 46/50 | Train: -1.755643 | Val: -1.935015
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 293 points (top 2.01%)
+  Variance: 3.74e-03 > threshold 2.74e-03
+  Final dataset: 14315 samples (98.0% retained)
+  Filtered 293 outliers | Remaining: 14315
+
+--- Iteration 18 ---
+  Epoch 1/50 | Train: 1.901899 | Val: 1.934070
+  Epoch 2/50 | Train: 1.146187 | Val: 0.769895
+  Epoch 3/50 | Train: 0.018049 | Val: -0.128087
+  Epoch 6/50 | Train: -0.951783 | Val: -0.963401
+  Epoch 7/50 | Train: -1.040542 | Val: -1.129515
+  Epoch 8/50 | Train: -1.132120 | Val: -1.337895
+  Epoch 9/50 | Train: -1.220207 | Val: -1.540145
+  Epoch 10/50 | Train: -1.272322 | Val: -1.673273
+  Epoch 11/50 | Train: -1.295088 | Val: -1.346820
+  Epoch 12/50 | Train: -1.370274 | Val: -1.690189
+  Epoch 15/50 | Train: -1.463453 | Val: -1.714914
+  Epoch 16/50 | Train: -1.530461 | Val: -0.743606
+  Epoch 17/50 | Train: -1.549302 | Val: -1.861614
+  Epoch 21/50 | Train: -1.582106 | Val: -1.067018
+  Epoch 23/50 | Train: -1.621117 | Val: -1.872052
+  Epoch 26/50 | Train: -1.657821 | Val: -1.830076
+  Epoch 31/50 | Train: -1.747299 | Val: -1.898815
+  Epoch 32/50 | Train: -1.754615 | Val: -2.056228
+  Epoch 35/50 | Train: -1.806405 | Val: -2.069333
+  Epoch 36/50 | Train: -1.767596 | Val: -1.859292
+  Epoch 40/50 | Train: -1.790709 | Val: -2.099574
+  Epoch 41/50 | Train: -1.847279 | Val: -1.815295
+  Epoch 46/50 | Train: -1.864634 | Val: -2.038193
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 287 points (top 2.00%)
+  Variance: 4.97e-03 > threshold 2.74e-03
+  Final dataset: 14028 samples (98.0% retained)
+  Filtered 287 outliers | Remaining: 14028
+
+--- Iteration 19 ---
+  Epoch 1/50 | Train: 1.791347 | Val: 2.412718
+  Epoch 2/50 | Train: 1.133659 | Val: 0.880426
+  Epoch 3/50 | Train: 0.415480 | Val: -0.282459
+  Epoch 4/50 | Train: -0.375884 | Val: -0.824976
+  Epoch 5/50 | Train: -0.703529 | Val: -0.889246
+  Epoch 6/50 | Train: -0.894501 | Val: -0.950469
+  Epoch 7/50 | Train: -0.958452 | Val: -1.013291
+  Epoch 8/50 | Train: -1.059908 | Val: -1.479564
+  Epoch 10/50 | Train: -1.188658 | Val: -1.482710
+  Epoch 11/50 | Train: -1.219203 | Val: -0.638847
+  Epoch 15/50 | Train: -1.370432 | Val: -1.782139
+  Epoch 16/50 | Train: -1.396474 | Val: -1.354896
+  Epoch 21/50 | Train: -1.490737 | Val: -0.959824
+  Epoch 22/50 | Train: -1.498372 | Val: -1.886025
+  Epoch 23/50 | Train: -1.549279 | Val: -1.892019
+  Epoch 24/50 | Train: -1.524139 | Val: -1.894145
+  Epoch 26/50 | Train: -1.543164 | Val: -1.899701
+  Epoch 29/50 | Train: -1.550527 | Val: -1.947004
+  Epoch 31/50 | Train: -1.595956 | Val: -1.913612
+  Epoch 32/50 | Train: -1.605430 | Val: -1.963904
+  Epoch 36/50 | Train: -1.598147 | Val: -1.734368
+  Epoch 39/50 | Train: -1.662925 | Val: -1.995853
+  Epoch 41/50 | Train: -1.655862 | Val: -1.671830
+  Epoch 42/50 | Train: -1.663394 | Val: -1.998768
+  Epoch 43/50 | Train: -1.649594 | Val: -2.000330
+  Epoch 46/50 | Train: -1.646908 | Val: -1.916884
+  Epoch 47/50 | Train: -1.656411 | Val: -2.024184
+  Running SEVER filtering...
+Remove 0.02 fraction of scores
+  Removing 281 points (top 2.00%)
+  Variance: 5.05e-03 > threshold 2.74e-03
+  Final dataset: 13747 samples (98.0% retained)
+  Filtered 281 outliers | Remaining: 13747
+
+Trial 11 completed | Best val loss: -2.153732
+
+Trial 11 SUCCEEDED | Loss: -2.153732
+
+
+>>> Checkpoint saved: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+>>> Completed trials: 12/20
+
+
+================================================================================
+OPTIMIZATION COMPLETE
+================================================================================
+
+Best trial:
+  Value (best_val_loss): -2.190604923719383
+  Params: {'VARIANCE_THRESHOLD': 1.0, 'SIGMA': None, 'TOP_FRACTION': None, 'MAX_ITR': 20}
+  Trial number: 1
+
+Best hyperparameters saved to: /astro/users/lindajin/WL_ML/trained_model/sever_best_hyperparameters.json
+Checkpoint file: /astro/users/lindajin/WL_ML/trained_model/optuna_study_checkpoint.pkl
+
+Finished at: 2025-11-12 11:50:46.003677
+================================================================================

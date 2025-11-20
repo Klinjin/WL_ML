@@ -1,0 +1,26 @@
+{
+  "sever_settings": {
+    "variance_threshold": 0.75,
+    "sigma": 0.005477225575051661,
+    "top_fraction": 0.02,
+    "filtering_mode": "deterministic"
+  },
+  "iterations": [
+    {
+      "iteration": 0,
+      "epochs": 50,
+      "dataset_size": 20604,
+      "best_train_loss": -2.0081007014150205,
+      "best_val_loss": -2.176326724420111,
+      "samples_filtered": 413
+    },
+    {
+      "iteration": 1,
+      "epochs": 50,
+      "dataset_size": 20191,
+      "best_train_loss": -1.7896793043311638,
+      "best_val_loss": -2.111274486564728,
+      "samples_filtered": 0
+    }
+  ]
+}

@@ -95,23 +95,35 @@ class Probability:
 
 class Utility:
     @staticmethod
-    def add_noise(data, mask, ng, pixel_size=2.):
+    def add_noise(data, mask, ng, pixel_size=2., std=None):
         """
         Add noise to a noiseless convergence map.
 
         Parameters
         ----------
         data : np.array
-            Noiseless convergence maps.
+            Noiseless convergence maps (can be raw or normalized).
         mask : np.array
             Binary mask map.
         ng : float
             Number of galaxies per arcmin². This determines the noise level; a larger number means smaller noise.
         pixel_size : float, optional
             Pixel size in arcminutes (default is 2.0).
+        std : float, optional
+            If data is normalized, provide the std used for normalization.
+            Noise scale will be adjusted accordingly.
+            Note: mean centering doesn't affect noise since noise is zero-mean.
         """
-
-        return data + np.random.randn(*data.shape) * 0.4 / (2*ng*pixel_size**2)**0.5 * mask
+        # Base noise in raw data units
+        noise_raw = np.random.randn(*data.shape) * 0.4 / (2*ng*pixel_size**2)**0.5 * mask
+        
+        # If data is normalized, scale noise to match normalized units
+        if std is not None:
+            noise = noise_raw / std
+        else:
+            noise = noise_raw
+            
+        return data + noise
 
     @staticmethod
     def load_np(data_dir, file_name):

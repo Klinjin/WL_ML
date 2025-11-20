@@ -71,7 +71,7 @@ class Config:
         
         # Training hyperparameters - matching Simple_CNN baseline
         self.BATCH_SIZE = 64
-        self.EPOCHS = 15
+        self.EPOCHS = 100
         self.LEARNING_RATE = 2e-4
         self.WEIGHT_DECAY = 1e-4
         
